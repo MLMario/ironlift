@@ -1,7 +1,7 @@
 # Requirements: IronLift
 
 **Defined:** 2026-02-11
-**Core Value:** The core workout loop — pick a template, log sets with weight/reps, finish and save — must work flawlessly, including fully offline.
+**Core Value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
 
 ## v1 Requirements
 
@@ -68,7 +68,7 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 - [ ] **WORK-11**: Rest timer supports +10s and -10s adjustment buttons
 - [ ] **WORK-12**: Rest timer sends local notification when complete (app backgrounded)
 - [ ] **WORK-13**: Rest timer auto-cancels when exercise removed or workout ends
-- [ ] **WORK-14**: User can finish workout — saves all logged sets to database
+- [ ] **WORK-14**: User can finish workout -- saves all logged sets to database
 - [ ] **WORK-15**: On finish, app detects structural template changes (added/removed exercises, changed set counts) and prompts to update template
 - [ ] **WORK-16**: User can cancel workout with confirmation modal (warns about losing progress)
 - [ ] **WORK-17**: Active workout screen presents as stack push (swipe-back disabled)
@@ -107,8 +107,8 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 - [ ] **UI-01**: App uses dark mode only with semantic theme tokens matching web app design
 - [ ] **UI-02**: Theme accessed via ThemeProvider context and useTheme() hook
-- [ ] **UI-03**: All components hand-rolled with StyleSheet.create() — no UI libraries
-- [ ] **UI-04**: System font (SF Pro) only — no custom fonts
+- [ ] **UI-03**: All components hand-rolled with StyleSheet.create() -- no UI libraries
+- [ ] **UI-04**: System font (SF Pro) only -- no custom fonts
 - [ ] **UI-05**: Colors, spacing, typography, border radii match web app CSS custom properties
 - [ ] **UI-06**: Minimum tap target of 44px on all interactive elements
 
@@ -162,90 +162,90 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | - | Pending |
-| AUTH-02 | - | Pending |
-| AUTH-03 | - | Pending |
-| AUTH-04 | - | Pending |
-| AUTH-05 | - | Pending |
-| AUTH-06 | - | Pending |
-| AUTH-07 | - | Pending |
-| AUTH-08 | - | Pending |
-| DASH-01 | - | Pending |
-| DASH-02 | - | Pending |
-| DASH-03 | - | Pending |
-| DASH-04 | - | Pending |
-| DASH-05 | - | Pending |
-| DASH-06 | - | Pending |
-| DASH-07 | - | Pending |
-| EXER-01 | - | Pending |
-| EXER-02 | - | Pending |
-| EXER-03 | - | Pending |
-| EXER-04 | - | Pending |
-| EXER-05 | - | Pending |
-| EXER-06 | - | Pending |
-| EXER-07 | - | Pending |
-| EXER-08 | - | Pending |
-| EXER-09 | - | Pending |
-| TMPL-01 | - | Pending |
-| TMPL-02 | - | Pending |
-| TMPL-03 | - | Pending |
-| TMPL-04 | - | Pending |
-| TMPL-05 | - | Pending |
-| TMPL-06 | - | Pending |
-| TMPL-07 | - | Pending |
-| TMPL-08 | - | Pending |
-| TMPL-09 | - | Pending |
-| TMPL-10 | - | Pending |
-| WORK-01 | - | Pending |
-| WORK-02 | - | Pending |
-| WORK-03 | - | Pending |
-| WORK-04 | - | Pending |
-| WORK-05 | - | Pending |
-| WORK-06 | - | Pending |
-| WORK-07 | - | Pending |
-| WORK-08 | - | Pending |
-| WORK-09 | - | Pending |
-| WORK-10 | - | Pending |
-| WORK-11 | - | Pending |
-| WORK-12 | - | Pending |
-| WORK-13 | - | Pending |
-| WORK-14 | - | Pending |
-| WORK-15 | - | Pending |
-| WORK-16 | - | Pending |
-| WORK-17 | - | Pending |
-| WORK-18 | - | Pending |
-| WORK-19 | - | Pending |
-| WORK-20 | - | Pending |
-| CHRT-01 | - | Pending |
-| CHRT-02 | - | Pending |
-| CHRT-03 | - | Pending |
-| CHRT-04 | - | Pending |
-| CHRT-05 | - | Pending |
-| CHRT-06 | - | Pending |
-| CHRT-07 | - | Pending |
-| HIST-01 | - | Pending |
-| HIST-02 | - | Pending |
-| HIST-03 | - | Pending |
-| HIST-04 | - | Pending |
-| HIST-05 | - | Pending |
-| SETT-01 | - | Pending |
-| SETT-02 | - | Pending |
-| SETT-03 | - | Pending |
-| SETT-04 | - | Pending |
-| SETT-05 | - | Pending |
-| SETT-06 | - | Pending |
-| UI-01 | - | Pending |
-| UI-02 | - | Pending |
-| UI-03 | - | Pending |
-| UI-04 | - | Pending |
-| UI-05 | - | Pending |
-| UI-06 | - | Pending |
+| AUTH-01 | Phase 2 | Pending |
+| AUTH-02 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Pending |
+| AUTH-04 | Phase 2 | Pending |
+| AUTH-05 | Phase 2 | Pending |
+| AUTH-06 | Phase 2 | Pending |
+| AUTH-07 | Phase 2 | Pending |
+| AUTH-08 | Phase 2 | Pending |
+| DASH-01 | Phase 4 | Pending |
+| DASH-02 | Phase 4 | Pending |
+| DASH-03 | Phase 6 | Pending |
+| DASH-04 | Phase 6 | Pending |
+| DASH-05 | Phase 4 | Pending |
+| DASH-06 | Phase 4 | Pending |
+| DASH-07 | Phase 6 | Pending |
+| EXER-01 | Phase 3 | Pending |
+| EXER-02 | Phase 3 | Pending |
+| EXER-03 | Phase 3 | Pending |
+| EXER-04 | Phase 3 | Pending |
+| EXER-05 | Phase 3 | Pending |
+| EXER-06 | Phase 3 | Pending |
+| EXER-07 | Phase 3 | Pending |
+| EXER-08 | Phase 3 | Pending |
+| EXER-09 | Phase 3 | Pending |
+| TMPL-01 | Phase 4 | Pending |
+| TMPL-02 | Phase 4 | Pending |
+| TMPL-03 | Phase 4 | Pending |
+| TMPL-04 | Phase 4 | Pending |
+| TMPL-05 | Phase 4 | Pending |
+| TMPL-06 | Phase 4 | Pending |
+| TMPL-07 | Phase 4 | Pending |
+| TMPL-08 | Phase 4 | Pending |
+| TMPL-09 | Phase 4 | Pending |
+| TMPL-10 | Phase 4 | Pending |
+| WORK-01 | Phase 5 | Pending |
+| WORK-02 | Phase 5 | Pending |
+| WORK-03 | Phase 5 | Pending |
+| WORK-04 | Phase 5 | Pending |
+| WORK-05 | Phase 5 | Pending |
+| WORK-06 | Phase 5 | Pending |
+| WORK-07 | Phase 5 | Pending |
+| WORK-08 | Phase 5 | Pending |
+| WORK-09 | Phase 5 | Pending |
+| WORK-10 | Phase 5 | Pending |
+| WORK-11 | Phase 5 | Pending |
+| WORK-12 | Phase 5 | Pending |
+| WORK-13 | Phase 5 | Pending |
+| WORK-14 | Phase 5 | Pending |
+| WORK-15 | Phase 5 | Pending |
+| WORK-16 | Phase 5 | Pending |
+| WORK-17 | Phase 5 | Pending |
+| WORK-18 | Phase 5 | Pending |
+| WORK-19 | Phase 5 | Pending |
+| WORK-20 | Phase 5 | Pending |
+| CHRT-01 | Phase 6 | Pending |
+| CHRT-02 | Phase 6 | Pending |
+| CHRT-03 | Phase 6 | Pending |
+| CHRT-04 | Phase 6 | Pending |
+| CHRT-05 | Phase 6 | Pending |
+| CHRT-06 | Phase 6 | Pending |
+| CHRT-07 | Phase 6 | Pending |
+| HIST-01 | Phase 7 | Pending |
+| HIST-02 | Phase 7 | Pending |
+| HIST-03 | Phase 7 | Pending |
+| HIST-04 | Phase 7 | Pending |
+| HIST-05 | Phase 7 | Pending |
+| SETT-01 | Phase 7 | Pending |
+| SETT-02 | Phase 7 | Pending |
+| SETT-03 | Phase 7 | Pending |
+| SETT-04 | Phase 7 | Pending |
+| SETT-05 | Phase 7 | Pending |
+| SETT-06 | Phase 7 | Pending |
+| UI-01 | Phase 1 | Pending |
+| UI-02 | Phase 1 | Pending |
+| UI-03 | Phase 1 | Pending |
+| UI-04 | Phase 1 | Pending |
+| UI-05 | Phase 1 | Pending |
+| UI-06 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 55 total
-- Mapped to phases: 0
-- Unmapped: 55 (pending roadmap creation)
+- v1 requirements: 78 total
+- Mapped to phases: 78
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-11 after initial definition*
+*Last updated: 2026-02-12 after roadmap creation*
