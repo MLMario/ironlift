@@ -1,0 +1,5 @@
+Placeholder: Place a real timer-complete.mp3 asset here.
+The useRestTimer hook (Plan 02) will reference:
+  require('../../assets/sounds/timer-complete.mp3')
+and handle the case where the asset fails to load gracefully.
+A short (~0.5s) alert chime in MP3 format is recommended.
