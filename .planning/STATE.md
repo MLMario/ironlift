@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 5 (Active Workout) -- building workout UI components and services
+**Current focus:** Phase 5 (Active Workout) -- building workout infrastructure, hooks, and UI
 
 ## Current Position
 
 Phase: 5 of 7 (Active Workout)
-Plan: 3 of 6 in current phase
+Plan: 1 of 6 in current phase (also 3 of 6 completed)
 Status: In progress
-Last activity: 2026-02-13 -- Completed 05-03-PLAN.md (Workout UI Components)
+Last activity: 2026-02-13 -- Completed 05-01-PLAN.md (Infrastructure)
 
-Progress: [████████████████░░░░] ~76%
+Progress: [████████████████░░░░] ~83%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 20
-- Average duration: ~3.5 min (including human verification)
-- Total execution time: ~66 min
+- Total plans completed: 21
+- Average duration: ~3.4 min (including human verification)
+- Total execution time: ~72 min
 
 **By Phase:**
 
@@ -31,12 +31,11 @@ Progress: [████████████████░░░░] ~76%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-
-| 5. Active Workout | 3/6 | ~6 min | ~2 min |
+| 5. Active Workout | 2/6 | ~8 min | ~4 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-06 (~2 min), 05-01 (~2 min), 05-02 (~2 min), 05-03 (~2 min)
-- Trend: Consistent ~2 min per plan for component-building tasks
+- Last 5 plans: 04-06 (~2 min), 05-01 (~6 min), 05-02 (~2 min), 05-03 (~2 min)
+- Trend: Infrastructure plans take longer due to dependency installation
 
 *Updated after each plan completion*
 
@@ -104,6 +103,10 @@ Recent decisions affecting current work:
 - [04-06]: Brand text split into two Text elements (Iron=textPrimary, Lift=accent) matching web app pattern
 - [04-06]: Weight input uses decimal-pad keyboard with Math.round(v*10)/10 for 1-decimal display
 - [04-06]: RestTimerInline progress bar fully removed (workout-only feature for Phase 5)
+- [05-01]: Logging service ported as-is from web app -- zero logic changes, only import paths (same pattern as exercises, templates)
+- [05-01]: Single write queue key (ironlift:writeQueue) not per-user -- payload contains user_id
+- [05-01]: SDK 54 notification handler requires shouldShowBanner + shouldShowList (not in older docs)
+- [05-01]: Sound asset directory uses .gitkeep placeholder -- real MP3 to be sourced separately
 - [05-03]: ProgressRing radius derived from (size - strokeWidth) / 2 for configurable sizing
 - [05-03]: RestTimerBar uses 8px track height with 28px container for time text overlay
 - [05-03]: ConfirmationModal nested Pressable pattern prevents overlay press propagation through card
@@ -122,5 +125,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 05-03-PLAN.md (Workout UI Components)
+Stopped at: Completed 05-01-PLAN.md (Infrastructure)
 Resume file: None
