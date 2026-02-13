@@ -57,11 +57,13 @@ Plans:
 **Web App Port**:
   - Copy and adapt: `auth.ts` service — swap Supabase client import, change `redirectTo` URL for password reset deep link (`ironlift://reset-password`), replace `expo-secure-store` with `expo-sqlite/localStorage` adapter
   - Reference: Auth surface for login/register/reset UI layout and flows
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Auth service, AuthProvider, root layout rewiring with splash screen
+- [ ] 02-02-PLAN.md — Reusable auth UI components (TextInputField, ErrorBox, SuccessBox, SubmitButton, AuthCard, AuthTabs)
+- [ ] 02-03-PLAN.md — Sign-in screen with login/register/reset sub-views and email verification modal
+- [ ] 02-04-PLAN.md — Reset password deep link screen and end-to-end auth verification
 
 ### Phase 3: Exercise Library
 **Goal**: Users can browse the full exercise catalog, search and filter it, and manage their own custom exercises -- the building blocks for templates and workouts
@@ -178,7 +180,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
-| 2. Authentication | 0/TBD | Not started | - |
+| 2. Authentication | 0/4 | Not started | - |
 | 3. Exercise Library | 0/TBD | Not started | - |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
 | 5. Active Workout | 0/TBD | Not started | - |
