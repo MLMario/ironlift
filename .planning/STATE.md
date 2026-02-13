@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 4 (Templates and Dashboard) COMPLETE -- all gap closure plans executed, ready for Phase 5
+**Current focus:** Phase 4 (Templates and Dashboard) VERIFIED -- UAT round 2 passed 11/11, ready for Phase 5
 
 ## Current Position
 
 Phase: 4 of 7 (Templates and Dashboard) -- COMPLETE (including gap closure)
 Plan: 6 of 6 in current phase
-Status: Phase complete -- all plans and gap closure executed
-Last activity: 2026-02-13 -- Completed 04-06-PLAN.md (UAT gap closure: brand styling, decimal input, rest timer)
+Status: Phase complete, UAT verified (11/11 passed), ready for Phase 5
+Last activity: 2026-02-13 -- UAT round 2 complete, all gaps resolved (weight decimal + weight save fixes)
 
 Progress: [███████████████░░░░░] ~70%
 
@@ -115,5 +115,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 04-06-PLAN.md (UAT gap closure) -- Phase 4 fully complete including gap closure
+Stopped at: UAT round 2 complete (11/11 passed) -- Phase 4 fully verified, ready for Phase 5
 Resume file: None

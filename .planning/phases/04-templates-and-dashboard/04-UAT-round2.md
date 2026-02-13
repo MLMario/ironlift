@@ -3,12 +3,12 @@ status: complete
 phase: 04-templates-and-dashboard
 source: 04-05-SUMMARY.md, 04-06-SUMMARY.md
 started: 2026-02-13T23:00:00Z
-updated: 2026-02-13T23:08:00Z
+updated: 2026-02-13T23:15:00Z
 ---
 
 ## Current Test
 
-[testing complete]
+[testing complete — all gaps resolved]
 
 ## Tests
 
@@ -18,9 +18,7 @@ result: pass
 
 ### 2. Decimal Weight Input
 expected: In the template editor, tapping a weight field opens a numeric keyboard that includes a decimal point key. You can type a value like "72.5" and it displays correctly (rounded to 1 decimal place).
-result: issue
-reported: "doesnt pass, field doesn allow for .5 decimal"
-severity: major
+result: pass (fixed inline — 894e287)
 
 ### 3. Rest Timer (No Progress Bar)
 expected: In the template editor, each exercise's rest timer section shows only: a -10s button, a time input field, and a +10s button. There is NO horizontal progress/fill bar.
@@ -54,22 +52,34 @@ result: pass
 expected: Tapping Edit from swipe actions opens the template editor with existing data loaded (name, exercises, sets, rest times all populated).
 result: pass
 
+### 11. Weight Save Persistence (post-fix)
+expected: Edit a template, change a weight value, save. Re-open the template and the weight change is persisted.
+result: pass (fixed inline — fa9df80)
+
 ## Summary
 
-total: 10
-passed: 9
-issues: 1
+total: 11
+passed: 11
+issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
 - truth: "Weight input allows decimal values up to 1 decimal point (e.g., 72.5)"
-  status: failed
+  status: resolved
   reason: "User reported: doesnt pass, field doesn allow for .5 decimal"
   severity: major
   test: 2
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "Controlled input loop destroys trailing decimal. parseFloat('72.') returns 72, so formatWeight(72) renders '72'."
+  fix: "Added local editingWeight text buffer state, parse only on blur (894e287)"
+  debug_session: ".planning/debug/weight-decimal-input.md"
+
+- truth: "Editing weight values in template editor and saving persists the weight changes"
+  status: resolved
+  reason: "User reported: saving template updates sets/reps/exercises/timer but does NOT save weight changes"
+  severity: major
+  test: post-fix
+  root_cause: "handleWeightChange only updated local buffer without calling onWeightChange. keyboardShouldPersistTaps='handled' skipped blur, so parent state stayed stale."
+  fix: "Propagate onWeightChange on every keystroke in addition to local buffer (fa9df80)"
+  debug_session: ".planning/debug/weight-not-saved.md"
