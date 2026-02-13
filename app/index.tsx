@@ -1,22 +1,23 @@
 /**
  * Dashboard Screen
  *
- * The app's central hub. Displays the user's workout templates in a 2-column
- * grid with swipeable edit/delete actions. Users can create new templates,
- * start workouts, and access settings from here.
+ * The app's central hub. Displays the user's workout templates in a
+ * single-column list with swipeable edit/delete actions. Users can create
+ * new templates, start workouts, and access settings from here.
  *
- * Replaces the Phase 1 placeholder dashboard.
+ * Uses useFocusEffect to refresh templates when returning from template
+ * editor or any other screen.
  *
  * States:
  * - Loading: centered spinner (no cached templates yet)
  * - Error: error message with retry
- * - Empty: encouraging message + grid with only the "+" card
- * - Normal: full template grid with cards
+ * - Normal: "My Templates" section with cards (empty = header + no cards)
  */
 
+import { useCallback } from 'react';
 import { View, Text, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
 import { auth } from '@/services/auth';
@@ -31,6 +32,13 @@ export default function DashboardScreen() {
   const styles = getStyles(theme);
   const router = useRouter();
   const { templates, isLoading, error, refresh } = useTemplates();
+
+  // Refresh templates when dashboard regains focus (e.g., after template editor modal)
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
 
   function handleCreateNew() {
     router.push('/template-editor');
@@ -95,14 +103,6 @@ export default function DashboardScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <DashboardHeader onSettingsPress={handleSettingsPress} />
-      {templates.length === 0 && (
-        <View style={styles.emptyMessage}>
-          <Text style={styles.emptyTitle}>No templates yet</Text>
-          <Text style={styles.emptySubtitle}>
-            Create your first workout template to get started!
-          </Text>
-        </View>
-      )}
       <TemplateGrid
         templates={templates}
         onEdit={handleEdit}
@@ -130,20 +130,6 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.base,
       color: theme.colors.danger,
       textAlign: 'center',
-    },
-    emptyMessage: {
-      paddingHorizontal: theme.spacing.md,
-      paddingTop: theme.spacing.lg,
-      gap: theme.spacing.xs,
-    },
-    emptyTitle: {
-      fontSize: theme.typography.sizes.lg,
-      fontWeight: theme.typography.weights.semibold,
-      color: theme.colors.textPrimary,
-    },
-    emptySubtitle: {
-      fontSize: theme.typography.sizes.base,
-      color: theme.colors.textSecondary,
     },
   });
 }

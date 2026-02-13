@@ -1,9 +1,12 @@
 /**
  * TemplateCard Component
  *
- * A swipeable template card for the dashboard grid. Displays the template
+ * A swipeable template card for the dashboard list. Displays the template
  * name, exercise preview (first 2 exercises + "and N more"), and a Start
  * button. Swiping left reveals Edit and Delete action buttons.
+ *
+ * Renders full-width in a single-column layout. Start button has internal
+ * margin within the card (not edge-to-edge).
  *
  * Uses ReanimatedSwipeable from react-native-gesture-handler for swipe
  * gestures with react-native-reanimated SharedValue animation.
@@ -22,9 +25,6 @@ import Animated, {
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
 import type { TemplateWithExercises } from '@/types/database';
-
-/** Fixed minimum height for consistent grid alignment across 2 columns. */
-export const CARD_MIN_HEIGHT = 180;
 
 /** Total width of the right action buttons (Edit + Delete). */
 const RIGHT_ACTIONS_WIDTH = 140;
@@ -135,16 +135,12 @@ export function TemplateCard({
 function getStyles(theme: Theme) {
   return StyleSheet.create({
     swipeableContainer: {
-      flex: 1,
       borderRadius: theme.radii.lg,
       overflow: 'hidden',
     },
     card: {
-      flex: 1,
       backgroundColor: theme.colors.bgSurface,
       borderRadius: theme.radii.lg,
-      minHeight: CARD_MIN_HEIGHT,
-      justifyContent: 'space-between',
     },
     cardBody: {
       flex: 1,
@@ -172,8 +168,9 @@ function getStyles(theme: Theme) {
       minHeight: theme.layout.minTapTarget,
       justifyContent: 'center',
       alignItems: 'center',
-      borderBottomLeftRadius: theme.radii.lg,
-      borderBottomRightRadius: theme.radii.lg,
+      borderRadius: theme.radii.md,
+      marginHorizontal: theme.spacing.sm,
+      marginBottom: theme.spacing.sm,
     },
     startButtonPressed: {
       backgroundColor: theme.colors.accentHover,
