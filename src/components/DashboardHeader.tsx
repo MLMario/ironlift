@@ -2,7 +2,8 @@
  * DashboardHeader Component
  *
  * Sticky header for the dashboard screen. Shows the "IronLift" brand text
- * on the left and a settings gear icon on the right.
+ * on the left (split-color: "Iron" in white, "Lift" in accent blue) and
+ * a settings gear icon on the right.
  *
  * Rendered above the FlatList (not inside it) so it stays fixed while
  * the template grid scrolls independently.
@@ -23,7 +24,10 @@ export function DashboardHeader({ onSettingsPress }: DashboardHeaderProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.brand}>IronLift</Text>
+      <View style={styles.brandContainer}>
+        <Text style={styles.brandIron}>Iron</Text>
+        <Text style={styles.brandLift}>Lift</Text>
+      </View>
       <Pressable
         onPress={onSettingsPress}
         style={styles.gearButton}
@@ -51,10 +55,19 @@ function getStyles(theme: Theme) {
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
     },
-    brand: {
+    brandContainer: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
+    brandIron: {
       fontSize: theme.typography.sizes['2xl'],
       fontWeight: theme.typography.weights.semibold,
       color: theme.colors.textPrimary,
+    },
+    brandLift: {
+      fontSize: theme.typography.sizes['2xl'],
+      fontWeight: theme.typography.weights.semibold,
+      color: theme.colors.accent,
     },
     gearButton: {
       minWidth: theme.layout.minTapTarget,
