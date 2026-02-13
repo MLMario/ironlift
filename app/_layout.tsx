@@ -1,23 +1,27 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 import { ThemeProvider, useTheme } from '@/theme';
-import { supabase } from '@/lib/supabase';
+import { AuthProvider, useAuth } from '@/hooks/useAuth';
+
+// Keep the native splash screen visible until auth state is resolved.
+// This prevents a flash of the auth screen when the user is already logged in.
+SplashScreen.preventAutoHideAsync();
 
 function RootLayoutNav() {
   const theme = useTheme();
-  // Phase 1: hardcode to true -- Phase 2 will use real auth state
-  const isLoggedIn = true;
+  const { isLoggedIn, isLoading } = useAuth();
 
   useEffect(() => {
-    // Phase 1: Supabase connection test -- log result to console
-    supabase.auth.getSession().then(({ error }) => {
-      if (error) {
-        console.error('Supabase connection test failed:', error.message);
-      } else {
-        console.log('Supabase connection successful');
-      }
-    });
-  }, []);
+    if (!isLoading) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoading]);
+
+  // While checking initial session, return null (splash screen stays visible)
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <Stack
@@ -29,7 +33,7 @@ function RootLayoutNav() {
       {/* Auth screens -- shown when NOT logged in */}
       <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen name="sign-in" />
-        <Stack.Screen name="create-account" />
+        <Stack.Screen name="reset-password" />
       </Stack.Protected>
 
       {/* App screens -- shown when logged in */}
@@ -52,7 +56,9 @@ function RootLayoutNav() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <RootLayoutNav />
+      <AuthProvider>
+        <RootLayoutNav />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
