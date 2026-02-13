@@ -5,33 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 2: Authentication -- sign-in screen complete, one plan remaining (reset password deep link)
+**Current focus:** Phase 2 complete. Next: Phase 3 (Exercise Library)
 
 ## Current Position
 
-Phase: 2 of 7 (Authentication)
-Plan: 3 of 4 in current phase
-Status: In progress
-Last activity: 2026-02-13 -- Completed 02-03-PLAN.md (Sign-in screen)
+Phase: 3 of 7 (Exercise Library)
+Plan: 0 of TBD in current phase
+Status: Not started
+Last activity: 2026-02-13 -- Completed Phase 2 (Authentication)
 
-Progress: [██████░░░░] ~30%
+Progress: [███████░░░] ~35%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: ~6 min (including human verification)
-- Total execution time: ~37 min
+- Total execution time: ~40 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
-| 2. Authentication | 3/4 | ~8 min | ~3 min |
+| 2. Authentication | 4/4 | ~11 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (~22 min incl. human verify), 02-01 (~3 min), 02-02 (~3 min), 02-03 (~2 min)
+- Last 5 plans: 02-01 (~3 min), 02-02 (~3 min), 02-03 (~2 min), 02-04 (~3 min)
 - Trend: Auth plans executing fast -- straightforward component creation with no blockers
 
 *Updated after each plan completion*
@@ -65,6 +65,8 @@ Recent decisions affecting current work:
 - [02-03]: Email preserved across login/register tab switches (cleared only on successful registration)
 - [02-03]: Password and confirmPassword cleared on all view transitions for security
 - [02-03]: successMessage prop on ResetPasswordForm kept as null in sign-in.tsx (reserved for future use)
+- [02-04]: reset-password screen placed outside both Protected guard groups -- setSession() triggers isLoggedIn=true mid-flow
+- [02-04]: Temporary logout button on dashboard placeholder (replaced in Phase 7 settings bottom sheet)
 
 ### Pending Todos
 
@@ -78,5 +80,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 02-03-PLAN.md (Sign-in screen)
+Stopped at: Completed Phase 2 (Authentication) -- all 4 plans executed
 Resume file: None

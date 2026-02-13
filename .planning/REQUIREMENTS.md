@@ -9,14 +9,14 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can create account with email and password
-- [ ] **AUTH-02**: User receives email verification after signup
-- [ ] **AUTH-03**: User can log in with email and password
-- [ ] **AUTH-04**: User session persists across app kills and restarts (auto-refresh via refresh token)
-- [ ] **AUTH-05**: User can log out from settings (local cache is cleared on logout)
-- [ ] **AUTH-06**: On login, app fetches and caches user's data from Supabase
-- [ ] **AUTH-07**: User can request password reset via email
-- [ ] **AUTH-08**: Password reset deep link (`ironlift://reset-password`) returns user to native password update screen
+- [x] **AUTH-01**: User can create account with email and password
+- [x] **AUTH-02**: User receives email verification after signup
+- [x] **AUTH-03**: User can log in with email and password
+- [x] **AUTH-04**: User session persists across app kills and restarts (auto-refresh via refresh token)
+- [x] **AUTH-05**: User can log out from settings (local cache is cleared on logout)
+- [x] **AUTH-06**: On login, app fetches and caches user's data from Supabase
+- [x] **AUTH-07**: User can request password reset via email
+- [x] **AUTH-08**: Password reset deep link (`ironlift://reset-password`) returns user to native password update screen
 
 ### Dashboard
 
@@ -162,14 +162,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
-| AUTH-06 | Phase 2 | Pending |
-| AUTH-07 | Phase 2 | Pending |
-| AUTH-08 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| AUTH-03 | Phase 2 | Complete |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 2 | Complete |
+| AUTH-06 | Phase 2 | Complete |
+| AUTH-07 | Phase 2 | Complete |
+| AUTH-08 | Phase 2 | Complete |
 | DASH-01 | Phase 4 | Pending |
 | DASH-02 | Phase 4 | Pending |
 | DASH-03 | Phase 6 | Pending |
@@ -248,4 +248,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-12 after roadmap creation*
+*Last updated: 2026-02-13 after Phase 2 completion*
