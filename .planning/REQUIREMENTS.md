@@ -30,15 +30,15 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Exercise Library
 
-- [ ] **EXER-01**: App ships with ~1000 system exercises with metadata (name, category, equipment, instructions, level, force, mechanic)
-- [ ] **EXER-02**: User can create custom exercises with name and category
-- [ ] **EXER-03**: Creating a custom exercise rejects duplicate names (against user's existing custom exercises)
-- [ ] **EXER-04**: User can edit custom exercise name and category
-- [ ] **EXER-05**: User can delete custom exercises
-- [ ] **EXER-06**: Exercise picker modal shows all exercises (system + custom) with search by name
-- [ ] **EXER-07**: Exercise picker modal filters exercises by category (Chest, Back, Shoulders, Legs, Arms, Core, Other)
-- [ ] **EXER-08**: Exercise picker includes "Create New Exercise" option that extends the modal to show name + category form inline
-- [ ] **EXER-09**: Exercise creation via picker is available in all contexts: template editor, active workout, and My Exercises
+- [x] **EXER-01**: App ships with ~1000 system exercises with metadata (name, category, equipment, instructions, level, force, mechanic)
+- [x] **EXER-02**: User can create custom exercises with name and category
+- [x] **EXER-03**: Creating a custom exercise rejects duplicate names (against user's existing custom exercises)
+- [x] **EXER-04**: User can edit custom exercise name and category
+- [x] **EXER-05**: User can delete custom exercises
+- [x] **EXER-06**: Exercise picker modal shows all exercises (system + custom) with search by name
+- [x] **EXER-07**: Exercise picker modal filters exercises by category (Chest, Back, Shoulders, Legs, Arms, Core, Other)
+- [x] **EXER-08**: Exercise picker includes "Create New Exercise" option that extends the modal to show name + category form inline
+- [x] **EXER-09**: Exercise creation via picker is available in all contexts: template editor, active workout, and My Exercises
 
 ### Templates
 
@@ -177,15 +177,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-05 | Phase 4 | Pending |
 | DASH-06 | Phase 4 | Pending |
 | DASH-07 | Phase 6 | Pending |
-| EXER-01 | Phase 3 | Pending |
-| EXER-02 | Phase 3 | Pending |
-| EXER-03 | Phase 3 | Pending |
-| EXER-04 | Phase 3 | Pending |
-| EXER-05 | Phase 3 | Pending |
-| EXER-06 | Phase 3 | Pending |
-| EXER-07 | Phase 3 | Pending |
-| EXER-08 | Phase 3 | Pending |
-| EXER-09 | Phase 3 | Pending |
+| EXER-01 | Phase 3 | Complete |
+| EXER-02 | Phase 3 | Complete |
+| EXER-03 | Phase 3 | Complete |
+| EXER-04 | Phase 3 | Complete |
+| EXER-05 | Phase 3 | Complete |
+| EXER-06 | Phase 3 | Complete |
+| EXER-07 | Phase 3 | Complete |
+| EXER-08 | Phase 3 | Complete |
+| EXER-09 | Phase 3 | Complete |
 | TMPL-01 | Phase 4 | Pending |
 | TMPL-02 | Phase 4 | Pending |
 | TMPL-03 | Phase 4 | Pending |

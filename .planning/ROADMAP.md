@@ -183,7 +183,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 |-------|----------------|--------|-----------|
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
-| 3. Exercise Library | 0/3 | Not started | - |
+| 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
 | 5. Active Workout | 0/TBD | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
