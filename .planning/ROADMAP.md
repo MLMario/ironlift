@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation and Theme** - Expo project scaffolding, theme system, navigation skeleton, Supabase client
 - [x] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
 - [x] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
-- [ ] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
+- [x] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
 - [ ] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
 - [ ] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [ ] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
@@ -104,10 +104,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Template service port, cache extension, useTemplates hook, GestureHandlerRootView
-- [ ] 04-02-PLAN.md — Template editor sub-components (SetRow, RestTimerInline, ExerciseEditorCard)
-- [ ] 04-03-PLAN.md — Dashboard screen with header, template grid, swipeable cards
-- [ ] 04-04-PLAN.md — Template editor modal assembly with full create/edit/delete flow
+- [x] 04-01-PLAN.md — Template service port, cache extension, useTemplates hook, GestureHandlerRootView
+- [x] 04-02-PLAN.md — Template editor sub-components (SetRow, RestTimerInline, ExerciseEditorCard)
+- [x] 04-03-PLAN.md — Dashboard screen with header, template grid, swipeable cards
+- [x] 04-04-PLAN.md — Template editor modal assembly with full create/edit/delete flow
 
 ### Phase 5: Active Workout
 **Goal**: Users can start a workout from a template, log sets with weight and reps, use a rest timer, and finish -- including fully offline with crash recovery -- delivering the core product experience
@@ -186,7 +186,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
-| 4. Templates and Dashboard | 0/4 | Not started | - |
+| 4. Templates and Dashboard | 4/4 | Complete | 2026-02-13 |
 | 5. Active Workout | 0/TBD | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |

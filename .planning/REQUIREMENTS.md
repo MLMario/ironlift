@@ -20,12 +20,12 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Dashboard
 
-- [ ] **DASH-01**: Dashboard displays user's workout templates as tappable cards in a grid
-- [ ] **DASH-02**: Each template card shows template name, edit icon, delete icon, and "Start" button
+- [x] **DASH-01**: Dashboard displays user's workout templates as tappable cards in a grid
+- [x] **DASH-02**: Each template card shows template name, edit icon, delete icon, and "Start" button
 - [ ] **DASH-03**: Dashboard displays user's exercise charts below templates
 - [ ] **DASH-04**: Each chart card shows exercise name, metric type, and rendered chart
-- [ ] **DASH-05**: Dashboard header shows IronLift brand and settings gear icon
-- [ ] **DASH-06**: Tapping "+ New Template" navigates to template editor (modal)
+- [x] **DASH-05**: Dashboard header shows IronLift brand and settings gear icon
+- [x] **DASH-06**: Tapping "+ New Template" navigates to template editor (modal)
 - [ ] **DASH-07**: Tapping "+ Add Chart" opens add chart modal
 
 ### Exercise Library
@@ -42,16 +42,16 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Templates
 
-- [ ] **TMPL-01**: User can create a new workout template with a name
-- [ ] **TMPL-02**: User can add exercises to a template via the exercise picker
-- [ ] **TMPL-03**: Each template exercise has a configurable default rest time (seconds)
-- [ ] **TMPL-04**: Each template exercise has configurable default sets with weight and reps
-- [ ] **TMPL-05**: User can reorder exercises within a template (up/down)
-- [ ] **TMPL-06**: User can remove exercises from a template
-- [ ] **TMPL-07**: User can add/remove sets within a template exercise
-- [ ] **TMPL-08**: User can save a template (create or update)
-- [ ] **TMPL-09**: User can delete a template from the dashboard
-- [ ] **TMPL-10**: Template editor presents as a modal (slides up from bottom)
+- [x] **TMPL-01**: User can create a new workout template with a name
+- [x] **TMPL-02**: User can add exercises to a template via the exercise picker
+- [x] **TMPL-03**: Each template exercise has a configurable default rest time (seconds)
+- [x] **TMPL-04**: Each template exercise has configurable default sets with weight and reps
+- [x] **TMPL-05**: User can reorder exercises within a template (up/down)
+- [x] **TMPL-06**: User can remove exercises from a template
+- [x] **TMPL-07**: User can add/remove sets within a template exercise
+- [x] **TMPL-08**: User can save a template (create or update)
+- [x] **TMPL-09**: User can delete a template from the dashboard
+- [x] **TMPL-10**: Template editor presents as a modal (slides up from bottom)
 
 ### Active Workout
 
@@ -170,12 +170,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-06 | Phase 2 | Complete |
 | AUTH-07 | Phase 2 | Complete |
 | AUTH-08 | Phase 2 | Complete |
-| DASH-01 | Phase 4 | Pending |
-| DASH-02 | Phase 4 | Pending |
+| DASH-01 | Phase 4 | Complete |
+| DASH-02 | Phase 4 | Complete |
 | DASH-03 | Phase 6 | Pending |
 | DASH-04 | Phase 6 | Pending |
-| DASH-05 | Phase 4 | Pending |
-| DASH-06 | Phase 4 | Pending |
+| DASH-05 | Phase 4 | Complete |
+| DASH-06 | Phase 4 | Complete |
 | DASH-07 | Phase 6 | Pending |
 | EXER-01 | Phase 3 | Complete |
 | EXER-02 | Phase 3 | Complete |
@@ -186,16 +186,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | EXER-07 | Phase 3 | Complete |
 | EXER-08 | Phase 3 | Complete |
 | EXER-09 | Phase 3 | Complete |
-| TMPL-01 | Phase 4 | Pending |
-| TMPL-02 | Phase 4 | Pending |
-| TMPL-03 | Phase 4 | Pending |
-| TMPL-04 | Phase 4 | Pending |
-| TMPL-05 | Phase 4 | Pending |
-| TMPL-06 | Phase 4 | Pending |
-| TMPL-07 | Phase 4 | Pending |
-| TMPL-08 | Phase 4 | Pending |
-| TMPL-09 | Phase 4 | Pending |
-| TMPL-10 | Phase 4 | Pending |
+| TMPL-01 | Phase 4 | Complete |
+| TMPL-02 | Phase 4 | Complete |
+| TMPL-03 | Phase 4 | Complete |
+| TMPL-04 | Phase 4 | Complete |
+| TMPL-05 | Phase 4 | Complete |
+| TMPL-06 | Phase 4 | Complete |
+| TMPL-07 | Phase 4 | Complete |
+| TMPL-08 | Phase 4 | Complete |
+| TMPL-09 | Phase 4 | Complete |
+| TMPL-10 | Phase 4 | Complete |
 | WORK-01 | Phase 5 | Pending |
 | WORK-02 | Phase 5 | Pending |
 | WORK-03 | Phase 5 | Pending |
@@ -248,4 +248,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-13 after Phase 2 completion*
+*Last updated: 2026-02-13 after Phase 4 completion*
