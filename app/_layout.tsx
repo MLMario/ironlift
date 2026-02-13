@@ -35,10 +35,6 @@ function RootLayoutNav() {
         <Stack.Screen name="sign-in" />
       </Stack.Protected>
 
-      {/* Reset password -- outside guards because setSession() flips isLoggedIn
-          mid-flow, which would redirect away before the user enters a new password */}
-      <Stack.Screen name="reset-password" />
-
       {/* App screens -- shown when logged in */}
       <Stack.Protected guard={isLoggedIn}>
         <Stack.Screen name="index" />
@@ -52,6 +48,13 @@ function RootLayoutNav() {
         />
         <Stack.Screen name="settings" />
       </Stack.Protected>
+
+      {/* Reset password -- outside guards because setSession() during deep link
+          recovery flips isLoggedIn mid-flow, which would redirect user away before
+          entering new password. Declared AFTER isLoggedIn group so that on normal
+          login, Expo Router finds index (first screen in isLoggedIn group) before
+          reaching this unguarded screen during its redirect scan. */}
+      <Stack.Screen name="reset-password" />
     </Stack>
   );
 }
