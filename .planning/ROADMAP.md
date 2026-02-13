@@ -13,7 +13,7 @@ IronLift is a native iOS exercise tracker ported from the IronFactor web app. Th
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation and Theme** - Expo project scaffolding, theme system, navigation skeleton, Supabase client
-- [x] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
+- [ ] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
 - [ ] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
 - [ ] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
 - [ ] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
@@ -57,13 +57,14 @@ Plans:
 **Web App Port**:
   - Copy and adapt: `auth.ts` service — swap Supabase client import, change `redirectTo` URL for password reset deep link (`ironlift://reset-password`), replace `expo-secure-store` with `expo-sqlite/localStorage` adapter
   - Reference: Auth surface for login/register/reset UI layout and flows
-**Plans**: 4 plans
+**Plans**: 5 plans
 
 Plans:
 - [x] 02-01-PLAN.md — Auth service, AuthProvider, root layout rewiring with splash screen
 - [x] 02-02-PLAN.md — Reusable auth UI components (TextInputField, ErrorBox, SuccessBox, SubmitButton, AuthCard, AuthTabs)
 - [x] 02-03-PLAN.md — Sign-in screen with login/register/reset sub-views and email verification modal
 - [x] 02-04-PLAN.md — Reset password deep link screen and end-to-end auth verification
+- [ ] 02-05-PLAN.md — Gap closure: fix login routing to dashboard (reset-password screen declaration order)
 
 ### Phase 3: Exercise Library
 **Goal**: Users can browse the full exercise catalog, search and filter it, and manage their own custom exercises -- the building blocks for templates and workouts
@@ -180,7 +181,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
-| 2. Authentication | 4/4 | Complete | 2026-02-13 |
+| 2. Authentication | 4/5 | Gap closure | - |
 | 3. Exercise Library | 0/TBD | Not started | - |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
 | 5. Active Workout | 0/TBD | Not started | - |
