@@ -56,6 +56,12 @@ export function SetRow({
 
   const handleWeightChange = (text: string) => {
     setEditingWeight(text);
+    // Also propagate to parent so state stays in sync even without blur
+    // (Save button with keyboardShouldPersistTaps="handled" skips blur)
+    const parsed = parseFloat(text);
+    if (!isNaN(parsed)) {
+      onWeightChange(Math.round(parsed * 10) / 10);
+    }
   };
 
   const handleWeightBlur = () => {
