@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 1 of 7 (Foundation and Theme)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-13 -- Completed 01-01-PLAN.md (Project scaffolding)
+Last activity: 2026-02-13 -- Completed 01-02-PLAN.md (Theme system and Supabase client)
 
-Progress: [█░░░░░░░░░] ~5%
+Progress: [██░░░░░░░░] ~10%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: ~5 min
-- Total execution time: ~5 min
+- Total plans completed: 2
+- Average duration: ~3.5 min
+- Total execution time: ~7 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation and Theme | 1/3 | ~5 min | ~5 min |
+| 1. Foundation and Theme | 2/3 | ~7 min | ~3.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~5 min)
-- Trend: First plan, no trend yet
+- Last 5 plans: 01-01 (~5 min), 01-02 (~2 min)
+- Trend: Accelerating (simpler tasks)
 
 *Updated after each plan completion*
 
@@ -48,6 +48,10 @@ Recent decisions affecting current work:
 - [01-01]: @/* path alias maps to src/* (not root ./*) -- separates source from config
 - [01-01]: App identity set to "IronLift" with "ironlift" slug and "ironlift://" deep link scheme
 - [01-01]: .env used for Supabase credentials (not .env.local) -- added to .gitignore
+- [01-02]: ThemeContext default = darkTheme (works outside ThemeProvider for testing)
+- [01-02]: typography.fontFamily = undefined (RN system font default, no custom font loading)
+- [01-02]: darkTheme uses `as const` for literal type autocomplete
+- [01-02]: Supabase client throws on missing env vars at startup (runtime validation)
 
 ### Pending Todos
 
@@ -56,12 +60,12 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - [Research]: @gorhom/bottom-sheet has LOW confidence on SDK 54 compatibility -- test early, prepare hand-rolled fallback (affects Phase 7)
-- [Research]: Auth token storage must use expo-sqlite/localStorage, not expo-secure-store (2048-byte limit) -- decision needed in Phase 1
+- [Research]: Auth token storage resolved -- using expo-sqlite/localStorage in 01-02
 - [Research]: New Architecture acceptance needed -- Expo Go SDK 54 defaults to it, constitution says classic
 - [01-01]: TypeScript errors from template files due to @/* path alias change -- harmless until Plan 03 replaces them
 
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 01-01-PLAN.md (Project scaffolding)
+Stopped at: Completed 01-02-PLAN.md (Theme system and Supabase client)
 Resume file: None
