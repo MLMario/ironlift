@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 4 (Templates and Dashboard) VERIFIED -- UAT round 2 passed 11/11, ready for Phase 5
+**Current focus:** Phase 5 (Active Workout) -- building workout UI components and services
 
 ## Current Position
 
-Phase: 4 of 7 (Templates and Dashboard) -- COMPLETE (including gap closure)
-Plan: 6 of 6 in current phase
-Status: Phase complete, UAT verified (11/11 passed), ready for Phase 5
-Last activity: 2026-02-13 -- UAT round 2 complete, all gaps resolved (weight decimal + weight save fixes)
+Phase: 5 of 7 (Active Workout)
+Plan: 3 of 6 in current phase
+Status: In progress
+Last activity: 2026-02-13 -- Completed 05-03-PLAN.md (Workout UI Components)
 
-Progress: [███████████████░░░░░] ~70%
+Progress: [████████████████░░░░] ~76%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
-- Average duration: ~4 min (including human verification)
-- Total execution time: ~60 min
+- Total plans completed: 20
+- Average duration: ~3.5 min (including human verification)
+- Total execution time: ~66 min
 
 **By Phase:**
 
@@ -32,8 +32,10 @@ Progress: [███████████████░░░░░] ~70%
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 
+| 5. Active Workout | 3/6 | ~6 min | ~2 min |
+
 **Recent Trend:**
-- Last 5 plans: 04-02 (~2 min), 04-03 (~2 min), 04-04 (~2 min), 04-05 (~2 min), 04-06 (~2 min)
+- Last 5 plans: 04-06 (~2 min), 05-01 (~2 min), 05-02 (~2 min), 05-03 (~2 min)
 - Trend: Consistent ~2 min per plan for component-building tasks
 
 *Updated after each plan completion*
@@ -102,6 +104,11 @@ Recent decisions affecting current work:
 - [04-06]: Brand text split into two Text elements (Iron=textPrimary, Lift=accent) matching web app pattern
 - [04-06]: Weight input uses decimal-pad keyboard with Math.round(v*10)/10 for 1-decimal display
 - [04-06]: RestTimerInline progress bar fully removed (workout-only feature for Phase 5)
+- [05-03]: ProgressRing radius derived from (size - strokeWidth) / 2 for configurable sizing
+- [05-03]: RestTimerBar uses 8px track height with 28px container for time text overlay
+- [05-03]: ConfirmationModal nested Pressable pattern prevents overlay press propagation through card
+- [05-03]: Modal overlay pattern: rgba(0,0,0,0.6) backdrop, centered card, maxWidth 340
+- [05-03]: Dismissible vs non-dismissible overlay via ConfirmationModal.dismissOnOverlayPress prop
 
 ### Pending Todos
 
@@ -115,5 +122,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: UAT round 2 complete (11/11 passed) -- Phase 4 fully verified, ready for Phase 5
+Stopped at: Completed 05-03-PLAN.md (Workout UI Components)
 Resume file: None
