@@ -5,33 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 2: Authentication -- auth UI components complete, building auth screens next
+**Current focus:** Phase 2: Authentication -- sign-in screen complete, one plan remaining (reset password deep link)
 
 ## Current Position
 
 Phase: 2 of 7 (Authentication)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-13 -- Completed 02-02-PLAN.md (Auth UI components)
+Last activity: 2026-02-13 -- Completed 02-03-PLAN.md (Sign-in screen)
 
-Progress: [█████░░░░░] ~25%
+Progress: [██████░░░░] ~30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
-- Average duration: ~7 min (including human verification)
-- Total execution time: ~35 min
+- Total plans completed: 6
+- Average duration: ~6 min (including human verification)
+- Total execution time: ~37 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
-| 2. Authentication | 2/4 | ~6 min | ~3 min |
+| 2. Authentication | 3/4 | ~8 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (~2 min), 01-03 (~22 min incl. human verify), 02-01 (~3 min), 02-02 (~3 min)
+- Last 5 plans: 01-03 (~22 min incl. human verify), 02-01 (~3 min), 02-02 (~3 min), 02-03 (~2 min)
 - Trend: Auth plans executing fast -- straightforward component creation with no blockers
 
 *Updated after each plan completion*
@@ -62,6 +62,9 @@ Recent decisions affecting current work:
 - [02-01]: create-account.tsx deleted -- register is internal to sign-in screen per CONTEXT.md
 - [02-02]: getStyles(theme) pattern for StyleSheet.create with theme tokens -- avoids inline styles while keeping theme-awareness
 - [02-02]: rgba approximations for ErrorBox/SuccessBox semi-transparent backgrounds (no semi-transparent tokens exist)
+- [02-03]: Email preserved across login/register tab switches (cleared only on successful registration)
+- [02-03]: Password and confirmPassword cleared on all view transitions for security
+- [02-03]: successMessage prop on ResetPasswordForm kept as null in sign-in.tsx (reserved for future use)
 
 ### Pending Todos
 
@@ -75,5 +78,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 02-02-PLAN.md (Auth UI components)
+Stopped at: Completed 02-03-PLAN.md (Sign-in screen)
 Resume file: None
