@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Web App Port**:
   - Copy as-is: `sql/` schema files for database reference
   - Copy as-is: `src/types/database.ts` and `src/types/services.ts` (TypeScript types)
-  - Translate: Web app CSS custom properties (colors, spacing, radii, typography) → TypeScript theme object
+  - Translate: Web app CSS custom properties (colors, spacing, radii, typography) -> TypeScript theme object
   - Reference: Web app stylesheets for exact design token values
 **Plans**: 3 plans
 
@@ -125,15 +125,18 @@ Plans:
   - Copy and adapt: `logging.ts` service — swap Supabase client import, add write queue integration for offline saves
   - Reference: Workout surface for exercise card layout, set row inputs, rest timer bar design, finish/cancel modals
   - Reference: `useTimerState` hook for rest timer state machine logic
-  - Reference: `useWorkoutBackup` hook for crash recovery pattern (adapt localStorage → AsyncStorage)
+  - Reference: `useWorkoutBackup` hook for crash recovery pattern (adapt localStorage -> AsyncStorage)
   - Reference: Template change detection logic (snapshot comparison on finish)
-  - Rebuild: Swipe-to-delete gesture (web uses @use-gesture → iOS uses react-native-gesture-handler)
-**Plans**: TBD
+  - Rebuild: Swipe-to-delete gesture (web uses @use-gesture -> iOS uses react-native-gesture-handler)
+**Plans**: 6 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
-- [ ] 05-03: TBD
+- [ ] 05-01-PLAN.md — Dependencies, logging service port, write queue, notification config
+- [ ] 05-02-PLAN.md — Core hooks: useWorkoutState, useRestTimer, useWorkoutBackup
+- [ ] 05-03-PLAN.md — Small components: ProgressRing, RestTimerBar, ConfirmationModal, ResumeWorkoutModal
+- [ ] 05-04-PLAN.md — Complex components: WorkoutSetRow (swipe-to-delete), WorkoutExerciseCard (accordion)
+- [ ] 05-05-PLAN.md — Workout screen assembly with finish/cancel flows and offline save
+- [ ] 05-06-PLAN.md — Dashboard integration (Start button, crash recovery) and human verification
 
 ### Phase 6: Charts
 **Goal**: Users can create per-exercise progress charts that visualize their training history on the dashboard -- closing the feedback loop that makes consistent training motivating
@@ -168,7 +171,7 @@ Plans:
   4. User can tap a workout entry to see full detail -- all exercises, sets, weights, and reps for that session
   5. Settings sub-screens (My Exercises, History, Workout Detail) present as stack pushes from the bottom sheet
 **Web App Port**:
-  - Reference: Settings panel for menu layout and navigation pattern (web slide-in → iOS bottom sheet)
+  - Reference: Settings panel for menu layout and navigation pattern (web slide-in -> iOS bottom sheet)
   - Reference: Workout History screen for timeline layout, date markers, metric badges, pagination pattern
   - Reference: Workout Detail screen for exercise/set display layout
   - Reference: My Exercises screen for custom exercise list, edit/delete UI (exercise service already ported in Phase 3)
@@ -189,6 +192,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
-| 5. Active Workout | 0/TBD | Not started | - |
+| 5. Active Workout | 0/6 | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |
