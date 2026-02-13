@@ -101,11 +101,13 @@ Plans:
   - Copy and adapt: `templates.ts` service — swap Supabase client import
   - Reference: Dashboard surface for template card grid layout, header design, mini-card proportions
   - Reference: Template editor surface for exercise list, set configuration, reorder controls, save/cancel flow
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — Template service port, cache extension, useTemplates hook, GestureHandlerRootView
+- [ ] 04-02-PLAN.md — Template editor sub-components (SetRow, RestTimerInline, ExerciseEditorCard)
+- [ ] 04-03-PLAN.md — Dashboard screen with header, template grid, swipeable cards
+- [ ] 04-04-PLAN.md — Template editor modal assembly with full create/edit/delete flow
 
 ### Phase 5: Active Workout
 **Goal**: Users can start a workout from a template, log sets with weight and reps, use a rest timer, and finish -- including fully offline with crash recovery -- delivering the core product experience
@@ -184,7 +186,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
-| 4. Templates and Dashboard | 0/TBD | Not started | - |
+| 4. Templates and Dashboard | 0/4 | Not started | - |
 | 5. Active Workout | 0/TBD | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |
