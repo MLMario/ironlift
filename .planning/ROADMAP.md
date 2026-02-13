@@ -108,8 +108,8 @@ Plans:
 - [x] 04-02-PLAN.md — Template editor sub-components (SetRow, RestTimerInline, ExerciseEditorCard)
 - [x] 04-03-PLAN.md — Dashboard screen with header, template grid, swipeable cards
 - [x] 04-04-PLAN.md — Template editor modal assembly with full create/edit/delete flow
-- [ ] 04-05-PLAN.md — Gap closure: dashboard layout overhaul (single column, section header, refresh on focus)
-- [ ] 04-06-PLAN.md — Gap closure: brand split-color, decimal weight input, remove rest timer progress bar
+- [x] 04-05-PLAN.md — Gap closure: dashboard layout overhaul (single column, section header, refresh on focus)
+- [x] 04-06-PLAN.md — Gap closure: brand split-color, decimal weight input, remove rest timer progress bar
 
 ### Phase 5: Active Workout
 **Goal**: Users can start a workout from a template, log sets with weight and reps, use a rest timer, and finish -- including fully offline with crash recovery -- delivering the core product experience
@@ -188,7 +188,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
-| 4. Templates and Dashboard | 4/4 | Complete | 2026-02-13 |
+| 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 0/TBD | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |
