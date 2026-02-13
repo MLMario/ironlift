@@ -105,12 +105,12 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Theme & UI
 
-- [ ] **UI-01**: App uses dark mode only with semantic theme tokens matching web app design
-- [ ] **UI-02**: Theme accessed via ThemeProvider context and useTheme() hook
-- [ ] **UI-03**: All components hand-rolled with StyleSheet.create() -- no UI libraries
-- [ ] **UI-04**: System font (SF Pro) only -- no custom fonts
-- [ ] **UI-05**: Colors, spacing, typography, border radii match web app CSS custom properties
-- [ ] **UI-06**: Minimum tap target of 44px on all interactive elements
+- [x] **UI-01**: App uses dark mode only with semantic theme tokens matching web app design
+- [x] **UI-02**: Theme accessed via ThemeProvider context and useTheme() hook
+- [x] **UI-03**: All components hand-rolled with StyleSheet.create() -- no UI libraries
+- [x] **UI-04**: System font (SF Pro) only -- no custom fonts
+- [x] **UI-05**: Colors, spacing, typography, border radii match web app CSS custom properties
+- [x] **UI-06**: Minimum tap target of 44px on all interactive elements
 
 ## v2 Requirements
 
@@ -234,12 +234,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETT-04 | Phase 7 | Pending |
 | SETT-05 | Phase 7 | Pending |
 | SETT-06 | Phase 7 | Pending |
-| UI-01 | Phase 1 | Pending |
-| UI-02 | Phase 1 | Pending |
-| UI-03 | Phase 1 | Pending |
-| UI-04 | Phase 1 | Pending |
-| UI-05 | Phase 1 | Pending |
-| UI-06 | Phase 1 | Pending |
+| UI-01 | Phase 1 | Complete |
+| UI-02 | Phase 1 | Complete |
+| UI-03 | Phase 1 | Complete |
+| UI-04 | Phase 1 | Complete |
+| UI-05 | Phase 1 | Complete |
+| UI-06 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 78 total
