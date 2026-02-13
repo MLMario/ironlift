@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme, type Theme } from '@/theme';
 import { auth } from '@/services/auth';
+import { ExercisePickerModal } from '@/components/ExercisePickerModal';
+import type { Exercise } from '@/types/database';
 
 function createStyles(theme: Theme) {
   return StyleSheet.create({
@@ -71,6 +74,8 @@ export default function DashboardScreen() {
   const theme = useTheme();
   const styles = createStyles(theme);
   const router = useRouter();
+  const [pickerVisible, setPickerVisible] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -94,10 +99,14 @@ export default function DashboardScreen() {
 
         <Pressable
           style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-          onPress={() => router.push('/settings/exercises')}
+          onPress={() => setPickerVisible(true)}
         >
           <Text style={styles.buttonText}>Exercises</Text>
         </Pressable>
+
+        {selectedExercise && (
+          <Text style={styles.subtitle}>Selected: {selectedExercise.name}</Text>
+        )}
 
         <Pressable
           style={({ pressed }) => [styles.logoutButton, pressed && styles.logoutButtonPressed]}
@@ -106,6 +115,15 @@ export default function DashboardScreen() {
           <Text style={styles.logoutText}>Log Out</Text>
         </Pressable>
       </View>
+
+      <ExercisePickerModal
+        visible={pickerVisible}
+        onClose={() => setPickerVisible(false)}
+        onSelect={(exercise) => {
+          setSelectedExercise(exercise);
+          setPickerVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 }
