@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 3 (Exercise Library) -- hook + UI sub-components complete, building picker modal next
+**Current focus:** Phase 3 (Exercise Library) complete -- ready for Phase 4 (Templates and Dashboard)
 
 ## Current Position
 
-Phase: 3 of 7 (Exercise Library)
-Plan: 2 of TBD in current phase
-Status: In progress
-Last activity: 2026-02-13 -- Completed 03-02-PLAN.md (exercise hook + UI components)
+Phase: 3 of 7 (Exercise Library) -- COMPLETE
+Plan: 3 of 3 in current phase
+Status: Phase complete, ready for Phase 4 planning
+Last activity: 2026-02-13 -- Completed 03-03-PLAN.md (exercise picker modal)
 
-Progress: [████████░░] ~43%
+Progress: [██████████░░░░░░░░░░] ~48%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: ~4.5 min (including human verification)
-- Total execution time: ~45 min
+- Total plans completed: 11
+- Average duration: ~4.3 min (including human verification)
+- Total execution time: ~48 min
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████████░░] ~43%
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
-| 3. Exercise Library | 2/? | ~4 min | ~2 min |
+| 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (~3 min), 02-05 (<1 min), 03-01 (~2 min), 03-02 (~1.5 min)
-- Trend: Sub-component creation is fast -- hook + 2 UI components in under 2 minutes
+- Last 5 plans: 02-05 (<1 min), 03-01 (~2 min), 03-02 (~1.5 min), 03-03 (~3 min)
+- Trend: Phase 3 completed in ~7 min total -- 3 plans building service, hook, components, and modal
 
 *Updated after each plan completion*
 
@@ -76,6 +76,11 @@ Recent decisions affecting current work:
 - [03-02]: CategoryChips uses ScrollView (not FlatList) for 8 fixed items
 - [03-02]: ITEM_HEIGHT=60 exported for FlatList getItemLayout optimization
 - [03-02]: No Cardio in CATEGORIES or FORM_CATEGORIES per user decision and DB constraint
+- [03-03]: ExercisePickerModal is a component (not a route) -- uses RN Modal, not Expo Router modal
+- [03-03]: Custom category dropdown built inline (no @react-native-picker/picker) -- not in approved library list
+- [03-03]: Modal state resets on every open via useEffect on visible prop
+- [03-03]: Inline create auto-selects the new exercise and closes the modal (onSelect callback)
+- [03-03]: Duplicate exercise name rejection with user-friendly error message
 
 ### Pending Todos
 
@@ -89,5 +94,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 03-02-PLAN.md (exercise hook + UI components) -- useExercises, CategoryChips, ExerciseListItem
+Stopped at: Completed 03-03-PLAN.md (exercise picker modal) -- Phase 3 complete
 Resume file: None

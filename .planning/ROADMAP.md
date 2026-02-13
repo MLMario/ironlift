@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation and Theme** - Expo project scaffolding, theme system, navigation skeleton, Supabase client
 - [x] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
-- [ ] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
+- [x] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
 - [ ] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
 - [ ] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
 - [ ] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
@@ -83,9 +83,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Exercise service port + AsyncStorage cache layer
-- [ ] 03-02-PLAN.md — useExercises hook + CategoryChips + ExerciseListItem components
-- [ ] 03-03-PLAN.md — ExercisePickerModal assembly + dashboard test hookup
+- [x] 03-01-PLAN.md — Exercise service port + AsyncStorage cache layer
+- [x] 03-02-PLAN.md — useExercises hook + CategoryChips + ExerciseListItem components
+- [x] 03-03-PLAN.md — ExercisePickerModal assembly + dashboard test hookup
 
 ### Phase 4: Templates and Dashboard
 **Goal**: Users can create, edit, and delete workout templates from a dashboard that serves as the app's central hub -- the launch point for every workout
