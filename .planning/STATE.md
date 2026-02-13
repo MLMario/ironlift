@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 4 (Templates and Dashboard) -- gap closure plans executing
+**Current focus:** Phase 4 (Templates and Dashboard) COMPLETE -- all gap closure plans executed, ready for Phase 5
 
 ## Current Position
 
-Phase: 4 of 7 (Templates and Dashboard) -- gap closure
-Plan: 5 of 6 in current phase (gap closure plans 05-06)
-Status: In progress -- 04-05 complete, 04-06 pending
-Last activity: 2026-02-13 -- Completed 04-05-PLAN.md (dashboard layout and refresh gap closure)
+Phase: 4 of 7 (Templates and Dashboard) -- COMPLETE (including gap closure)
+Plan: 6 of 6 in current phase
+Status: Phase complete -- all plans and gap closure executed
+Last activity: 2026-02-13 -- Completed 04-06-PLAN.md (UAT gap closure: brand styling, decimal input, rest timer)
 
-Progress: [██████████████░░░░░░] ~67%
+Progress: [███████████████░░░░░] ~70%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: ~4 min (including human verification)
-- Total execution time: ~58 min
+- Total execution time: ~60 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [██████████████░░░░░░] ~67%
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
-| 4. Templates and Dashboard | 5/6 | ~10 min | ~2 min |
+| 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-01 (~2 min), 04-02 (~2 min), 04-03 (~2 min), 04-04 (~2 min), 04-05 (~2 min)
+- Last 5 plans: 04-02 (~2 min), 04-03 (~2 min), 04-04 (~2 min), 04-05 (~2 min), 04-06 (~2 min)
 - Trend: Consistent ~2 min per plan for component-building tasks
 
 *Updated after each plan completion*
@@ -99,6 +99,9 @@ Recent decisions affecting current work:
 - [04-05]: useFocusEffect triggers refresh() on every dashboard focus event for template freshness
 - [04-05]: TemplateGrid owns section header with +Create button, replacing sentinel add card pattern
 - [04-05]: Empty state handled naturally by showing header with no cards (no separate empty message)
+- [04-06]: Brand text split into two Text elements (Iron=textPrimary, Lift=accent) matching web app pattern
+- [04-06]: Weight input uses decimal-pad keyboard with Math.round(v*10)/10 for 1-decimal display
+- [04-06]: RestTimerInline progress bar fully removed (workout-only feature for Phase 5)
 
 ### Pending Todos
 
@@ -112,5 +115,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 04-05-PLAN.md (dashboard layout and refresh gap closure)
+Stopped at: Completed 04-06-PLAN.md (UAT gap closure) -- Phase 4 fully complete including gap closure
 Resume file: None
