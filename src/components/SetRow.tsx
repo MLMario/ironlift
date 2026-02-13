@@ -10,6 +10,7 @@
  * All tap targets meet the 44px minimum.
  */
 
+import { useState } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/theme';
@@ -45,7 +46,20 @@ export function SetRow({
   const theme = useTheme();
   const styles = getStyles(theme);
 
+  // Local text buffer for weight input — prevents controlled input loop
+  // from destroying trailing decimals (e.g., "72." → parseFloat → 72 → "72")
+  const [editingWeight, setEditingWeight] = useState<string | null>(null);
+
+  const handleWeightFocus = () => {
+    setEditingWeight(formatWeight(weight));
+  };
+
   const handleWeightChange = (text: string) => {
+    setEditingWeight(text);
+  };
+
+  const handleWeightBlur = () => {
+    const text = editingWeight ?? '';
     const parsed = parseFloat(text);
     if (isNaN(parsed)) {
       onWeightChange(0);
@@ -53,6 +67,7 @@ export function SetRow({
       // Round to 1 decimal place
       onWeightChange(Math.round(parsed * 10) / 10);
     }
+    setEditingWeight(null);
   };
 
   const handleRepsChange = (text: string) => {
@@ -68,8 +83,10 @@ export function SetRow({
 
       <TextInput
         style={styles.input}
-        value={formatWeight(weight)}
+        value={editingWeight !== null ? editingWeight : formatWeight(weight)}
         onChangeText={handleWeightChange}
+        onFocus={handleWeightFocus}
+        onBlur={handleWeightBlur}
         keyboardType="decimal-pad"
         selectTextOnFocus
         placeholderTextColor={theme.colors.textMuted}
