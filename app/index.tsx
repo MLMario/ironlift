@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme, type Theme } from '@/theme';
+import { auth } from '@/services/auth';
 
 function createStyles(theme: Theme) {
   return StyleSheet.create({
@@ -43,6 +44,26 @@ function createStyles(theme: Theme) {
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.medium,
     },
+    logoutButton: {
+      borderWidth: 1,
+      borderColor: theme.colors.danger,
+      borderRadius: theme.radii.md,
+      paddingHorizontal: theme.spacing.lg,
+      minHeight: theme.layout.minTapTarget,
+      justifyContent: 'center' as const,
+      alignItems: 'center' as const,
+      width: '100%' as const,
+      maxWidth: theme.layout.containerMaxWidth,
+      marginTop: theme.spacing.lg,
+    },
+    logoutButtonPressed: {
+      backgroundColor: 'rgba(248, 113, 113, 0.1)',
+    },
+    logoutText: {
+      color: theme.colors.danger,
+      fontSize: theme.typography.sizes.base,
+      fontWeight: theme.typography.weights.medium,
+    },
   });
 }
 
@@ -76,6 +97,13 @@ export default function DashboardScreen() {
           onPress={() => router.push('/settings/exercises')}
         >
           <Text style={styles.buttonText}>Exercises</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.logoutButton, pressed && styles.logoutButtonPressed]}
+          onPress={() => auth.logout()}
+        >
+          <Text style={styles.logoutText}>Log Out</Text>
         </Pressable>
       </View>
     </SafeAreaView>
