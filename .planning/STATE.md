@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 1 complete. Ready for Phase 2: Authentication
+**Current focus:** Phase 2: Authentication -- auth UI components complete, building auth screens next
 
 ## Current Position
 
-Phase: 1 of 7 (Foundation and Theme) -- COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase complete
-Last activity: 2026-02-13 -- Completed 01-03-PLAN.md (Navigation skeleton with placeholder screens)
+Phase: 2 of 7 (Authentication)
+Plan: 2 of 4 in current phase
+Status: In progress
+Last activity: 2026-02-13 -- Completed 02-02-PLAN.md (Auth UI components)
 
-Progress: [███░░░░░░░] ~15%
+Progress: [█████░░░░░] ~25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: ~10 min (including human verification)
-- Total execution time: ~29 min
+- Total plans completed: 4
+- Average duration: ~8 min (including human verification)
+- Total execution time: ~32 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
+| 2. Authentication | 1/4 | ~3 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (~5 min), 01-02 (~2 min), 01-03 (~22 min incl. human verify)
-- Trend: 01-03 longer due to human-verify checkpoint (code work ~5 min, verification ~17 min)
+- Last 5 plans: 01-01 (~5 min), 01-02 (~2 min), 01-03 (~22 min incl. human verify), 02-01 (~3 min)
+- Trend: 02-01 fast due to direct port from web app with minimal changes, no checkpoints
 
 *Updated after each plan completion*
 
@@ -55,10 +56,14 @@ Recent decisions affecting current work:
 - [01-03]: isLoggedIn = true hardcoded in root layout for Phase 1 -- Stack.Protected guard ready for Phase 2
 - [01-03]: getSession() is a local-only operation -- returns "successful" even without real .env credentials (acceptable for Phase 1)
 - [01-03]: All 17 default Expo template files deleted -- hub-and-spoke replaces tabs entirely
+- [02-01]: useAuth.tsx uses .tsx extension (not .ts) because AuthProvider renders JSX
+- [02-01]: AppState auto-refresh at module level in supabase.ts per official Supabase pattern
+- [02-01]: reset-password.tsx placeholder created for Expo Router route requirement (implementation in 02-04)
+- [02-01]: create-account.tsx deleted -- register is internal to sign-in screen per CONTEXT.md
 
 ### Pending Todos
 
-None -- Phase 1 complete.
+- Supabase Dashboard configuration needed (see 02-USER-SETUP.md): redirect URL, email confirmation, password length
 
 ### Blockers/Concerns
 
@@ -68,5 +73,5 @@ None -- Phase 1 complete.
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 01-03-PLAN.md (Navigation skeleton) -- Phase 1 complete
+Stopped at: Completed 02-01-PLAN.md (Auth service, AuthProvider, root layout rewiring)
 Resume file: None
