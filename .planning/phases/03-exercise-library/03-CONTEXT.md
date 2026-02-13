@@ -32,8 +32,8 @@ Browse ~1000 system exercises with search and category filtering, create custom 
 - Scrollable horizontal chips (pill-shaped) — not dropdown like web app
 - Single-select: one category at a time, tap to switch
 - "All" chip pre-selected by default when picker opens
-- Hardcoded category list: All, Chest, Back, Shoulders, Legs, Arms, Core, Cardio, Other
-- Same categories used everywhere (filter chips and create form) — Cardio included in both (differs from web app which excluded Cardio from filter)
+- Hardcoded category list: All, Chest, Back, Shoulders, Legs, Arms, Core, Other (Cardio dropped — DB constraint excludes it)
+- Same categories used everywhere (filter chips and create form minus "All")
 
 ### Custom exercise creation
 - Inline form inside the picker modal, toggled via full-width button ("Create New Exercise" / "Cancel New Exercise")
