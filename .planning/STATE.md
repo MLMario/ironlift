@@ -82,6 +82,9 @@ Recent decisions affecting current work:
 - [03-03]: Modal state resets on every open via useEffect on visible prop
 - [03-03]: Inline create auto-selects the new exercise and closes the modal (onSelect callback)
 - [03-03]: Duplicate exercise name rejection with user-friendly error message
+- [04-01]: Template service ported as-is from web app -- zero logic changes, only import paths (same pattern as exercises)
+- [04-01]: Cache key ironlift:templates with no expiry timestamps -- best-effort caching (same as exercises)
+- [04-01]: GestureHandlerRootView wraps outermost in RootLayout (outside ThemeProvider/AuthProvider)
 - [04-02]: EditingSet/EditingExercise types colocated in ExerciseEditorCard.tsx -- lightweight editing state separate from DB types
 - [04-02]: RestTimerInline progress bar uses 300s max reference for visual fill ratio
 - [04-02]: parseTimeInput accepts both plain seconds ("90") and MM:SS ("1:30") format
