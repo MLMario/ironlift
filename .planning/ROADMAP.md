@@ -37,11 +37,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   - Copy as-is: `src/types/database.ts` and `src/types/services.ts` (TypeScript types)
   - Translate: Web app CSS custom properties (colors, spacing, radii, typography) → TypeScript theme object
   - Reference: Web app stylesheets for exact design token values
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Project scaffolding, dependency installation, web app file port
+- [ ] 01-02-PLAN.md — Theme system (tokens, provider, hook) and Supabase client
+- [ ] 01-03-PLAN.md — Navigation skeleton with placeholder screens and device verification
 
 ### Phase 2: Authentication
 **Goal**: Users can create accounts, log in, maintain persistent sessions, and recover forgotten passwords -- gating all personalized data access
@@ -176,7 +177,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation and Theme | 0/TBD | Not started | - |
+| 1. Foundation and Theme | 0/3 | Planned | - |
 | 2. Authentication | 0/TBD | Not started | - |
 | 3. Exercise Library | 0/TBD | Not started | - |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
