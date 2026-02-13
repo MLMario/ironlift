@@ -33,8 +33,11 @@ function RootLayoutNav() {
       {/* Auth screens -- shown when NOT logged in */}
       <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen name="sign-in" />
-        <Stack.Screen name="reset-password" />
       </Stack.Protected>
+
+      {/* Reset password -- outside guards because setSession() flips isLoggedIn
+          mid-flow, which would redirect away before the user enters a new password */}
+      <Stack.Screen name="reset-password" />
 
       {/* App screens -- shown when logged in */}
       <Stack.Protected guard={isLoggedIn}>
