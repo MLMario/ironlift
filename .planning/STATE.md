@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 3 (Exercise Library) -- data layer complete, building hooks next
+**Current focus:** Phase 3 (Exercise Library) -- hook + UI sub-components complete, building picker modal next
 
 ## Current Position
 
 Phase: 3 of 7 (Exercise Library)
-Plan: 1 of TBD in current phase
+Plan: 2 of TBD in current phase
 Status: In progress
-Last activity: 2026-02-13 -- Completed 03-01-PLAN.md (exercise data layer)
+Last activity: 2026-02-13 -- Completed 03-02-PLAN.md (exercise hook + UI components)
 
-Progress: [████████░░] ~40%
+Progress: [████████░░] ~43%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: ~5 min (including human verification)
-- Total execution time: ~43 min
+- Total plans completed: 10
+- Average duration: ~4.5 min (including human verification)
+- Total execution time: ~45 min
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████████░░] ~40%
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
-| 3. Exercise Library | 1/? | ~2 min | ~2 min |
+| 3. Exercise Library | 2/? | ~4 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-03 (~2 min), 02-04 (~3 min), 02-05 (<1 min), 03-01 (~2 min)
-- Trend: Data layer port executed quickly -- direct copy with import path changes
+- Last 5 plans: 02-04 (~3 min), 02-05 (<1 min), 03-01 (~2 min), 03-02 (~1.5 min)
+- Trend: Sub-component creation is fast -- hook + 2 UI components in under 2 minutes
 
 *Updated after each plan completion*
 
@@ -72,6 +72,10 @@ Recent decisions affecting current work:
 - [03-01]: Exercise service ported as-is from web app -- zero logic changes, only import paths
 - [03-01]: Cache key ironlift:exercises with no expiry timestamps -- best-effort caching
 - [03-01]: AsyncStorage cache errors logged but never thrown (cache is best-effort)
+- [03-02]: sortExercises: user exercises first, system second, alphabetical within (case-insensitive localeCompare)
+- [03-02]: CategoryChips uses ScrollView (not FlatList) for 8 fixed items
+- [03-02]: ITEM_HEIGHT=60 exported for FlatList getItemLayout optimization
+- [03-02]: No Cardio in CATEGORIES or FORM_CATEGORIES per user decision and DB constraint
 
 ### Pending Todos
 
@@ -85,5 +89,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 03-01-PLAN.md (exercise data layer) -- cache utilities + exercise service ported
+Stopped at: Completed 03-02-PLAN.md (exercise hook + UI components) -- useExercises, CategoryChips, ExerciseListItem
 Resume file: None
