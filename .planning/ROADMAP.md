@@ -12,7 +12,7 @@ IronLift is a native iOS exercise tracker ported from the IronFactor web app. Th
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation and Theme** - Expo project scaffolding, theme system, navigation skeleton, Supabase client
+- [x] **Phase 1: Foundation and Theme** - Expo project scaffolding, theme system, navigation skeleton, Supabase client
 - [ ] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
 - [ ] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
 - [ ] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
@@ -40,9 +40,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffolding, dependency installation, web app file port
-- [ ] 01-02-PLAN.md — Theme system (tokens, provider, hook) and Supabase client
-- [ ] 01-03-PLAN.md — Navigation skeleton with placeholder screens and device verification
+- [x] 01-01-PLAN.md — Project scaffolding, dependency installation, web app file port
+- [x] 01-02-PLAN.md — Theme system (tokens, provider, hook) and Supabase client
+- [x] 01-03-PLAN.md — Navigation skeleton with placeholder screens and device verification
 
 ### Phase 2: Authentication
 **Goal**: Users can create accounts, log in, maintain persistent sessions, and recover forgotten passwords -- gating all personalized data access
@@ -177,7 +177,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation and Theme | 0/3 | Planned | - |
+| 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 0/TBD | Not started | - |
 | 3. Exercise Library | 0/TBD | Not started | - |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
