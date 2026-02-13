@@ -80,11 +80,12 @@ Plans:
   - Copy and adapt: `exercises.ts` service — swap Supabase client import
   - Reference: Exercise picker modal for search/filter UI layout and inline create form behavior
   - Reference: My Exercises screen for custom exercise list/edit/delete UI
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Exercise service port + AsyncStorage cache layer
+- [ ] 03-02-PLAN.md — useExercises hook + CategoryChips + ExerciseListItem components
+- [ ] 03-03-PLAN.md — ExercisePickerModal assembly + dashboard test hookup
 
 ### Phase 4: Templates and Dashboard
 **Goal**: Users can create, edit, and delete workout templates from a dashboard that serves as the app's central hub -- the launch point for every workout
@@ -182,7 +183,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 |-------|----------------|--------|-----------|
 | 1. Foundation and Theme | 3/3 | Complete | 2026-02-13 |
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
-| 3. Exercise Library | 0/TBD | Not started | - |
+| 3. Exercise Library | 0/3 | Not started | - |
 | 4. Templates and Dashboard | 0/TBD | Not started | - |
 | 5. Active Workout | 0/TBD | Not started | - |
 | 6. Charts | 0/TBD | Not started | - |
