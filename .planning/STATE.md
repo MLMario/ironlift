@@ -5,34 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 2 complete. Next: Phase 3 (Exercise Library)
+**Current focus:** Phase 2 gap closure complete. Next: Phase 3 (Exercise Library)
 
 ## Current Position
 
 Phase: 3 of 7 (Exercise Library)
 Plan: 0 of TBD in current phase
 Status: Not started
-Last activity: 2026-02-13 -- Completed Phase 2 (Authentication)
+Last activity: 2026-02-13 -- Completed 02-05-PLAN.md (gap closure: login routing fix)
 
 Progress: [███████░░░] ~35%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: ~6 min (including human verification)
-- Total execution time: ~40 min
+- Total plans completed: 8
+- Average duration: ~5 min (including human verification)
+- Total execution time: ~41 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
-| 2. Authentication | 4/4 | ~11 min | ~3 min |
+| 2. Authentication | 5/5 | ~12 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (~3 min), 02-02 (~3 min), 02-03 (~2 min), 02-04 (~3 min)
-- Trend: Auth plans executing fast -- straightforward component creation with no blockers
+- Last 5 plans: 02-02 (~3 min), 02-03 (~2 min), 02-04 (~3 min), 02-05 (<1 min)
+- Trend: Gap closure plan executed in seconds -- single declaration reorder
 
 *Updated after each plan completion*
 
@@ -67,6 +67,7 @@ Recent decisions affecting current work:
 - [02-03]: successMessage prop on ResetPasswordForm kept as null in sign-in.tsx (reserved for future use)
 - [02-04]: reset-password screen placed outside both Protected guard groups -- setSession() triggers isLoggedIn=true mid-flow
 - [02-04]: Temporary logout button on dashboard placeholder (replaced in Phase 7 settings bottom sheet)
+- [02-05]: reset-password declared AFTER isLoggedIn group to fix redirect scan order -- Expo Router finds index first on login
 
 ### Pending Todos
 
@@ -80,5 +81,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed Phase 2 (Authentication) -- all 4 plans executed
+Stopped at: Completed 02-05-PLAN.md (gap closure) -- Phase 2 fully complete with 5 plans
 Resume file: None
