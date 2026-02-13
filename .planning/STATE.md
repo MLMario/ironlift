@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 2 gap closure complete. Next: Phase 3 (Exercise Library)
+**Current focus:** Phase 3 (Exercise Library) -- data layer complete, building hooks next
 
 ## Current Position
 
 Phase: 3 of 7 (Exercise Library)
-Plan: 0 of TBD in current phase
-Status: Not started
-Last activity: 2026-02-13 -- Completed 02-05-PLAN.md (gap closure: login routing fix)
+Plan: 1 of TBD in current phase
+Status: In progress
+Last activity: 2026-02-13 -- Completed 03-01-PLAN.md (exercise data layer)
 
-Progress: [███████░░░] ~35%
+Progress: [████████░░] ~40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: ~5 min (including human verification)
-- Total execution time: ~41 min
+- Total execution time: ~43 min
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [███████░░░] ~35%
 |-------|-------|-------|----------|
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
+| 3. Exercise Library | 1/? | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (~3 min), 02-03 (~2 min), 02-04 (~3 min), 02-05 (<1 min)
-- Trend: Gap closure plan executed in seconds -- single declaration reorder
+- Last 5 plans: 02-03 (~2 min), 02-04 (~3 min), 02-05 (<1 min), 03-01 (~2 min)
+- Trend: Data layer port executed quickly -- direct copy with import path changes
 
 *Updated after each plan completion*
 
@@ -68,6 +69,9 @@ Recent decisions affecting current work:
 - [02-04]: reset-password screen placed outside both Protected guard groups -- setSession() triggers isLoggedIn=true mid-flow
 - [02-04]: Temporary logout button on dashboard placeholder (replaced in Phase 7 settings bottom sheet)
 - [02-05]: reset-password declared AFTER isLoggedIn group to fix redirect scan order -- Expo Router finds index first on login
+- [03-01]: Exercise service ported as-is from web app -- zero logic changes, only import paths
+- [03-01]: Cache key ironlift:exercises with no expiry timestamps -- best-effort caching
+- [03-01]: AsyncStorage cache errors logged but never thrown (cache is best-effort)
 
 ### Pending Todos
 
@@ -81,5 +85,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 02-05-PLAN.md (gap closure) -- Phase 2 fully complete with 5 plans
+Stopped at: Completed 03-01-PLAN.md (exercise data layer) -- cache utilities + exercise service ported
 Resume file: None
