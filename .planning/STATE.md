@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 3 (Exercise Library) complete -- ready for Phase 4 (Templates and Dashboard)
+**Current focus:** Phase 4 (Templates and Dashboard) in progress -- building template editor components
 
 ## Current Position
 
-Phase: 3 of 7 (Exercise Library) -- COMPLETE
-Plan: 3 of 3 in current phase
-Status: Phase complete, ready for Phase 4 planning
-Last activity: 2026-02-13 -- Completed 03-03-PLAN.md (exercise picker modal)
+Phase: 4 of 7 (Templates and Dashboard)
+Plan: 2 of 4 in current phase
+Status: In progress
+Last activity: 2026-02-13 -- Completed 04-02-PLAN.md (template editor sub-components)
 
-Progress: [██████████░░░░░░░░░░] ~48%
+Progress: [█████████████░░░░░░░] ~55%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: ~4.3 min (including human verification)
-- Total execution time: ~48 min
+- Total plans completed: 13
+- Average duration: ~4 min (including human verification)
+- Total execution time: ~52 min
 
 **By Phase:**
 
@@ -30,10 +30,11 @@ Progress: [██████████░░░░░░░░░░] ~48%
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
+| 4. Templates and Dashboard | 2/4 | ~4 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-05 (<1 min), 03-01 (~2 min), 03-02 (~1.5 min), 03-03 (~3 min)
-- Trend: Phase 3 completed in ~7 min total -- 3 plans building service, hook, components, and modal
+- Last 5 plans: 03-01 (~2 min), 03-02 (~1.5 min), 03-03 (~3 min), 04-01 (~2 min), 04-02 (~2 min)
+- Trend: Consistent ~2 min per plan for component-building tasks
 
 *Updated after each plan completion*
 
@@ -81,6 +82,9 @@ Recent decisions affecting current work:
 - [03-03]: Modal state resets on every open via useEffect on visible prop
 - [03-03]: Inline create auto-selects the new exercise and closes the modal (onSelect callback)
 - [03-03]: Duplicate exercise name rejection with user-friendly error message
+- [04-02]: EditingSet/EditingExercise types colocated in ExerciseEditorCard.tsx -- lightweight editing state separate from DB types
+- [04-02]: RestTimerInline progress bar uses 300s max reference for visual fill ratio
+- [04-02]: parseTimeInput accepts both plain seconds ("90") and MM:SS ("1:30") format
 
 ### Pending Todos
 
@@ -94,5 +98,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 03-03-PLAN.md (exercise picker modal) -- Phase 3 complete
+Stopped at: Completed 04-02-PLAN.md (template editor sub-components)
 Resume file: None
