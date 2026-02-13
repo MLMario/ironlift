@@ -2,21 +2,20 @@
  * RestTimerInline Component
  *
  * Inline rest timer configuration for the template editor.
- * Shows -10s button, visual progress bar, MM:SS time input, and +10s button.
+ * Shows -10s button, MM:SS time input, and +10s button in a row.
  *
  * Time formatting helpers:
  * - formatTime: converts seconds to "M:SS" display (e.g., 90 -> "1:30")
  * - parseTimeInput: handles plain seconds ("90") or MM:SS ("1:30") input
  *
- * Minimum rest time is 0 seconds. Progress bar is relative to 300s max.
+ * Minimum rest time is 0 seconds. No progress bar in template editor context
+ * (progress bar is a workout-only feature for Phase 5).
  */
 
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
-
-const MAX_REST_SECONDS = 300;
 
 interface RestTimerInlineProps {
   seconds: number;
@@ -82,17 +81,11 @@ export function RestTimerInline({
     }
   };
 
-  const fillRatio = Math.min(seconds / MAX_REST_SECONDS, 1);
-
   return (
     <View style={styles.container}>
       <Pressable onPress={handleDecrement} style={styles.button}>
         <Text style={styles.buttonText}>-10s</Text>
       </Pressable>
-
-      <View style={styles.barContainer}>
-        <View style={[styles.barFill, { width: `${fillRatio * 100}%` }]} />
-      </View>
 
       <TextInput
         style={styles.timeInput}
@@ -133,18 +126,6 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.sm,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textSecondary,
-    },
-    barContainer: {
-      flex: 1,
-      height: 8,
-      backgroundColor: theme.colors.bgElevated,
-      borderRadius: theme.radii.full,
-      overflow: 'hidden',
-    },
-    barFill: {
-      height: '100%',
-      backgroundColor: theme.colors.accent,
-      borderRadius: theme.radii.full,
     },
     timeInput: {
       width: 60,

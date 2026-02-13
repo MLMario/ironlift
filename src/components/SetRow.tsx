@@ -4,7 +4,8 @@
  * A single row in the set configuration table within the template editor.
  * Displays set number, weight input, reps input, and a delete button.
  *
- * Weight and reps use numeric TextInputs with monospace font.
+ * Weight uses decimal-pad TextInput (allows decimals, rounds to 1 decimal place).
+ * Reps use numeric TextInput with monospace font.
  * Delete button is hidden (opacity 0) when canDelete is false (minimum 1 set enforced).
  * All tap targets meet the 44px minimum.
  */
@@ -24,6 +25,14 @@ interface SetRowProps {
   canDelete: boolean;
 }
 
+/**
+ * Format weight for display: round to 1 decimal, strip trailing .0
+ */
+function formatWeight(value: number): string {
+  const rounded = Math.round(value * 10) / 10;
+  return String(rounded);
+}
+
 export function SetRow({
   setNumber,
   weight,
@@ -38,7 +47,12 @@ export function SetRow({
 
   const handleWeightChange = (text: string) => {
     const parsed = parseFloat(text);
-    onWeightChange(isNaN(parsed) ? 0 : parsed);
+    if (isNaN(parsed)) {
+      onWeightChange(0);
+    } else {
+      // Round to 1 decimal place
+      onWeightChange(Math.round(parsed * 10) / 10);
+    }
   };
 
   const handleRepsChange = (text: string) => {
@@ -54,9 +68,9 @@ export function SetRow({
 
       <TextInput
         style={styles.input}
-        value={String(weight)}
+        value={formatWeight(weight)}
         onChangeText={handleWeightChange}
-        keyboardType="numeric"
+        keyboardType="decimal-pad"
         selectTextOnFocus
         placeholderTextColor={theme.colors.textMuted}
       />
