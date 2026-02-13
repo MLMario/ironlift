@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 4 (Templates and Dashboard) COMPLETE -- ready for Phase 5 (Active Workout)
+**Current focus:** Phase 4 (Templates and Dashboard) -- gap closure plans executing
 
 ## Current Position
 
-Phase: 4 of 7 (Templates and Dashboard) -- COMPLETE
-Plan: 4 of 4 in current phase
-Status: Phase complete, verified, ready for Phase 5 planning
-Last activity: 2026-02-13 -- Phase 4 complete (all 4 plans executed, verified)
+Phase: 4 of 7 (Templates and Dashboard) -- gap closure
+Plan: 5 of 6 in current phase (gap closure plans 05-06)
+Status: In progress -- 04-05 complete, 04-06 pending
+Last activity: 2026-02-13 -- Completed 04-05-PLAN.md (dashboard layout and refresh gap closure)
 
-Progress: [█████████████░░░░░░░] ~65%
+Progress: [██████████████░░░░░░] ~67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 15
+- Total plans completed: 16
 - Average duration: ~4 min (including human verification)
-- Total execution time: ~56 min
+- Total execution time: ~58 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [█████████████░░░░░░░] ~65%
 | 1. Foundation and Theme | 3/3 | ~29 min | ~10 min |
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
-| 4. Templates and Dashboard | 4/4 | ~8 min | ~2 min |
+| 4. Templates and Dashboard | 5/6 | ~10 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (~3 min), 04-01 (~2 min), 04-02 (~2 min), 04-03 (~2 min), 04-04 (~2 min)
+- Last 5 plans: 04-01 (~2 min), 04-02 (~2 min), 04-03 (~2 min), 04-04 (~2 min), 04-05 (~2 min)
 - Trend: Consistent ~2 min per plan for component-building tasks
 
 *Updated after each plan completion*
@@ -90,11 +90,15 @@ Recent decisions affecting current work:
 - [04-02]: parseTimeInput accepts both plain seconds ("90") and MM:SS ("1:30") format
 - [04-03]: Settings gear wired to auth.logout() temporarily (Phase 7 settings bottom sheet replacement)
 - [04-03]: Start button rendered as no-op placeholder (Phase 5 active workout implementation)
-- [04-03]: CARD_MIN_HEIGHT=180 exported from TemplateCard for grid alignment consistency
+- [04-03]: CARD_MIN_HEIGHT=180 exported from TemplateCard for grid alignment consistency (removed in 04-05)
 - [04-04]: EditingTemplate interface with id: string | null for create/edit mode detection
 - [04-04]: ExercisePickerModal excludeIds prevents duplicate exercises in template
 - [04-04]: ScrollView with .map() for exercise list -- avoids nested FlatList warnings
 - [04-04]: hasChanges boolean for unsaved changes tracking triggers Cancel dialog
+- [04-05]: Single-column vertical list replaces 2-column grid for iOS template display
+- [04-05]: useFocusEffect triggers refresh() on every dashboard focus event for template freshness
+- [04-05]: TemplateGrid owns section header with +Create button, replacing sentinel add card pattern
+- [04-05]: Empty state handled naturally by showing header with no cards (no separate empty message)
 
 ### Pending Todos
 
@@ -108,5 +112,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 04-04-PLAN.md (template editor modal) -- Phase 4 complete
+Stopped at: Completed 04-05-PLAN.md (dashboard layout and refresh gap closure)
 Resume file: None
