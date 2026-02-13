@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 5 of 7 (Active Workout)
-Plan: 1 of 6 in current phase (also 3 of 6 completed)
+Plan: 2 of 6 in current phase (also 4 of 6 completed via parallel execution)
 Status: In progress
-Last activity: 2026-02-13 -- Completed 05-01-PLAN.md (Infrastructure)
+Last activity: 2026-02-13 -- Completed 05-02-PLAN.md (Core Workout Hooks)
 
-Progress: [████████████████░░░░] ~83%
+Progress: [████████████████░░░░] ~85%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
-- Average duration: ~3.4 min (including human verification)
-- Total execution time: ~72 min
+- Total plans completed: 22
+- Average duration: ~3.5 min (including human verification)
+- Total execution time: ~79 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [████████████████░░░░] ~83%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 2/6 | ~8 min | ~4 min |
+| 5. Active Workout | 3/6 | ~15 min | ~5 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-06 (~2 min), 05-01 (~6 min), 05-02 (~2 min), 05-03 (~2 min)
-- Trend: Infrastructure plans take longer due to dependency installation
+- Last 5 plans: 04-06 (~2 min), 05-01 (~6 min), 05-02 (~7 min), 05-03 (~2 min)
+- Trend: Hook/infrastructure plans take longer due to porting and type alignment
 
 *Updated after each plan completion*
 
@@ -107,6 +107,10 @@ Recent decisions affecting current work:
 - [05-01]: Single write queue key (ironlift:writeQueue) not per-user -- payload contains user_id
 - [05-01]: SDK 54 notification handler requires shouldShowBanner + shouldShowList (not in older docs)
 - [05-01]: Sound asset directory uses .gitkeep placeholder -- real MP3 to be sourced separately
+- [05-02]: Wall-clock time for timer instead of tick counting -- immune to iOS background suspension
+- [05-02]: RestoredWorkoutData defined in useWorkoutState to avoid circular imports with useWorkoutBackup
+- [05-02]: createAudioPlayer (non-hook API) for one-shot sound playback from callback context
+- [05-02]: All backup errors logged but never thrown (best-effort persistence)
 - [05-03]: ProgressRing radius derived from (size - strokeWidth) / 2 for configurable sizing
 - [05-03]: RestTimerBar uses 8px track height with 28px container for time text overlay
 - [05-03]: ConfirmationModal nested Pressable pattern prevents overlay press propagation through card
@@ -125,5 +129,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-13
-Stopped at: Completed 05-01-PLAN.md (Infrastructure)
+Stopped at: Completed 05-02-PLAN.md (Core Workout Hooks)
 Resume file: None
