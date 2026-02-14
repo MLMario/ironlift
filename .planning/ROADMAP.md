@@ -139,7 +139,7 @@ Plans:
 - [x] 05-06-PLAN.md — Dashboard integration (Start button, crash recovery) and human verification
 - [x] 05-07-PLAN.md — Gap closure: fix useWorkoutState initialization race condition
 - [x] 05-08-PLAN.md — Gap closure: set row opacity leak, timer bar inactive/end state display
-- [ ] 05-09-PLAN.md — Gap closure: RestTimerBar inactive fill visibility and bar thickness
+- [x] 05-09-PLAN.md — Gap closure: RestTimerBar inactive fill visibility and bar thickness
 
 ### Phase 6: Charts
 **Goal**: Users can create per-exercise progress charts that visualize their training history on the dashboard -- closing the feedback loop that makes consistent training motivating
@@ -195,6 +195,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
-| 5. Active Workout | 8/9 | In Progress | - |
+| 5. Active Workout | 9/9 | Complete | 2026-02-13 |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |
