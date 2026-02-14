@@ -55,26 +55,26 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Active Workout
 
-- [ ] **WORK-01**: User can start a workout by tapping "Start" on a template card
-- [ ] **WORK-02**: Workout screen shows template name and start timestamp
-- [ ] **WORK-03**: Each exercise card shows exercise name and category
-- [ ] **WORK-04**: Each set row has weight input, reps input, and done checkbox
-- [ ] **WORK-05**: Tapping done checkbox marks the set as complete and triggers rest timer
-- [ ] **WORK-06**: User can add sets to any exercise during the workout
-- [ ] **WORK-07**: User can remove sets via swipe-to-delete gesture (left swipe reveals delete)
-- [ ] **WORK-08**: User can add exercises mid-workout via exercise picker
-- [ ] **WORK-09**: User can remove exercises during the workout
-- [ ] **WORK-10**: Rest timer displays as inline horizontal bar with countdown and time remaining
-- [ ] **WORK-11**: Rest timer supports +10s and -10s adjustment buttons
-- [ ] **WORK-12**: Rest timer sends local notification when complete (app backgrounded)
-- [ ] **WORK-13**: Rest timer auto-cancels when exercise removed or workout ends
-- [ ] **WORK-14**: User can finish workout -- saves all logged sets to database
-- [ ] **WORK-15**: On finish, app detects structural template changes (added/removed exercises, changed set counts) and prompts to update template
-- [ ] **WORK-16**: User can cancel workout with confirmation modal (warns about losing progress)
-- [ ] **WORK-17**: Active workout screen presents as stack push (swipe-back disabled)
-- [ ] **WORK-18**: Active workout state auto-saves to AsyncStorage on every change (crash recovery)
-- [ ] **WORK-19**: On app relaunch, user is prompted to resume an in-progress workout if one exists
-- [ ] **WORK-20**: User can start and complete a workout fully offline using cached templates
+- [x] **WORK-01**: User can start a workout by tapping "Start" on a template card
+- [x] **WORK-02**: Workout screen shows template name and start timestamp
+- [x] **WORK-03**: Each exercise card shows exercise name and category
+- [x] **WORK-04**: Each set row has weight input, reps input, and done checkbox
+- [x] **WORK-05**: Tapping done checkbox marks the set as complete and triggers rest timer
+- [x] **WORK-06**: User can add sets to any exercise during the workout
+- [x] **WORK-07**: User can remove sets via swipe-to-delete gesture (left swipe reveals delete)
+- [x] **WORK-08**: User can add exercises mid-workout via exercise picker
+- [x] **WORK-09**: User can remove exercises during the workout
+- [x] **WORK-10**: Rest timer displays as inline horizontal bar with countdown and time remaining
+- [x] **WORK-11**: Rest timer supports +10s and -10s adjustment buttons
+- [x] **WORK-12**: Rest timer sends local notification when complete (app backgrounded)
+- [x] **WORK-13**: Rest timer auto-cancels when exercise removed or workout ends
+- [x] **WORK-14**: User can finish workout -- saves all logged sets to database
+- [x] **WORK-15**: On finish, app detects structural template changes (added/removed exercises, changed set counts) and prompts to update template
+- [x] **WORK-16**: User can cancel workout with confirmation modal (warns about losing progress)
+- [x] **WORK-17**: Active workout screen presents as stack push (swipe-back disabled)
+- [x] **WORK-18**: Active workout state auto-saves to AsyncStorage on every change (crash recovery)
+- [x] **WORK-19**: On app relaunch, user is prompted to resume an in-progress workout if one exists
+- [x] **WORK-20**: User can start and complete a workout fully offline using cached templates
 
 ### Charts
 
@@ -196,26 +196,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TMPL-08 | Phase 4 | Complete |
 | TMPL-09 | Phase 4 | Complete |
 | TMPL-10 | Phase 4 | Complete |
-| WORK-01 | Phase 5 | Pending |
-| WORK-02 | Phase 5 | Pending |
-| WORK-03 | Phase 5 | Pending |
-| WORK-04 | Phase 5 | Pending |
-| WORK-05 | Phase 5 | Pending |
-| WORK-06 | Phase 5 | Pending |
-| WORK-07 | Phase 5 | Pending |
-| WORK-08 | Phase 5 | Pending |
-| WORK-09 | Phase 5 | Pending |
-| WORK-10 | Phase 5 | Pending |
-| WORK-11 | Phase 5 | Pending |
-| WORK-12 | Phase 5 | Pending |
-| WORK-13 | Phase 5 | Pending |
-| WORK-14 | Phase 5 | Pending |
-| WORK-15 | Phase 5 | Pending |
-| WORK-16 | Phase 5 | Pending |
-| WORK-17 | Phase 5 | Pending |
-| WORK-18 | Phase 5 | Pending |
-| WORK-19 | Phase 5 | Pending |
-| WORK-20 | Phase 5 | Pending |
+| WORK-01 | Phase 5 | Complete |
+| WORK-02 | Phase 5 | Complete |
+| WORK-03 | Phase 5 | Complete |
+| WORK-04 | Phase 5 | Complete |
+| WORK-05 | Phase 5 | Complete |
+| WORK-06 | Phase 5 | Complete |
+| WORK-07 | Phase 5 | Complete |
+| WORK-08 | Phase 5 | Complete |
+| WORK-09 | Phase 5 | Complete |
+| WORK-10 | Phase 5 | Complete |
+| WORK-11 | Phase 5 | Complete |
+| WORK-12 | Phase 5 | Complete |
+| WORK-13 | Phase 5 | Complete |
+| WORK-14 | Phase 5 | Complete |
+| WORK-15 | Phase 5 | Complete |
+| WORK-16 | Phase 5 | Complete |
+| WORK-17 | Phase 5 | Complete |
+| WORK-18 | Phase 5 | Complete |
+| WORK-19 | Phase 5 | Complete |
+| WORK-20 | Phase 5 | Complete |
 | CHRT-01 | Phase 6 | Pending |
 | CHRT-02 | Phase 6 | Pending |
 | CHRT-03 | Phase 6 | Pending |
@@ -248,4 +248,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-13 after Phase 4 completion*
+*Last updated: 2026-02-14 after Phase 5 completion*

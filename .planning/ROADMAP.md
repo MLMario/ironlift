@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Authentication** - Email/password auth, session persistence, password reset with deep link
 - [x] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
 - [x] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
-- [ ] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
+- [x] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
 - [ ] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [ ] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 
@@ -131,12 +131,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Dependencies, logging service port, write queue, notification config
-- [ ] 05-02-PLAN.md — Core hooks: useWorkoutState, useRestTimer, useWorkoutBackup
-- [ ] 05-03-PLAN.md — Small components: ProgressRing, RestTimerBar, ConfirmationModal, ResumeWorkoutModal
-- [ ] 05-04-PLAN.md — Complex components: WorkoutSetRow (swipe-to-delete), WorkoutExerciseCard (accordion)
-- [ ] 05-05-PLAN.md — Workout screen assembly with finish/cancel flows and offline save
-- [ ] 05-06-PLAN.md — Dashboard integration (Start button, crash recovery) and human verification
+- [x] 05-01-PLAN.md — Dependencies, logging service port, write queue, notification config
+- [x] 05-02-PLAN.md — Core hooks: useWorkoutState, useRestTimer, useWorkoutBackup
+- [x] 05-03-PLAN.md — Small components: ProgressRing, RestTimerBar, ConfirmationModal, ResumeWorkoutModal
+- [x] 05-04-PLAN.md — Complex components: WorkoutSetRow (swipe-to-delete), WorkoutExerciseCard (accordion)
+- [x] 05-05-PLAN.md — Workout screen assembly with finish/cancel flows and offline save
+- [x] 05-06-PLAN.md — Dashboard integration (Start button, crash recovery) and human verification
 
 ### Phase 6: Charts
 **Goal**: Users can create per-exercise progress charts that visualize their training history on the dashboard -- closing the feedback loop that makes consistent training motivating
@@ -192,6 +192,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Authentication | 5/5 | Complete | 2026-02-12 |
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
-| 5. Active Workout | 0/6 | Not started | - |
+| 5. Active Workout | 6/6 | Complete | 2026-02-14 |
 | 6. Charts | 0/TBD | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |

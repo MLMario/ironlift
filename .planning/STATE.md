@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 5 (Active Workout) -- building workout infrastructure, hooks, and UI
+**Current focus:** Phase 5 complete. Ready for Phase 6 (Charts).
 
 ## Current Position
 
-Phase: 5 of 7 (Active Workout)
-Plan: 5 of 6 in current phase
-Status: In progress
-Last activity: 2026-02-14 -- Completed 05-05-PLAN.md (Active Workout Screen Assembly)
+Phase: 5 of 7 (Active Workout) -- COMPLETE
+Plan: 6 of 6 in current phase
+Status: Complete
+Last activity: 2026-02-14 -- Completed 05-06-PLAN.md (Dashboard Integration)
 
-Progress: [██████████████████░░] ~92%
+Progress: [████████████████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
+- Total plans completed: 25
 - Average duration: ~3.5 min (including human verification)
-- Total execution time: ~85 min
+- Total execution time: ~88 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [██████████████████░░] ~92%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 5/6 | ~21 min | ~4.2 min |
+| 5. Active Workout | 6/6 | ~24 min | ~4 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-02 (~7 min), 05-03 (~2 min), 05-04 (~3 min), 05-05 (~3 min)
-- Trend: Screen assembly plans execute fast when hooks and components are pre-built
+- Last 5 plans: 05-03 (~2 min), 05-04 (~3 min), 05-05 (~3 min), 05-06 (~3 min)
+- Trend: Screen assembly and integration plans execute fast when hooks and components are pre-built
 
 *Updated after each plan completion*
 
@@ -123,6 +123,9 @@ Recent decisions affecting current work:
 - [05-05]: Route params (templateId, restore) for template loading and crash recovery
 - [05-05]: backupTrigger counter pattern for deferred backup save via useEffect
 - [05-05]: Template update best-effort: skip silently on failure, workout save is priority
+- [05-06]: Start button navigates via router.push with templateId query param
+- [05-06]: Crash recovery check runs on dashboard mount via useWorkoutBackup.restore()
+- [05-06]: Discard immediately clears backup (no confirmation per locked decision)
 
 ### Pending Todos
 
@@ -136,5 +139,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-05-PLAN.md (Active Workout Screen Assembly)
+Stopped at: Phase 5 complete. Documentation finalized.
 Resume file: None
