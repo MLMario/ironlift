@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 5 of 7 (Active Workout)
-Plan: 4 of 6 in current phase
+Plan: 5 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-14 -- Completed 05-04-PLAN.md (Workout UI Components)
+Last activity: 2026-02-14 -- Completed 05-05-PLAN.md (Active Workout Screen Assembly)
 
-Progress: [█████████████████░░░] ~88%
+Progress: [██████████████████░░] ~92%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
+- Total plans completed: 24
 - Average duration: ~3.5 min (including human verification)
-- Total execution time: ~82 min
+- Total execution time: ~85 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [█████████████████░░░] ~88%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 4/6 | ~18 min | ~4.5 min |
+| 5. Active Workout | 5/6 | ~21 min | ~4.2 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-01 (~6 min), 05-02 (~7 min), 05-03 (~2 min), 05-04 (~3 min)
-- Trend: UI component plans execute faster than hook/infrastructure plans
+- Last 5 plans: 05-02 (~7 min), 05-03 (~2 min), 05-04 (~3 min), 05-05 (~3 min)
+- Trend: Screen assembly plans execute fast when hooks and components are pre-built
 
 *Updated after each plan completion*
 
@@ -120,6 +120,9 @@ Recent decisions affecting current work:
 - [05-04]: All exercise cards default to expanded (user controls collapse, matching web)
 - [05-04]: Alert.alert for remove exercise confirmation (simpler than ConfirmationModal for single action)
 - [05-04]: failOffsetY [-5, 5] on pan gesture prevents swipe from conflicting with vertical ScrollView
+- [05-05]: Route params (templateId, restore) for template loading and crash recovery
+- [05-05]: backupTrigger counter pattern for deferred backup save via useEffect
+- [05-05]: Template update best-effort: skip silently on failure, workout save is priority
 
 ### Pending Todos
 
@@ -133,5 +136,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-04-PLAN.md (Workout UI Components)
+Stopped at: Completed 05-05-PLAN.md (Active Workout Screen Assembly)
 Resume file: None
