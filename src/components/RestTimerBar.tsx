@@ -69,7 +69,7 @@ export function RestTimerBar({
                 width: `${Math.min(100, Math.max(0, percentage))}%`,
                 backgroundColor: isActive
                   ? theme.colors.accent
-                  : theme.colors.bgElevated,
+                  : theme.colors.textMuted,
               },
             ]}
           />
@@ -129,7 +129,7 @@ function getStyles(theme: Theme) {
       justifyContent: 'center',
     },
     barTrack: {
-      height: 8,
+      height: 28,
       backgroundColor: theme.colors.border,
       borderRadius: theme.radii.full,
       overflow: 'hidden',
@@ -148,7 +148,7 @@ function getStyles(theme: Theme) {
       justifyContent: 'center',
     },
     timeText: {
-      fontSize: theme.typography.sizes.xs,
+      fontSize: theme.typography.sizes.sm,
       fontFamily: theme.typography.fontFamilyMono,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textMuted,
