@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 5 of 7 (Active Workout)
-Plan: 2 of 6 in current phase (also 4 of 6 completed via parallel execution)
+Plan: 4 of 6 in current phase
 Status: In progress
-Last activity: 2026-02-13 -- Completed 05-02-PLAN.md (Core Workout Hooks)
+Last activity: 2026-02-14 -- Completed 05-04-PLAN.md (Workout UI Components)
 
-Progress: [████████████████░░░░] ~85%
+Progress: [█████████████████░░░] ~88%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
+- Total plans completed: 23
 - Average duration: ~3.5 min (including human verification)
-- Total execution time: ~79 min
+- Total execution time: ~82 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [████████████████░░░░] ~85%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 3/6 | ~15 min | ~5 min |
+| 5. Active Workout | 4/6 | ~18 min | ~4.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-06 (~2 min), 05-01 (~6 min), 05-02 (~7 min), 05-03 (~2 min)
-- Trend: Hook/infrastructure plans take longer due to porting and type alignment
+- Last 5 plans: 05-01 (~6 min), 05-02 (~7 min), 05-03 (~2 min), 05-04 (~3 min)
+- Trend: UI component plans execute faster than hook/infrastructure plans
 
 *Updated after each plan completion*
 
@@ -116,6 +116,10 @@ Recent decisions affecting current work:
 - [05-03]: ConfirmationModal nested Pressable pattern prevents overlay press propagation through card
 - [05-03]: Modal overlay pattern: rgba(0,0,0,0.6) backdrop, centered card, maxWidth 340
 - [05-03]: Dismissible vs non-dismissible overlay via ConfirmationModal.dismissOnOverlayPress prop
+- [05-04]: Rubberband factor 0.2 for swipe overscroll resistance, spring config damping:20 stiffness:200
+- [05-04]: All exercise cards default to expanded (user controls collapse, matching web)
+- [05-04]: Alert.alert for remove exercise confirmation (simpler than ConfirmationModal for single action)
+- [05-04]: failOffsetY [-5, 5] on pan gesture prevents swipe from conflicting with vertical ScrollView
 
 ### Pending Todos
 
@@ -128,6 +132,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-13
-Stopped at: Completed 05-02-PLAN.md (Core Workout Hooks)
+Last session: 2026-02-14
+Stopped at: Completed 05-04-PLAN.md (Workout UI Components)
 Resume file: None
