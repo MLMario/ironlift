@@ -8,7 +8,7 @@
  * Does NOT handle AsyncStorage backup -- that is useWorkoutBackup's concern.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type { TemplateWithExercises, Exercise } from '@/types/database';
 
 // ============================================================================
@@ -106,11 +106,18 @@ export function useWorkoutState(
 
   // ==================== INITIALIZATION ====================
   // Priority: restoredWorkout > template (matching web)
+  // Deps include [template, restoredWorkout] because they arrive async from
+  // AsyncStorage in app/workout.tsx. isInitialized ref prevents re-init once active.
+
+  const isInitialized = useRef(false);
 
   useEffect(() => {
+    if (isInitialized.current) return;
+
     if (restoredWorkout) {
       setActiveWorkout(restoredWorkout.activeWorkout);
       setOriginalTemplateSnapshot(restoredWorkout.originalTemplateSnapshot);
+      isInitialized.current = true;
       return;
     }
 
@@ -148,10 +155,9 @@ export function useWorkoutState(
         })),
       };
       setOriginalTemplateSnapshot(snapshot);
+      isInitialized.current = true;
     }
-    // Only run on mount -- template and restoredWorkout are initial values
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [template, restoredWorkout]);
 
   // ==================== MUTATION FUNCTIONS ====================
   // All use functional setState for immutability
