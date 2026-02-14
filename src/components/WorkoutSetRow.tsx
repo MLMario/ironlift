@@ -201,10 +201,9 @@ export function WorkoutSetRow({
           style={[
             styles.rowOuter,
             animatedRowStyle,
-            isDone && styles.rowDone,
           ]}
         >
-          <View style={styles.row}>
+          <View style={[styles.row, isDone && styles.rowContentDone]}>
             {/* Column 1: Set number badge */}
             <View
               style={[
@@ -299,7 +298,7 @@ function getStyles(theme: Theme) {
     rowOuter: {
       backgroundColor: theme.colors.bgSurface,
     },
-    rowDone: {
+    rowContentDone: {
       opacity: 0.6,
     },
     row: {
