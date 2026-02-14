@@ -5,21 +5,21 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 5 gap closure complete (UAT round 2 fixes done). Ready for Phase 6 (Charts).
+**Current focus:** Phase 5 gap closure complete (UAT round 3 fixes done). Ready for Phase 6 (Charts).
 
 ## Current Position
 
 Phase: 5 of 7 (Active Workout) -- COMPLETE (with gap closure)
-Plan: 8 of 8 in current phase (6 original + 2 gap closure)
+Plan: 9 of 9 in current phase (6 original + 3 gap closure)
 Status: Complete
-Last activity: 2026-02-14 -- Completed 05-08-PLAN.md (UAT round 2 cosmetic fixes)
+Last activity: 2026-02-14 -- Completed 05-09-PLAN.md (UAT round 3 cosmetic fixes)
 
 Progress: [████████████████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 27
+- Total plans completed: 28
 - Average duration: ~3.3 min (including human verification)
 - Total execution time: ~90 min
 
@@ -31,10 +31,10 @@ Progress: [████████████████████] 100%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 8/8 | ~26 min | ~3.3 min |
+| 5. Active Workout | 9/9 | ~27 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-05 (~3 min), 05-06 (~3 min), 05-07 (~1 min), 05-08 (~1 min)
+- Last 5 plans: 05-06 (~3 min), 05-07 (~1 min), 05-08 (~1 min), 05-09 (<1 min)
 - Trend: Gap closure plans with targeted single-file fixes execute fastest
 
 *Updated after each plan completion*
@@ -112,7 +112,10 @@ Recent decisions affecting current work:
 - [05-02]: createAudioPlayer (non-hook API) for one-shot sound playback from callback context
 - [05-02]: All backup errors logged but never thrown (best-effort persistence)
 - [05-03]: ProgressRing radius derived from (size - strokeWidth) / 2 for configurable sizing
-- [05-03]: RestTimerBar uses 8px track height with 28px container for time text overlay
+- [05-03]: RestTimerBar uses 28px container for time text overlay
+- [05-09]: RestTimerBar inactive fill changed from bgElevated to textMuted for visible contrast
+- [05-09]: RestTimerBar track height changed from 8px to 28px, proportional to 44px buttons
+- [05-09]: RestTimerBar time text changed from xs to sm for readability in thicker bar
 - [05-03]: ConfirmationModal nested Pressable pattern prevents overlay press propagation through card
 - [05-03]: Modal overlay pattern: rgba(0,0,0,0.6) backdrop, centered card, maxWidth 340
 - [05-03]: Dismissible vs non-dismissible overlay via ConfirmationModal.dismissOnOverlayPress prop
@@ -142,5 +145,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-08-PLAN.md (UAT round 2 cosmetic fixes). Phase 5 fully complete.
+Stopped at: Completed 05-09-PLAN.md (UAT round 3 cosmetic fixes). Phase 5 fully complete.
 Resume file: None
