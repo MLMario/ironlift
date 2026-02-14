@@ -1,67 +1,705 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useTheme, type Theme } from '@/theme';
+/**
+ * Active Workout Screen
+ *
+ * Full workout screen that replaces the Phase 1 placeholder.
+ * Wires all hooks (useWorkoutState, useRestTimer, useWorkoutBackup) to all
+ * components (WorkoutExerciseCard, ConfirmationModal, ExercisePickerModal).
+ *
+ * Route params:
+ * - templateId: string -- template to load from cache
+ * - restore: "true" -- resume from crash recovery backup
+ *
+ * Features:
+ * - Exercise list with weight/reps inputs and done checkboxes
+ * - Rest timer triggered on set completion
+ * - Add/remove sets and exercises mid-workout
+ * - Finish flow with template change detection and save
+ * - Cancel flow with confirmation and discard
+ * - Offline save via write queue
+ * - Backup save on meaningful actions (not keystrokes)
+ * - Swipe-back gesture disabled (via _layout.tsx gestureEnabled: false)
+ */
 
-function createStyles(theme: Theme) {
+import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  KeyboardAvoidingView,
+  Keyboard,
+  Alert,
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useTheme, type Theme } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { useWorkoutState } from '@/hooks/useWorkoutState';
+import type { RestoredWorkoutData } from '@/hooks/useWorkoutState';
+import { useRestTimer } from '@/hooks/useRestTimer';
+import { useWorkoutBackup } from '@/hooks/useWorkoutBackup';
+import { logging } from '@/services/logging';
+import { templates as templatesService } from '@/services/templates';
+import { enqueue } from '@/services/writeQueue';
+import { getCachedTemplates } from '@/lib/cache';
+import { WorkoutExerciseCard } from '@/components/WorkoutExerciseCard';
+import { ConfirmationModal } from '@/components/ConfirmationModal';
+import { ExercisePickerModal } from '@/components/ExercisePickerModal';
+import type { TemplateWithExercises, Exercise } from '@/types/database';
+import type { WorkoutLogInput, TemplateExerciseInput } from '@/types/services';
+
+export default function WorkoutScreen() {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  const router = useRouter();
+  const { user } = useAuth();
+  const params = useLocalSearchParams<{ templateId?: string; restore?: string }>();
+
+  // ============================================================================
+  // Template / Restore loading
+  // ============================================================================
+
+  const [template, setTemplate] = useState<TemplateWithExercises | undefined>(undefined);
+  const [restoredBackup, setRestoredBackup] = useState<RestoredWorkoutData | undefined>(undefined);
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [initError, setInitError] = useState<string | null>(null);
+
+  const backup = useWorkoutBackup(user?.id);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function init() {
+      try {
+        // Restore path: load backup from AsyncStorage
+        if (params.restore === 'true') {
+          const backupData = await backup.restore();
+          if (backupData && !cancelled) {
+            setRestoredBackup({
+              activeWorkout: backupData.activeWorkout,
+              originalTemplateSnapshot: backupData.originalTemplateSnapshot,
+            });
+            setIsInitializing(false);
+            return;
+          }
+          // Backup not found -- fall through to template path or error
+        }
+
+        // Template path: load template from cache
+        if (params.templateId) {
+          const cached = await getCachedTemplates();
+          const found = cached?.find((t) => t.id === params.templateId);
+          if (found && !cancelled) {
+            setTemplate(found);
+            setIsInitializing(false);
+            return;
+          }
+          // Not in cache -- show error
+          if (!cancelled) {
+            setInitError('Template not found. Please go back and try again.');
+            setIsInitializing(false);
+          }
+          return;
+        }
+
+        // Neither restore nor templateId -- error
+        if (!cancelled) {
+          setInitError('No template selected. Please go back and try again.');
+          setIsInitializing(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setInitError('Failed to load workout data.');
+          setIsInitializing(false);
+        }
+      }
+    }
+
+    init();
+    return () => {
+      cancelled = true;
+    };
+    // Only run on mount -- params and backup are initial values
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ============================================================================
+  // Hooks
+  // ============================================================================
+
+  const {
+    activeWorkout,
+    originalTemplateSnapshot,
+    revealedSetKey,
+    updateSetWeight,
+    updateSetReps,
+    toggleSetDone,
+    addSet,
+    deleteSet,
+    addExercise,
+    removeExercise,
+    setRevealedSet,
+    closeAllSwipes,
+    hasTemplateChanges,
+  } = useWorkoutState(template, restoredBackup);
+
+  const {
+    timer,
+    start: startTimer,
+    stop: stopTimer,
+    adjust: adjustTimer,
+    isActiveForExercise,
+    getProgress,
+  } = useRestTimer();
+
+  // ============================================================================
+  // Backup save trigger
+  // ============================================================================
+
+  // Counter incremented on meaningful actions. useEffect watches it to save backup.
+  const [backupTrigger, setBackupTrigger] = useState(0);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    // Skip the initial render (no meaningful action has occurred yet)
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (backupTrigger > 0) {
+      backup.save(activeWorkout, originalTemplateSnapshot);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [backupTrigger]);
+
+  const triggerBackup = useCallback(() => {
+    setBackupTrigger((prev) => prev + 1);
+  }, []);
+
+  // ============================================================================
+  // Set done handler (connects state + timer + backup)
+  // ============================================================================
+
+  const handleToggleDone = useCallback(
+    (exerciseIndex: number, setIndex: number) => {
+      const result = toggleSetDone(exerciseIndex, setIndex);
+      if (!result.wasDone) {
+        // Was not done, now is done -> start rest timer
+        const exercise = activeWorkout.exercises[exerciseIndex];
+        startTimer(exerciseIndex, exercise.rest_seconds);
+      }
+      triggerBackup();
+    },
+    [toggleSetDone, activeWorkout.exercises, startTimer, triggerBackup]
+  );
+
+  // ============================================================================
+  // Add/Delete set handlers (with backup trigger)
+  // ============================================================================
+
+  const handleAddSet = useCallback(
+    (exerciseIndex: number) => {
+      addSet(exerciseIndex);
+      triggerBackup();
+    },
+    [addSet, triggerBackup]
+  );
+
+  const handleDeleteSet = useCallback(
+    (exerciseIndex: number, setIndex: number) => {
+      deleteSet(exerciseIndex, setIndex);
+      triggerBackup();
+    },
+    [deleteSet, triggerBackup]
+  );
+
+  // ============================================================================
+  // Remove exercise handler (connects state + timer + backup)
+  // ============================================================================
+
+  const handleRemoveExercise = useCallback(
+    (exerciseIndex: number) => {
+      // Stop timer if removing exercise that has active timer
+      if (isActiveForExercise(exerciseIndex)) {
+        stopTimer();
+      }
+      removeExercise(exerciseIndex);
+      triggerBackup();
+    },
+    [isActiveForExercise, stopTimer, removeExercise, triggerBackup]
+  );
+
+  // ============================================================================
+  // Exercise picker
+  // ============================================================================
+
+  const [showExercisePicker, setShowExercisePicker] = useState(false);
+
+  const handleSelectExercise = useCallback(
+    (exercise: Exercise) => {
+      addExercise(exercise);
+      setShowExercisePicker(false);
+      triggerBackup();
+    },
+    [addExercise, triggerBackup]
+  );
+
+  // ============================================================================
+  // Timer adjust handler
+  // ============================================================================
+
+  const handleAdjustTimer = useCallback(
+    (delta: number) => {
+      adjustTimer(delta);
+    },
+    [adjustTimer]
+  );
+
+  // ============================================================================
+  // Modal state
+  // ============================================================================
+
+  const [showFinishModal, setShowFinishModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showTemplateUpdateModal, setShowTemplateUpdateModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // ============================================================================
+  // Finish flow
+  // ============================================================================
+
+  const handleFinishPress = useCallback(() => {
+    Keyboard.dismiss();
+    if (activeWorkout.exercises.length === 0) {
+      Alert.alert('No Exercises', 'Add at least one exercise before finishing.');
+      return;
+    }
+    setShowFinishModal(true);
+  }, [activeWorkout.exercises.length]);
+
+  const handleFinishConfirm = useCallback(() => {
+    setShowFinishModal(false);
+    // Check for template structural changes
+    if (hasTemplateChanges() && activeWorkout.template_id) {
+      setShowTemplateUpdateModal(true);
+    } else {
+      saveWorkoutAndCleanup(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasTemplateChanges, activeWorkout.template_id]);
+
+  const handleTemplateUpdateConfirm = useCallback(() => {
+    setShowTemplateUpdateModal(false);
+    saveWorkoutAndCleanup(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleTemplateUpdateCancel = useCallback(() => {
+    setShowTemplateUpdateModal(false);
+    saveWorkoutAndCleanup(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * Save workout log and clean up.
+   * If updateTemplate is true, also update the template with current exercises.
+   */
+  const saveWorkoutAndCleanup = useCallback(
+    async (shouldUpdateTemplate: boolean) => {
+      setIsSaving(true);
+
+      const workoutData: WorkoutLogInput = {
+        template_id: activeWorkout.template_id,
+        started_at: activeWorkout.started_at || new Date().toISOString(),
+        exercises: activeWorkout.exercises.map((ex, i) => ({
+          exercise_id: ex.exercise_id,
+          rest_seconds: ex.rest_seconds,
+          order: i,
+          sets: ex.sets.map((s) => ({
+            set_number: s.set_number,
+            weight: s.weight || 0,
+            reps: s.reps || 0,
+            is_done: s.is_done,
+          })),
+        })),
+      };
+
+      try {
+        // Update template if requested (best-effort, skip on failure)
+        if (shouldUpdateTemplate && activeWorkout.template_id) {
+          try {
+            const templateExercises: TemplateExerciseInput[] = activeWorkout.exercises.map(
+              (ex) => ({
+                exercise_id: ex.exercise_id,
+                default_rest_seconds: ex.rest_seconds,
+                sets: ex.sets.map((s) => ({
+                  set_number: s.set_number,
+                  weight: s.weight || 0,
+                  reps: s.reps || 0,
+                })),
+              })
+            );
+            await templatesService.updateTemplate(
+              activeWorkout.template_id,
+              activeWorkout.template_name,
+              templateExercises
+            );
+          } catch {
+            // Template update failed (offline?) -- skip silently
+            // Workout save is the priority
+          }
+        }
+
+        // Try online save first
+        const { error } = await logging.createWorkoutLog(workoutData);
+
+        if (error) {
+          // Online save failed -- enqueue for offline sync
+          await enqueue({
+            id: crypto.randomUUID(),
+            type: 'workout_log',
+            payload: workoutData,
+            created_at: new Date().toISOString(),
+          });
+        }
+
+        // Always: stop timer, clear backup, navigate to dashboard
+        stopTimer();
+        await backup.clear();
+        router.back();
+      } catch {
+        // Even on unexpected error, enqueue and navigate
+        try {
+          await enqueue({
+            id: crypto.randomUUID(),
+            type: 'workout_log',
+            payload: workoutData,
+            created_at: new Date().toISOString(),
+          });
+        } catch {
+          // Last resort: just navigate away
+        }
+        stopTimer();
+        await backup.clear();
+        router.back();
+      } finally {
+        setIsSaving(false);
+      }
+    },
+    [activeWorkout, stopTimer, backup, router]
+  );
+
+  // ============================================================================
+  // Cancel flow
+  // ============================================================================
+
+  const handleCancelPress = useCallback(() => {
+    Keyboard.dismiss();
+    setShowCancelModal(true);
+  }, []);
+
+  const handleCancelConfirm = useCallback(async () => {
+    setShowCancelModal(false);
+    stopTimer();
+    await backup.clear();
+    router.back();
+  }, [stopTimer, backup, router]);
+
+  // ============================================================================
+  // Swipe coordination handlers
+  // ============================================================================
+
+  const handleSetReveal = useCallback(
+    (key: string) => {
+      setRevealedSet(key);
+    },
+    [setRevealedSet]
+  );
+
+  const handleSetClose = useCallback(
+    (key: string) => {
+      // Only close if this is the currently revealed key
+      setRevealedSet(null);
+    },
+    [setRevealedSet]
+  );
+
+  // ============================================================================
+  // Loading / Error states
+  // ============================================================================
+
+  if (isInitializing) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={theme.colors.accent} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (initError) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.centered}>
+          <Text style={styles.errorText}>{initError}</Text>
+          <Pressable
+            style={({ pressed }) => [styles.backButton, pressed && styles.backButtonPressed]}
+            onPress={() => router.back()}
+          >
+            <Text style={styles.backButtonText}>Go Back</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // ============================================================================
+  // Timer props for exercise cards
+  // ============================================================================
+
+  function getTimerProps(exerciseIndex: number) {
+    const isActive = isActiveForExercise(exerciseIndex);
+    if (isActive && timer.status === 'active') {
+      return {
+        timerRemaining: timer.remaining,
+        timerTotal: timer.duration,
+        isTimerActive: true,
+      };
+    }
+    return {
+      timerRemaining: 0,
+      timerTotal: 0,
+      isTimerActive: false,
+    };
+  }
+
+  // ============================================================================
+  // Render
+  // ============================================================================
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top']}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable onPress={handleCancelPress} hitSlop={8}>
+          <Text style={styles.cancelText}>Cancel</Text>
+        </Pressable>
+
+        <Text style={styles.headerTitle} numberOfLines={1}>
+          {activeWorkout.template_name || 'Workout'}
+        </Text>
+
+        <Pressable
+          onPress={handleFinishPress}
+          hitSlop={8}
+          disabled={isSaving}
+        >
+          {isSaving ? (
+            <ActivityIndicator size="small" color={theme.colors.accent} />
+          ) : (
+            <Text style={styles.finishText}>Finish</Text>
+          )}
+        </Pressable>
+      </View>
+
+      {/* Body */}
+      <KeyboardAvoidingView
+        style={styles.flex1}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={0}
+      >
+        <ScrollView
+          style={styles.flex1}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          {activeWorkout.exercises.map((exercise, exerciseIndex) => {
+            const timerProps = getTimerProps(exerciseIndex);
+            return (
+              <WorkoutExerciseCard
+                key={`${exercise.exercise_id}-${exerciseIndex}`}
+                exercise={exercise}
+                exerciseIndex={exerciseIndex}
+                onWeightChange={updateSetWeight}
+                onRepsChange={updateSetReps}
+                onToggleDone={handleToggleDone}
+                onAddSet={handleAddSet}
+                onDeleteSet={handleDeleteSet}
+                onRemoveExercise={handleRemoveExercise}
+                timerRemaining={timerProps.timerRemaining}
+                timerTotal={timerProps.timerTotal}
+                isTimerActive={timerProps.isTimerActive}
+                onAdjustTimer={handleAdjustTimer}
+                revealedSetKey={revealedSetKey}
+                onSetReveal={handleSetReveal}
+                onSetClose={handleSetClose}
+              />
+            );
+          })}
+
+          {/* Add Exercise button */}
+          <Pressable
+            style={({ pressed }) => [
+              styles.addExerciseButton,
+              pressed && styles.addExerciseButtonPressed,
+            ]}
+            onPress={() => {
+              Keyboard.dismiss();
+              setShowExercisePicker(true);
+            }}
+          >
+            <Text style={styles.addExerciseText}>Add Exercise</Text>
+          </Pressable>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      {/* Exercise Picker Modal */}
+      <ExercisePickerModal
+        visible={showExercisePicker}
+        excludeIds={activeWorkout.exercises.map((ex) => ex.exercise_id)}
+        onClose={() => setShowExercisePicker(false)}
+        onSelect={handleSelectExercise}
+      />
+
+      {/* Finish Confirmation Modal */}
+      <ConfirmationModal
+        visible={showFinishModal}
+        title="Finish Workout?"
+        message="Save this workout and end your session?"
+        confirmLabel="Save"
+        cancelLabel="Cancel"
+        confirmVariant="primary"
+        onConfirm={handleFinishConfirm}
+        onCancel={() => setShowFinishModal(false)}
+      />
+
+      {/* Cancel Confirmation Modal */}
+      <ConfirmationModal
+        visible={showCancelModal}
+        title="Cancel Workout?"
+        message="All progress will be lost."
+        confirmLabel="Discard"
+        cancelLabel="Go Back"
+        confirmVariant="danger"
+        onConfirm={handleCancelConfirm}
+        onCancel={() => setShowCancelModal(false)}
+      />
+
+      {/* Template Update Modal */}
+      <ConfirmationModal
+        visible={showTemplateUpdateModal}
+        title="Update Template?"
+        message="You made changes during this workout. Update the template with these changes?"
+        secondaryMessage="This will update the exercise list and number of sets in your template."
+        confirmLabel="Yes, Update"
+        cancelLabel="No, Keep Original"
+        confirmVariant="primary"
+        dismissOnOverlayPress={false}
+        onConfirm={handleTemplateUpdateConfirm}
+        onCancel={handleTemplateUpdateCancel}
+      />
+    </SafeAreaView>
+  );
+}
+
+// ============================================================================
+// Styles
+// ============================================================================
+
+function getStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.bgPrimary,
     },
-    content: {
+    flex1: {
       flex: 1,
-      padding: theme.spacing.md,
+    },
+    centered: {
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      padding: theme.spacing.lg,
       gap: theme.spacing.md,
     },
-    title: {
-      color: theme.colors.textPrimary,
-      fontSize: theme.typography.sizes['2xl'],
-      fontWeight: theme.typography.weights.semibold,
+
+    // Header
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.border,
+      backgroundColor: theme.colors.bgPrimary,
     },
-    subtitle: {
-      color: theme.colors.textSecondary,
+    cancelText: {
       fontSize: theme.typography.sizes.base,
+      color: theme.colors.textSecondary,
     },
-    button: {
+    headerTitle: {
+      flex: 1,
+      fontSize: theme.typography.sizes.lg,
+      fontWeight: theme.typography.weights.semibold,
+      color: theme.colors.textPrimary,
+      textAlign: 'center',
+      marginHorizontal: theme.spacing.sm,
+    },
+    finishText: {
+      fontSize: theme.typography.sizes.base,
+      fontWeight: theme.typography.weights.semibold,
+      color: theme.colors.accent,
+    },
+
+    // Scroll content
+    scrollContent: {
+      padding: theme.spacing.md,
+      paddingBottom: theme.spacing.xl,
+    },
+
+    // Add exercise button
+    addExerciseButton: {
+      backgroundColor: theme.colors.accent,
+      borderRadius: theme.radii.md,
+      minHeight: 44,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: theme.spacing.sm,
+    },
+    addExerciseButtonPressed: {
+      backgroundColor: theme.colors.accentHover,
+    },
+    addExerciseText: {
+      fontSize: theme.typography.sizes.base,
+      fontWeight: theme.typography.weights.medium,
+      color: theme.colors.textPrimary,
+    },
+
+    // Error state
+    errorText: {
+      fontSize: theme.typography.sizes.base,
+      color: theme.colors.textSecondary,
+      textAlign: 'center',
+    },
+    backButton: {
       backgroundColor: theme.colors.accent,
       borderRadius: theme.radii.md,
       paddingHorizontal: theme.spacing.lg,
-      minHeight: theme.layout.minTapTarget,
+      minHeight: 44,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    buttonPressed: {
+    backButtonPressed: {
       backgroundColor: theme.colors.accentHover,
     },
-    buttonText: {
-      color: theme.colors.textPrimary,
+    backButtonText: {
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.medium,
+      color: theme.colors.textPrimary,
     },
   });
-}
-
-export default function WorkoutScreen() {
-  const theme = useTheme();
-  const styles = createStyles(theme);
-  const router = useRouter();
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Active Workout</Text>
-        <Text style={styles.subtitle}>Placeholder -- Phase 1</Text>
-
-        <Pressable
-          style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.buttonText}>Back to Dashboard</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
-  );
 }
