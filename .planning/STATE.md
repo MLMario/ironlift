@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 5 complete. Ready for Phase 6 (Charts).
+**Current focus:** Phase 5 gap closure complete. Ready for Phase 6 (Charts).
 
 ## Current Position
 
-Phase: 5 of 7 (Active Workout) -- COMPLETE
-Plan: 6 of 6 in current phase
+Phase: 5 of 7 (Active Workout) -- COMPLETE (with gap closure)
+Plan: 7 of 7 in current phase (6 original + 1 gap closure)
 Status: Complete
-Last activity: 2026-02-14 -- Completed 05-06-PLAN.md (Dashboard Integration)
+Last activity: 2026-02-14 -- Completed 05-07-PLAN.md (useWorkoutState race condition fix)
 
 Progress: [████████████████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
-- Average duration: ~3.5 min (including human verification)
-- Total execution time: ~88 min
+- Total plans completed: 26
+- Average duration: ~3.4 min (including human verification)
+- Total execution time: ~89 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [████████████████████] 100%
 | 2. Authentication | 5/5 | ~12 min | ~2 min |
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
-| 5. Active Workout | 6/6 | ~24 min | ~4 min |
+| 5. Active Workout | 7/7 | ~25 min | ~3.6 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-03 (~2 min), 05-04 (~3 min), 05-05 (~3 min), 05-06 (~3 min)
-- Trend: Screen assembly and integration plans execute fast when hooks and components are pre-built
+- Last 5 plans: 05-04 (~3 min), 05-05 (~3 min), 05-06 (~3 min), 05-07 (~1 min)
+- Trend: Gap closure plans with targeted single-file fixes execute fastest
 
 *Updated after each plan completion*
 
@@ -126,6 +126,7 @@ Recent decisions affecting current work:
 - [05-06]: Start button navigates via router.push with templateId query param
 - [05-06]: Crash recovery check runs on dashboard mount via useWorkoutBackup.restore()
 - [05-06]: Discard immediately clears backup (no confirmation per locked decision)
+- [05-07]: useRef(false) isInitialized guard prevents re-initialization while allowing useEffect to re-fire on async dependency changes
 
 ### Pending Todos
 
@@ -139,5 +140,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Phase 5 complete. Documentation finalized.
+Stopped at: Completed 05-07-PLAN.md (gap closure). Phase 5 fully complete.
 Resume file: None
