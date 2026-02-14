@@ -462,7 +462,10 @@ export default function WorkoutScreen() {
   // ============================================================================
 
   function getTimerProps(exerciseIndex: number) {
+    const exercise = activeWorkout.exercises[exerciseIndex];
+    const restSeconds = exercise.rest_seconds;
     const isActive = isActiveForExercise(exerciseIndex);
+
     if (isActive && timer.status === 'active') {
       return {
         timerRemaining: timer.remaining,
@@ -470,9 +473,12 @@ export default function WorkoutScreen() {
         isTimerActive: true,
       };
     }
+
+    // When inactive (not started, or timer completed/idle):
+    // Show the full configured rest time so the bar appears full
     return {
-      timerRemaining: 0,
-      timerTotal: 0,
+      timerRemaining: restSeconds,
+      timerTotal: restSeconds,
       isTimerActive: false,
     };
   }
