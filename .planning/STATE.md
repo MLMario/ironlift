@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 5 gap closure complete (UAT round 3 fixes done). Ready for Phase 6 (Charts).
+**Current focus:** Phase 6 (Charts) in progress. Plan 01 (data layer) complete.
 
 ## Current Position
 
-Phase: 5 of 7 (Active Workout) -- COMPLETE (with gap closure)
-Plan: 9 of 9 in current phase (6 original + 3 gap closure)
-Status: Complete
-Last activity: 2026-02-14 -- Completed 05-09-PLAN.md (UAT round 3 cosmetic fixes)
+Phase: 6 of 7 (Charts)
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-02-15 -- Completed 06-01-PLAN.md (chart data layer)
 
-Progress: [████████████████████] 100%
+Progress: [████████████████████████░░░░] 29/32 plans (~91%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 28
-- Average duration: ~3.3 min (including human verification)
-- Total execution time: ~90 min
+- Total plans completed: 29
+- Average duration: ~3.2 min (including human verification)
+- Total execution time: ~92 min
 
 **By Phase:**
 
@@ -32,10 +32,11 @@ Progress: [████████████████████] 100%
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
+| 6. Charts | 1/4 | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-06 (~3 min), 05-07 (~1 min), 05-08 (~1 min), 05-09 (<1 min)
-- Trend: Gap closure plans with targeted single-file fixes execute fastest
+- Last 5 plans: 05-07 (~1 min), 05-08 (~1 min), 05-09 (<1 min), 06-01 (~2 min)
+- Trend: Data layer plans with service porting execute quickly
 
 *Updated after each plan completion*
 
@@ -132,6 +133,10 @@ Recent decisions affecting current work:
 - [05-07]: useRef(false) isInitialized guard prevents re-initialization while allowing useEffect to re-fire on async dependency changes
 - [05-08]: Inner content opacity (not outer Animated.View) preserves swipe-behind-layer opacity isolation
 - [05-08]: getTimerProps returns exercise.rest_seconds when timer inactive, showing full bar instead of 0:00
+- [06-01]: Charts service exported as plain object (no ChartsService type annotation) -- renderChart/destroyChart discarded
+- [06-01]: createChart re-fetches with exercises join after insert (fixes web app bug)
+- [06-01]: getMetricDisplayName returns "Max Volume" (shortened from web's "Max Volume Set (lbs)") for mobile card titles
+- [06-01]: Cache key ironlift:charts with no expiry timestamps -- best-effort caching (same as exercises, templates)
 
 ### Pending Todos
 
@@ -144,6 +149,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-14
-Stopped at: Completed 05-09-PLAN.md (UAT round 3 cosmetic fixes). Phase 5 fully complete.
+Last session: 2026-02-15
+Stopped at: Completed 06-01-PLAN.md (chart data layer). Phase 6 in progress.
 Resume file: None
