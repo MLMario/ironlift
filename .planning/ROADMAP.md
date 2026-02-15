@@ -157,11 +157,13 @@ Plans:
   - Reference: Chart computation logic for total_sets and max_volume_set metrics
   - Reference: Add Chart modal for exercise/metric/axis selection UI
   - Reference: Dashboard chart card layout
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — Chart packages, CRUD service port, cache extension, useCharts hook
+- [ ] 06-02-PLAN.md — Chart rendering components (useChartData, KebabMenu, ChartCard, ChartSection)
+- [ ] 06-03-PLAN.md — Add Chart bottom sheet with exercise selection and radio buttons
+- [ ] 06-04-PLAN.md — Dashboard integration (ScrollView conversion, chart wiring) and human verification
 
 ### Phase 7: History and Settings
 **Goal**: Users can review past workouts in a paginated timeline, manage their custom exercises, and access app settings -- completing the full feature set for release
@@ -196,5 +198,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
-| 6. Charts | 0/TBD | Not started | - |
+| 6. Charts | 0/4 | Not started | - |
 | 7. History and Settings | 0/TBD | Not started | - |
