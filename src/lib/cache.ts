@@ -1,17 +1,17 @@
 /**
  * Cache Utilities Module
  *
- * Provides AsyncStorage-backed caching for exercise and template data.
+ * Provides AsyncStorage-backed caching for exercise, template, and chart data.
  * All operations are best-effort: errors are logged but never thrown.
- * Future phases will extend this module with additional cache keys
- * (workout history).
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Exercise, TemplateWithExercises } from '@/types/database';
+import type { UserChartData } from '@/types/services';
 
 const CACHE_KEY_EXERCISES = 'ironlift:exercises';
 const CACHE_KEY_TEMPLATES = 'ironlift:templates';
+const CACHE_KEY_CHARTS = 'ironlift:charts';
 
 /**
  * Retrieve cached exercises from AsyncStorage.
@@ -90,5 +90,47 @@ export async function clearTemplateCache(): Promise<void> {
     await AsyncStorage.removeItem(CACHE_KEY_TEMPLATES);
   } catch (err) {
     console.error('Failed to clear template cache:', err);
+  }
+}
+
+// ============================================================================
+// Chart Cache
+// ============================================================================
+
+/**
+ * Retrieve cached chart configs from AsyncStorage.
+ *
+ * @returns Parsed UserChartData array, or null on cache miss/error
+ */
+export async function getCachedCharts(): Promise<UserChartData[] | null> {
+  try {
+    const json = await AsyncStorage.getItem(CACHE_KEY_CHARTS);
+    return json ? JSON.parse(json) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Store chart configs in AsyncStorage cache.
+ *
+ * @param charts - Array of chart configs to cache
+ */
+export async function setCachedCharts(charts: UserChartData[]): Promise<void> {
+  try {
+    await AsyncStorage.setItem(CACHE_KEY_CHARTS, JSON.stringify(charts));
+  } catch (err) {
+    console.error('Failed to cache charts:', err);
+  }
+}
+
+/**
+ * Remove the charts cache entry from AsyncStorage.
+ */
+export async function clearChartCache(): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(CACHE_KEY_CHARTS);
+  } catch (err) {
+    console.error('Failed to clear chart cache:', err);
   }
 }
