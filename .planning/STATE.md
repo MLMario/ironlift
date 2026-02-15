@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 6 (Charts) in progress. Plans 01-02 complete.
+**Current focus:** Phase 6 (Charts) in progress. Plans 01-03 complete.
 
 ## Current Position
 
 Phase: 6 of 7 (Charts)
-Plan: 2 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-15 -- Completed 06-02-PLAN.md (chart rendering pipeline)
+Last activity: 2026-02-15 -- Completed 06-03-PLAN.md (add chart bottom sheet)
 
-Progress: [█████████████████████████░░░] 30/32 plans (~94%)
+Progress: [██████████████████████████░░] 31/32 plans (~97%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 30
+- Total plans completed: 31
 - Average duration: ~3.1 min (including human verification)
-- Total execution time: ~94 min
+- Total execution time: ~96 min
 
 **By Phase:**
 
@@ -32,10 +32,10 @@ Progress: [███████████████████████
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
-| 6. Charts | 2/4 | ~4 min | ~2 min |
+| 6. Charts | 3/4 | ~6 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-08 (~1 min), 05-09 (<1 min), 06-01 (~2 min), 06-02 (~2 min)
+- Last 5 plans: 05-09 (<1 min), 06-01 (~2 min), 06-02 (~2 min), 06-03 (~2 min)
 - Trend: Component creation plans executing at consistent ~2 min pace
 
 *Updated after each plan completion*
@@ -142,6 +142,11 @@ Recent decisions affecting current work:
 - [06-02]: ChartCard tooltip shows rounded integer with unit suffix ("225 lbs", "12 sets")
 - [06-02]: ChartSection renders charts with .map() not FlatList to avoid nested scrollable container warnings
 - [06-02]: Date labels formatted as M/D and session labels as plain numbers
+- [06-03]: RN Modal with slide animation used for AddChartSheet (not @gorhom/bottom-sheet) -- simpler for 3-field form
+- [06-03]: Step state machine ('form' | 'selectExercise') for multi-step flow within single modal
+- [06-03]: RadioGroup sub-component with hand-rolled circles (20px outer, 10px inner) per constitution no-component-library rule
+- [06-03]: Exercise list grouped by category using Map reduce, preserving getExercisesWithLoggedData sort order
+- [06-03]: Offline error detection via error message content check for network-related keywords
 
 ### Pending Todos
 
@@ -155,5 +160,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 06-02-PLAN.md (chart rendering pipeline). Phase 6 in progress.
+Stopped at: Completed 06-03-PLAN.md (add chart bottom sheet). Phase 6 in progress.
 Resume file: None
