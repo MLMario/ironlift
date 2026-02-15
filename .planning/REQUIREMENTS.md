@@ -22,11 +22,11 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 - [x] **DASH-01**: Dashboard displays user's workout templates as tappable cards in a grid
 - [x] **DASH-02**: Each template card shows template name, edit icon, delete icon, and "Start" button
-- [ ] **DASH-03**: Dashboard displays user's exercise charts below templates
-- [ ] **DASH-04**: Each chart card shows exercise name, metric type, and rendered chart
+- [x] **DASH-03**: Dashboard displays user's exercise charts below templates
+- [x] **DASH-04**: Each chart card shows exercise name, metric type, and rendered chart
 - [x] **DASH-05**: Dashboard header shows IronLift brand and settings gear icon
 - [x] **DASH-06**: Tapping "+ New Template" navigates to template editor (modal)
-- [ ] **DASH-07**: Tapping "+ Add Chart" opens add chart modal
+- [x] **DASH-07**: Tapping "+ Add Chart" opens add chart modal
 
 ### Exercise Library
 
@@ -78,13 +78,13 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### Charts
 
-- [ ] **CHRT-01**: User can create a chart by selecting an exercise, metric type, and x-axis mode
-- [ ] **CHRT-02**: Metric types: total sets per workout, max volume (weight x reps) per workout
-- [ ] **CHRT-03**: X-axis modes: by date, by session number
-- [ ] **CHRT-04**: Charts render as line charts with gradient fill
-- [ ] **CHRT-05**: Chart data is computed client-side from cached workout history
-- [ ] **CHRT-06**: User can delete a chart
-- [ ] **CHRT-07**: Charts display on dashboard below templates
+- [x] **CHRT-01**: User can create a chart by selecting an exercise, metric type, and x-axis mode
+- [x] **CHRT-02**: Metric types: total sets per workout, max volume (weight x reps) per workout
+- [x] **CHRT-03**: X-axis modes: by date, by session number
+- [x] **CHRT-04**: Charts render as line charts with gradient fill
+- [x] **CHRT-05**: Chart data is computed client-side from cached workout history
+- [x] **CHRT-06**: User can delete a chart
+- [x] **CHRT-07**: Charts display on dashboard below templates
 
 ### History
 
@@ -172,11 +172,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-08 | Phase 2 | Complete |
 | DASH-01 | Phase 4 | Complete |
 | DASH-02 | Phase 4 | Complete |
-| DASH-03 | Phase 6 | Pending |
-| DASH-04 | Phase 6 | Pending |
+| DASH-03 | Phase 6 | Complete |
+| DASH-04 | Phase 6 | Complete |
 | DASH-05 | Phase 4 | Complete |
 | DASH-06 | Phase 4 | Complete |
-| DASH-07 | Phase 6 | Pending |
+| DASH-07 | Phase 6 | Complete |
 | EXER-01 | Phase 3 | Complete |
 | EXER-02 | Phase 3 | Complete |
 | EXER-03 | Phase 3 | Complete |
@@ -216,13 +216,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | WORK-18 | Phase 5 | Complete |
 | WORK-19 | Phase 5 | Complete |
 | WORK-20 | Phase 5 | Complete |
-| CHRT-01 | Phase 6 | Pending |
-| CHRT-02 | Phase 6 | Pending |
-| CHRT-03 | Phase 6 | Pending |
-| CHRT-04 | Phase 6 | Pending |
-| CHRT-05 | Phase 6 | Pending |
-| CHRT-06 | Phase 6 | Pending |
-| CHRT-07 | Phase 6 | Pending |
+| CHRT-01 | Phase 6 | Complete |
+| CHRT-02 | Phase 6 | Complete |
+| CHRT-03 | Phase 6 | Complete |
+| CHRT-04 | Phase 6 | Complete |
+| CHRT-05 | Phase 6 | Complete |
+| CHRT-06 | Phase 6 | Complete |
+| CHRT-07 | Phase 6 | Complete |
 | HIST-01 | Phase 7 | Pending |
 | HIST-02 | Phase 7 | Pending |
 | HIST-03 | Phase 7 | Pending |
@@ -248,4 +248,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-14 after Phase 5 completion*
+*Last updated: 2026-02-15 after Phase 6 completion*
