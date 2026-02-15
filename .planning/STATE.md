@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 6 (Charts) in progress. Plan 01 (data layer) complete.
+**Current focus:** Phase 6 (Charts) in progress. Plans 01-02 complete.
 
 ## Current Position
 
 Phase: 6 of 7 (Charts)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-15 -- Completed 06-01-PLAN.md (chart data layer)
+Last activity: 2026-02-15 -- Completed 06-02-PLAN.md (chart rendering pipeline)
 
-Progress: [████████████████████████░░░░] 29/32 plans (~91%)
+Progress: [█████████████████████████░░░] 30/32 plans (~94%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
-- Average duration: ~3.2 min (including human verification)
-- Total execution time: ~92 min
+- Total plans completed: 30
+- Average duration: ~3.1 min (including human verification)
+- Total execution time: ~94 min
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
-| 6. Charts | 1/4 | ~2 min | ~2 min |
+| 6. Charts | 2/4 | ~4 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-07 (~1 min), 05-08 (~1 min), 05-09 (<1 min), 06-01 (~2 min)
-- Trend: Data layer plans with service porting execute quickly
+- Last 5 plans: 05-08 (~1 min), 05-09 (<1 min), 06-01 (~2 min), 06-02 (~2 min)
+- Trend: Component creation plans executing at consistent ~2 min pace
 
 *Updated after each plan completion*
 
@@ -137,6 +137,11 @@ Recent decisions affecting current work:
 - [06-01]: createChart re-fetches with exercises join after insert (fixes web app bug)
 - [06-01]: getMetricDisplayName returns "Max Volume" (shortened from web's "Max Volume Set (lbs)") for mobile card titles
 - [06-01]: Cache key ironlift:charts with no expiry timestamps -- best-effort caching (same as exercises, templates)
+- [06-02]: useChartData dependency array uses [chart.id] only -- recomputes when chart config changes
+- [06-02]: KebabMenu uses RN Modal pattern (proven in codebase) rather than absolute positioning
+- [06-02]: ChartCard tooltip shows rounded integer with unit suffix ("225 lbs", "12 sets")
+- [06-02]: ChartSection renders charts with .map() not FlatList to avoid nested scrollable container warnings
+- [06-02]: Date labels formatted as M/D and session labels as plain numbers
 
 ### Pending Todos
 
@@ -150,5 +155,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 06-01-PLAN.md (chart data layer). Phase 6 in progress.
+Stopped at: Completed 06-02-PLAN.md (chart rendering pipeline). Phase 6 in progress.
 Resume file: None
