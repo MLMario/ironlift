@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Exercise Library** - System exercises, custom exercise CRUD, exercise picker modal
 - [x] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
 - [x] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
-- [x] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
+- [ ] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [ ] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 
 ## Phase Details
@@ -157,13 +157,14 @@ Plans:
   - Reference: Chart computation logic for total_sets and max_volume_set metrics
   - Reference: Add Chart modal for exercise/metric/axis selection UI
   - Reference: Dashboard chart card layout
-**Plans**: 4 plans
+**Plans**: 5 plans
 
 Plans:
 - [x] 06-01-PLAN.md — Chart packages, CRUD service port, cache extension, useCharts hook
 - [x] 06-02-PLAN.md — Chart rendering components (useChartData, KebabMenu, ChartCard, ChartSection)
 - [x] 06-03-PLAN.md — Add Chart bottom sheet with exercise selection and radio buttons
 - [x] 06-04-PLAN.md — Dashboard integration (ScrollView conversion, chart wiring) and human verification
+- [ ] 06-05-PLAN.md — Gap closure: CTA cutoff, tooltip text width, kebab menu positioning
 
 ### Phase 7: History and Settings
 **Goal**: Users can review past workouts in a paginated timeline, manage their custom exercises, and access app settings -- completing the full feature set for release
@@ -198,5 +199,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
-| 6. Charts | 4/4 | Complete | 2026-02-15 |
+| 6. Charts | 4/5 | Gap closure | 2026-02-15 |
 | 7. History and Settings | 0/TBD | Not started | - |
