@@ -2,12 +2,12 @@
  * TemplateGrid Component
  *
  * Single-column template list with a "My Templates" section header and
- * "+Create" button. Templates render full-width in a vertical FlatList.
- *
- * Replaces the previous 2-column grid with sentinel "+" card approach.
+ * "+Create" button. Templates render full-width using .map() inside a
+ * plain View (not FlatList) so it can be embedded in a parent ScrollView
+ * without nested scrollable container warnings.
  */
 
-import { FlatList, View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
 import { TemplateCard } from '@/components/TemplateCard';
@@ -31,19 +31,8 @@ export function TemplateGrid({
   const theme = useTheme();
   const styles = getStyles(theme);
 
-  function renderItem({ item }: { item: TemplateWithExercises }) {
-    return (
-      <TemplateCard
-        template={item}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        onStart={onStart}
-      />
-    );
-  }
-
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>My Templates</Text>
         <Pressable
@@ -56,24 +45,27 @@ export function TemplateGrid({
           <Text style={styles.createButtonText}>+ Create</Text>
         </Pressable>
       </View>
-      <FlatList
-        data={templates}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{
-          gap: theme.spacing.sm,
-          paddingHorizontal: theme.spacing.md,
-          paddingBottom: theme.spacing.md,
-        }}
-      />
+      <View style={styles.templateList}>
+        {templates.map((template) => (
+          <TemplateCard
+            key={template.id}
+            template={template}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onStart={onStart}
+          />
+        ))}
+      </View>
     </View>
   );
 }
 
 function getStyles(theme: Theme) {
   return StyleSheet.create({
-    container: {
-      flex: 1,
+    templateList: {
+      gap: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.md,
+      paddingBottom: theme.spacing.md,
     },
     sectionHeader: {
       flexDirection: 'row',
