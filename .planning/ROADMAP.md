@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Templates and Dashboard** - Template CRUD, template editor modal, dashboard with template cards
 - [x] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
 - [x] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
-- [ ] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
+- [x] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 - [x] **Phase 8: Chart Fit-to-Width Display** - Show all chart data points in one view without horizontal scrolling
 
 ## Phase Details
@@ -189,8 +189,8 @@ Plans:
 - [x] 07-01-PLAN.md — Settings bottom sheet with menu items, dashboard gear icon rewiring
 - [x] 07-02-PLAN.md — Workout History screen with paginated timeline, sticky stats, infinite scroll
 - [x] 07-03-PLAN.md — My Exercises screen with inline edit, delete with dependency check, create modal
-- [ ] 07-04-PLAN.md — Workout Detail screen with exercise blocks, category badges, set grids
-- [ ] 07-05-PLAN.md — Human verification of all Phase 7 features
+- [x] 07-04-PLAN.md — Workout Detail screen with exercise blocks, category badges, set grids
+- [x] 07-05-PLAN.md — Human verification of all Phase 7 features
 
 ### Phase 8: Chart Fit-to-Width Display
 **Goal**: Charts display all data points within the visible card width instead of scrolling horizontally -- removing the need to scroll and showing the full trend at a glance
@@ -217,5 +217,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
-| 7. History and Settings | 3/5 | In progress | - |
+| 7. History and Settings | 5/5 | Complete | 2026-02-16 |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
