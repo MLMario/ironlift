@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [x] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 - [x] **Phase 8: Chart Fit-to-Width Display** - Show all chart data points in one view without horizontal scrolling
-- [ ] **Phase 9: Timer Fixes** - Rest timer visible on workout start, direct time editing via text input
+- [x] **Phase 9: Timer Fixes** - Rest timer visible on workout start, direct time editing via text input
 - [ ] **Phase 10: Settings Stack Navigation** - Replace settings bottom sheet with full-screen stack navigation (slide from right with back button)
 
 ## Phase Details
@@ -216,9 +216,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Extract time utilities, add timer pause, add rest time mutation with dirty tracking
-- [ ] 09-02-PLAN.md — Three-state RestTimerBar with inline TextInput editing, fix isExpanded default
-- [ ] 09-03-PLAN.md — Workout screen wiring with rest time editing and silent save on finish
+- [x] 09-01-PLAN.md — Extract time utilities, add timer pause, add rest time mutation with dirty tracking
+- [x] 09-02-PLAN.md — Three-state RestTimerBar with inline TextInput editing, fix isExpanded default
+- [x] 09-03-PLAN.md — Workout screen wiring with rest time editing and silent save on finish
 
 ### Phase 10: Settings Stack Navigation
 **Goal**: Replace the settings bottom sheet overlay with a full-screen stacked screen that slides in from the right, replacing the dashboard view entirely -- with a back button to return to the dashboard
@@ -248,5 +248,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
 | 7. History and Settings | 5/5 | Complete | 2026-02-16 |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
-| 9. Timer Fixes | 0/3 | Not started | - |
+| 9. Timer Fixes | 3/3 | Complete | 2026-02-16 |
 | 10. Settings Stack Navigation | 0/1 | Not started | - |
