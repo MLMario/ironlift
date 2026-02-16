@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 6 (Charts) complete including UAT gap closure. Ready for Phase 7.
+**Current focus:** Phase 6 (Charts) complete including UAT gap closure round 2. Ready for Phase 7.
 
 ## Current Position
 
 Phase: 6 of 7 (Charts)
-Plan: 5 of 5 in current phase (includes gap closure plan)
-Status: Phase complete (all UAT gaps closed)
-Last activity: 2026-02-15 -- Completed 06-05-PLAN.md (UAT gap closure)
+Plan: 6 of 6 in current phase (includes gap closure plans)
+Status: Phase complete (all UAT gaps closed, round 2 included)
+Last activity: 2026-02-16 -- Completed 06-06-PLAN.md (gap closure round 2)
 
-Progress: [█████████████████████████████] 33/33 plans (100%)
+Progress: [██████████████████████████████] 34/34 plans (100%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
+- Total plans completed: 34
 - Average duration: ~3.0 min (including human verification)
-- Total execution time: ~100 min
+- Total execution time: ~101 min
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
-| 6. Charts | 5/5 | ~10 min | ~2 min |
+| 6. Charts | 6/6 | ~11 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-02 (~2 min), 06-03 (~2 min), 06-04 (~2 min), 06-05 (~2 min)
-- Trend: Bugfix plans executing at consistent ~2 min pace
+- Last 5 plans: 06-03 (~2 min), 06-04 (~2 min), 06-05 (~2 min), 06-06 (~1 min)
+- Trend: Bugfix plans executing at consistent ~1-2 min pace
 
 *Updated after each plan completion*
 
@@ -153,6 +153,9 @@ Recent decisions affecting current work:
 - [06-05]: activatePointersOnLongPress: true enables scroll by default, tooltip on long press
 - [06-05]: Inner Pressable in AddChartSheet replaced with View + onStartShouldSetResponder to stop touch swallowing
 - [06-05]: KebabMenu uses View.measure() with collapsable={false} for reliable screen coordinate measurement
+- [06-06]: KebabMenu handleClose preserves triggerPos during fade-out -- prevents dropdown flash to fallback position
+- [06-06]: pointerLabelWidth: 120 overrides gifted-charts default 20px for readable tooltip text
+- [06-06]: AddChartSheet form fields wrapped in ScrollView with pinned button row for overflow handling
 
 ### Pending Todos
 
@@ -165,6 +168,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-15
-Stopped at: Completed 06-05-PLAN.md (UAT gap closure). Phase 6 fully complete with all UAT gaps closed.
+Last session: 2026-02-16
+Stopped at: Completed 06-06-PLAN.md (gap closure round 2). Phase 6 fully complete with all UAT gaps closed.
 Resume file: None
