@@ -186,9 +186,9 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Settings bottom sheet with menu items, dashboard gear icon rewiring
-- [ ] 07-02-PLAN.md — Workout History screen with paginated timeline, sticky stats, infinite scroll
-- [ ] 07-03-PLAN.md — My Exercises screen with inline edit, delete with dependency check, create modal
+- [x] 07-01-PLAN.md — Settings bottom sheet with menu items, dashboard gear icon rewiring
+- [x] 07-02-PLAN.md — Workout History screen with paginated timeline, sticky stats, infinite scroll
+- [x] 07-03-PLAN.md — My Exercises screen with inline edit, delete with dependency check, create modal
 - [ ] 07-04-PLAN.md — Workout Detail screen with exercise blocks, category badges, set grids
 - [ ] 07-05-PLAN.md — Human verification of all Phase 7 features
 
@@ -217,5 +217,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
-| 7. History and Settings | 0/5 | Not started | - |
+| 7. History and Settings | 3/5 | In progress | - |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
