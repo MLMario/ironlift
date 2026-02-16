@@ -9,7 +9,7 @@
  * additional menu items as needed.
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { View, Text, Pressable, Modal, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/theme';
@@ -23,16 +23,30 @@ export function KebabMenu({ onDelete }: KebabMenuProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [triggerPos, setTriggerPos] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+  const triggerRef = useRef<View>(null);
+
+  const handleOpenMenu = () => {
+    triggerRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
+      setTriggerPos({ x: pageX, y: pageY, width, height });
+      setMenuVisible(true);
+    });
+  };
+
+  const handleClose = () => {
+    setMenuVisible(false);
+    setTriggerPos(null);
+  };
 
   const handleDelete = () => {
-    setMenuVisible(false);
+    handleClose();
     onDelete();
   };
 
   return (
-    <View>
+    <View ref={triggerRef} collapsable={false}>
       <Pressable
-        onPress={() => setMenuVisible(true)}
+        onPress={handleOpenMenu}
         hitSlop={8}
         style={({ pressed }) => [
           styles.trigger,
@@ -51,13 +65,13 @@ export function KebabMenu({ onDelete }: KebabMenuProps) {
         transparent
         animationType="fade"
         statusBarTranslucent
-        onRequestClose={() => setMenuVisible(false)}
+        onRequestClose={handleClose}
       >
         <Pressable
           style={styles.overlay}
-          onPress={() => setMenuVisible(false)}
+          onPress={handleClose}
         >
-          <View style={styles.dropdownAnchor}>
+          <View style={[styles.dropdownAnchor, { top: triggerPos ? triggerPos.y + triggerPos.height : 80 }]}>
             <View style={styles.dropdown}>
               <Pressable
                 onPress={handleDelete}
@@ -93,7 +107,6 @@ function getStyles(theme: Theme) {
     },
     dropdownAnchor: {
       position: 'absolute',
-      top: 80,
       right: theme.spacing.lg,
       alignItems: 'flex-end',
     },
