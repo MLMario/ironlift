@@ -262,7 +262,7 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.sm,
       fontFamily: theme.typography.fontFamilyMono,
       fontWeight: theme.typography.weights.medium,
-      color: theme.colors.textMuted,
+      color: theme.colors.textPrimary,
     },
     timeTextActive: {
       color: theme.colors.textPrimary,
