@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Active Workout** - Core workout loop with set logging, rest timer, offline support, crash recovery
 - [x] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [ ] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
+- [ ] **Phase 8: Chart Fit-to-Width Display** - Show all chart data points in one view without horizontal scrolling
 
 ## Phase Details
 
@@ -188,10 +189,22 @@ Plans:
 - [ ] 07-01: TBD
 - [ ] 07-02: TBD
 
+### Phase 8: Chart Fit-to-Width Display
+**Goal**: Charts display all data points within the visible card width instead of scrolling horizontally -- removing the need to scroll and showing the full trend at a glance
+**Depends on**: Phase 6
+**Success Criteria** (what must be TRUE):
+  1. Chart renders all data points within the visible card width (no horizontal scrolling)
+  2. Spacing between points adjusts dynamically based on the number of data points
+  3. Charts with few data points still look well-spaced (not cramped)
+**Plans**: 1 plan
+
+Plans:
+- [ ] 08-01-PLAN.md — Fit-to-width LineChart with onLayout measurement, adjustToWidth, and label thinning
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -202,3 +215,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
 | 7. History and Settings | 0/TBD | Not started | - |
+| 8. Chart Fit-to-Width Display | 0/1 | Not started | - |
