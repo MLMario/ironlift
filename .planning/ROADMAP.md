@@ -20,6 +20,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Charts** - Exercise progress charts, chart CRUD, dashboard chart display
 - [x] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 - [x] **Phase 8: Chart Fit-to-Width Display** - Show all chart data points in one view without horizontal scrolling
+- [ ] **Phase 9: Timer Fixes** - Rest timer visible on workout start, direct time editing via text input
+- [ ] **Phase 10: Settings Stack Navigation** - Replace settings bottom sheet with full-screen stack navigation (slide from right with back button)
 
 ## Phase Details
 
@@ -204,10 +206,37 @@ Plans:
 Plans:
 - [x] 08-01-PLAN.md — Fit-to-width LineChart with onLayout measurement, adjustToWidth, and label thinning
 
+### Phase 9: Timer Fixes
+**Goal**: Rest timer is visible and editable from the moment a workout starts -- users can see the current rest time and edit it directly (not just via +/-10s buttons) matching the template editor's time input pattern
+**Depends on**: Phase 5
+**Success Criteria** (what must be TRUE):
+  1. Rest timer bar shows the exercise's rest time value immediately when a workout starts (before any set is completed)
+  2. The +/-10s adjustment buttons are functional from the start of the workout (not only after first set completion)
+  3. User can tap the rest timer time display to edit the value directly via text input (minutes and seconds), matching the template editor's RestTimerInline pattern
+**Plans**: 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Extract time utilities, add timer pause, add rest time mutation with dirty tracking
+- [ ] 09-02-PLAN.md — Three-state RestTimerBar with inline TextInput editing, fix isExpanded default
+- [ ] 09-03-PLAN.md — Workout screen wiring with rest time editing and silent save on finish
+
+### Phase 10: Settings Stack Navigation
+**Goal**: Replace the settings bottom sheet overlay with a full-screen stacked screen that slides in from the right, replacing the dashboard view entirely -- with a back button to return to the dashboard
+**Depends on**: Phase 7
+**Success Criteria** (what must be TRUE):
+  1. Tapping the settings gear icon navigates to a full-screen settings screen (slides from right) instead of opening a bottom sheet overlay
+  2. Settings screen has a back button that returns to the dashboard
+  3. All existing settings sub-screens (My Exercises, Workout History, Workout Detail) continue to work as stack pushes from the settings screen
+  4. The @gorhom/bottom-sheet dependency for settings is removed (or no longer used for settings)
+**Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 10 to break down)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -219,3 +248,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
 | 7. History and Settings | 5/5 | Complete | 2026-02-16 |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
+| 9. Timer Fixes | 0/3 | Not started | - |
+| 10. Settings Stack Navigation | 0/0 | Not started | - |
