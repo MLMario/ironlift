@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 8 (Chart Fit-to-Width) complete. UAT passed 5/5. Ready for Phase 7.
+**Current focus:** Phase 7 (History and Settings) in progress. Plan 01 complete.
 
 ## Current Position
 
-Phase: 8 of 8 (Chart Fit-to-Width Display)
-Plan: 1 of 1 in current phase
-Status: Phase complete (UAT 5/5 passed)
-Last activity: 2026-02-15 -- Completed 08-01-PLAN.md and UAT
+Phase: 7 of 8 (History and Settings)
+Plan: 1 of ? in current phase
+Status: In progress
+Last activity: 2026-02-16 -- Completed 07-01-PLAN.md
 
-Progress: [██████████████████████████████] 35/35 plans (100%)
+Progress: [██████████████████████████████░] 36/? plans
 
 ## Performance Metrics
 
@@ -34,10 +34,11 @@ Progress: [███████████████████████
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
+| 7. History and Settings | 1/? | ~3 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-05 (~2 min), 06-06 (~1 min), 08-01 (~2 min)
-- Trend: Single-file plans executing at consistent ~2 min pace
+- Last 5 plans: 06-06 (~1 min), 08-01 (~2 min), 07-01 (~3 min)
+- Trend: Consistent ~2-3 min pace
 
 *Updated after each plan completion*
 
@@ -161,6 +162,9 @@ Recent decisions affecting current work:
 - [08-01]: thinLabels function removes overlapping x-axis labels on dense charts (MIN_LABEL_SPACING=28)
 - [08-01]: chartWidth > 0 guard prevents division-by-zero in library spacing calculation
 - [08-01]: Adaptive data point radius: 4px default, 3px for 30+ points, 2px for 50+ points
+- [07-01]: @gorhom/bottom-sheet used for settings sheet (validated on SDK 54 with reanimated 4.1.6)
+- [07-01]: Dismiss-then-navigate uses 200ms setTimeout (simpler than onClose callback approach)
+- [07-01]: SettingsSheet rendered outside ScrollView as SafeAreaView sibling to avoid gesture conflicts
 
 ### Pending Todos
 
@@ -172,11 +176,11 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- [Research]: @gorhom/bottom-sheet has LOW confidence on SDK 54 compatibility -- test early, prepare hand-rolled fallback (affects Phase 7)
+- [RESOLVED]: @gorhom/bottom-sheet v5.2.8 installed and compiles successfully on SDK 54 with reanimated 4.1.6
 - [Research]: New Architecture acceptance needed -- Expo Go SDK 54 defaults to it, constitution says classic
 
 ## Session Continuity
 
-Last session: 2026-02-15
-Stopped at: Completed 08-01-PLAN.md and UAT (5/5 passed). Phase 8 complete.
+Last session: 2026-02-16
+Stopped at: Completed 07-01-PLAN.md (Settings bottom sheet). Phase 7 plan 01 complete.
 Resume file: None
