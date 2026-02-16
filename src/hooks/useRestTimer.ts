@@ -44,6 +44,7 @@ export type TimerState =
  *
  * - start(): begins timer, schedules notification
  * - stop(): cancels timer and notification
+ * - pause(): freezes timer at current remaining value (status stays 'active')
  * - adjust(): modifies duration mid-timer, reschedules notification
  * - isActiveForExercise(): checks if timer belongs to specific exercise
  * - getProgress(): returns 0-100 percentage for progress bar
@@ -210,6 +211,35 @@ export function useRestTimer() {
   }, [clearTimer, cancelNotification]);
 
   /**
+   * Pause the active timer, freezing remaining time in place.
+   *
+   * Key behaviors:
+   * - Stops the interval and cancels the scheduled notification
+   * - Does NOT reset timerParamsRef (unlike stop())
+   * - Keeps timer.status as 'active' with frozen remaining value
+   * - The parent (RestTimerBar) sees isActive=true but countdown is frozen
+   * - After pause, caller typically enters edit mode and then calls start()
+   *   to restart from a new value
+   */
+  const pause = useCallback(async (): Promise<void> => {
+    const params = timerParamsRef.current;
+    if (!params) return;
+
+    // Calculate remaining at pause moment
+    const elapsed = Math.floor((Date.now() - params.startedAt) / 1000);
+    const remaining = Math.max(0, params.duration - elapsed);
+
+    // Stop interval and notification
+    clearTimer();
+    await cancelNotification();
+
+    // Freeze the remaining value in state (status stays 'active')
+    setTimer((prev) =>
+      prev.status === 'active' ? { ...prev, remaining } : prev
+    );
+  }, [clearTimer, cancelNotification]);
+
+  /**
    * Adjust the timer duration by delta seconds.
    * Reschedules notification with updated remaining time.
    */
@@ -307,6 +337,7 @@ export function useRestTimer() {
     timer,
     start,
     stop,
+    pause,
     adjust,
     isActiveForExercise,
     getProgress,

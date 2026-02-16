@@ -49,13 +49,15 @@ export interface ActiveWorkout {
 }
 
 /**
- * Original template snapshot for structural change detection.
- * Only tracks exercise presence and set counts -- not weight/reps values
- * per locked decision (structural changes only).
+ * Original template snapshot for structural change detection and rest time dirty tracking.
+ * Tracks exercise presence, set counts, and rest_seconds per exercise.
+ * Does NOT compare weight/reps values per locked decision (structural changes only).
+ * rest_seconds is tracked separately for session-scoped rest time editing with auto-save.
  */
 export interface TemplateSnapshot {
   exercises: {
     exercise_id: string;
+    rest_seconds: number;
     sets: {
       set_number: number;
       weight: number;
@@ -143,10 +145,11 @@ export function useWorkoutState(
 
       setActiveWorkout(initialWorkout);
 
-      // Store deep copy for change detection
+      // Store deep copy for change detection (structural + rest time dirty tracking)
       const snapshot: TemplateSnapshot = {
         exercises: template.exercises.map((te) => ({
           exercise_id: te.exercise_id,
+          rest_seconds: te.default_rest_seconds || 90,
           sets: te.sets.map((set) => ({
             set_number: set.set_number,
             weight: set.weight,
@@ -342,6 +345,54 @@ export function useWorkoutState(
   }, []);
 
   /**
+   * Update the rest_seconds value for a specific exercise.
+   * Used for session-scoped rest time editing during workout.
+   */
+  const updateRestSeconds = useCallback(
+    (exerciseIndex: number, seconds: number): void => {
+      setActiveWorkout((prev) => {
+        const exercises = [...prev.exercises];
+        const exercise = { ...exercises[exerciseIndex] };
+        exercise.rest_seconds = seconds;
+        exercises[exerciseIndex] = exercise;
+        return { ...prev, exercises };
+      });
+    },
+    []
+  );
+
+  /**
+   * Get exercises whose rest_seconds differ from the original template snapshot.
+   * Returns an array of { exercise_id, rest_seconds } for changed exercises only.
+   * Used on workout finish to auto-save rest time changes silently.
+   */
+  const getRestTimeChanges = useCallback(
+    (): Array<{ exercise_id: string; rest_seconds: number }> => {
+      if (!originalTemplateSnapshot) return [];
+
+      const changes: Array<{ exercise_id: string; rest_seconds: number }> = [];
+
+      for (const exercise of activeWorkout.exercises) {
+        const original = originalTemplateSnapshot.exercises.find(
+          (e) => e.exercise_id === exercise.exercise_id
+        );
+        // Skip exercises added during workout (no original to compare)
+        if (!original) continue;
+        // Include if rest_seconds changed
+        if (exercise.rest_seconds !== original.rest_seconds) {
+          changes.push({
+            exercise_id: exercise.exercise_id,
+            rest_seconds: exercise.rest_seconds,
+          });
+        }
+      }
+
+      return changes;
+    },
+    [originalTemplateSnapshot, activeWorkout.exercises]
+  );
+
+  /**
    * Detect structural changes between current workout and original template.
    * Only checks exercise count, set count per exercise, and exercise presence.
    * Does NOT compare weight/reps values (locked decision).
@@ -384,6 +435,7 @@ export function useWorkoutState(
     revealedSetKey,
     updateSetWeight,
     updateSetReps,
+    updateRestSeconds,
     toggleSetDone,
     addSet,
     deleteSet,
@@ -392,5 +444,6 @@ export function useWorkoutState(
     setRevealedSet: setRevealed,
     closeAllSwipes,
     hasTemplateChanges,
+    getRestTimeChanges,
   };
 }
