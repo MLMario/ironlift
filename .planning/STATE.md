@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 7 (History and Settings) in progress. Plans 01-03 complete.
+**Current focus:** Phase 7 (History and Settings) in progress. Plans 01-04 complete.
 
 ## Current Position
 
 Phase: 7 of 8 (History and Settings)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-16 -- Completed 07-03-PLAN.md
+Last activity: 2026-02-16 -- Completed 07-04-PLAN.md
 
-Progress: [████████████████████████████████░░] 35/38 plans
+Progress: [█████████████████████████████████░] 36/38 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 37
-- Average duration: ~2.9 min (including human verification)
-- Total execution time: ~107 min
+- Total plans completed: 38
+- Average duration: ~2.8 min (including human verification)
+- Total execution time: ~108 min
 
 **By Phase:**
 
@@ -34,11 +34,11 @@ Progress: [███████████████████████
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
-| 7. History and Settings | 3/5 | ~7 min | ~2.3 min |
+| 7. History and Settings | 4/5 | ~8 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-01 (~2 min), 07-01 (~3 min), 07-02 (~2 min), 07-03 (~2 min)
-- Trend: Consistent ~2-3 min pace
+- Last 5 plans: 07-01 (~3 min), 07-02 (~2 min), 07-03 (~2 min), 07-04 (~1 min)
+- Trend: Consistent ~1-3 min pace
 
 *Updated after each plan completion*
 
@@ -171,6 +171,10 @@ Recent decisions affecting current work:
 - [07-03]: LayoutAnimation.Presets.easeInEaseOut for inline edit accordion (simpler than reanimated height interpolation)
 - [07-03]: ScrollView with .map() for MyExercisesList (avoids nested FlatList, user exercise count is small)
 - [07-03]: Category dropdown inline pattern reused from Phase 3 ExercisePickerModal
+- [07-04]: Route renamed from [exerciseId].tsx to [workoutId].tsx for correct navigation semantics
+- [07-04]: CATEGORY_COLORS constant with rgba bg + hex text pairs for color-coded category badges
+- [07-04]: ExerciseBlock as inline function component (single-use within Workout Detail screen)
+- [07-04]: Unicode em dash for bodyweight exercises (weight === 0) instead of "0 lbs"
 
 ### Pending Todos
 
@@ -188,5 +192,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 07-03-PLAN.md (My Exercises screen). Phase 7 plan 03 complete.
+Stopped at: Completed 07-04-PLAN.md (Workout Detail screen). Phase 7 plan 04 complete.
 Resume file: None
