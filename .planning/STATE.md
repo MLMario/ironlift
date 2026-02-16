@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 7 (History and Settings) in progress. Plan 01 complete.
+**Current focus:** Phase 7 (History and Settings) in progress. Plans 01-02 complete.
 
 ## Current Position
 
 Phase: 7 of 8 (History and Settings)
-Plan: 1 of ? in current phase
+Plan: 2 of 5 in current phase
 Status: In progress
-Last activity: 2026-02-16 -- Completed 07-01-PLAN.md
+Last activity: 2026-02-16 -- Completed 07-02-PLAN.md
 
-Progress: [██████████████████████████████░] 36/? plans
+Progress: [███████████████████████████████░] 37/? plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 35
-- Average duration: ~3.0 min (including human verification)
-- Total execution time: ~103 min
+- Total plans completed: 36
+- Average duration: ~2.9 min (including human verification)
+- Total execution time: ~105 min
 
 **By Phase:**
 
@@ -34,10 +34,10 @@ Progress: [███████████████████████
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
-| 7. History and Settings | 1/? | ~3 min | ~3 min |
+| 7. History and Settings | 2/5 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-06 (~1 min), 08-01 (~2 min), 07-01 (~3 min)
+- Last 5 plans: 08-01 (~2 min), 07-01 (~3 min), 07-02 (~2 min)
 - Trend: Consistent ~2-3 min pace
 
 *Updated after each plan completion*
@@ -165,6 +165,9 @@ Recent decisions affecting current work:
 - [07-01]: @gorhom/bottom-sheet used for settings sheet (validated on SDK 54 with reanimated 4.1.6)
 - [07-01]: Dismiss-then-navigate uses 200ms setTimeout (simpler than onClose callback approach)
 - [07-01]: SettingsSheet rendered outside ScrollView as SafeAreaView sibling to avoid gesture conflicts
+- [07-02]: Menlo fontFamily for monospace stat values (iOS-available, matches web ui-monospace)
+- [07-02]: Per-item timeline line segments (not single continuous line) for FlatList virtualization compatibility
+- [07-02]: PAGE_SIZE=7 matching web app pagination
 
 ### Pending Todos
 
@@ -182,5 +185,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 07-01-PLAN.md (Settings bottom sheet). Phase 7 plan 01 complete.
+Stopped at: Completed 07-02-PLAN.md (Workout History screen). Phase 7 plan 02 complete.
 Resume file: None
