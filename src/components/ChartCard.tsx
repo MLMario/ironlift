@@ -19,7 +19,8 @@ import { charts } from "@/services/charts";
 import type { Theme } from "@/theme";
 import { useTheme } from "@/theme";
 import type { UserChartData } from "@/types/services";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
@@ -45,11 +46,49 @@ function getUnitSuffix(metricType: string): string {
   }
 }
 
+const INITIAL_SPACING = 10;
+const MIN_LABEL_SPACING = 28;
+
+/**
+ * Thin labels for dense charts so they don't overlap.
+ * Shows every Nth label based on available spacing per data point.
+ * Always preserves first visible label and last label.
+ */
+function thinLabels(
+  items: ChartLineDataItem[],
+  containerWidth: number
+): ChartLineDataItem[] {
+  if (items.length <= 1) return items;
+
+  const availableWidth = containerWidth - INITIAL_SPACING;
+  const spacingPerPoint = availableWidth / (items.length - 1);
+
+  if (spacingPerPoint >= MIN_LABEL_SPACING) {
+    return items;
+  }
+
+  const showEveryN = Math.ceil(MIN_LABEL_SPACING / spacingPerPoint);
+
+  return items.map((item, index) => ({
+    ...item,
+    label:
+      index % showEveryN === 0 || index === items.length - 1
+        ? item.label
+        : "",
+  }));
+}
+
 export function ChartCard({ chart, onDelete }: ChartCardProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
   const { data, isLoading } = useChartData(chart);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [chartWidth, setChartWidth] = useState(0);
+
+  const handleChartLayout = useCallback((event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    setChartWidth(width);
+  }, []);
 
   const title = `${chart.exercises.name} \u2014 ${charts.getMetricDisplayName(chart.metric_type)}`;
   const unitSuffix = getUnitSuffix(chart.metric_type);
@@ -82,57 +121,65 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
       );
     }
 
+    const thinnedData = thinLabels(data, chartWidth);
+    const effectiveRadius = data.length > 50 ? 2 : data.length > 30 ? 3 : 4;
+
     return (
-      <View style={styles.chartContainer}>
-        <LineChart
-          data={data}
-          areaChart
-          curved
-          curvature={0.4}
-          color="#4f9eff"
-          startFillColor="rgba(79, 158, 255, 0.3)"
-          endFillColor="rgba(79, 158, 255, 0.01)"
-          startOpacity={0.3}
-          endOpacity={0.01}
-          dataPointsColor="#4f9eff"
-          dataPointsRadius={4}
-          height={180}
-          spacing={40}
-          initialSpacing={20}
-          endSpacing={20}
-          hideYAxisText
-          xAxisLabelTextStyle={{
-            color: theme.colors.textMuted,
-            fontSize: 10,
-          }}
-          xAxisColor={theme.colors.border}
-          yAxisColor="transparent"
-          hideRules
-          isAnimated={false}
-          nestedScrollEnabled
-          scrollToEnd
-          pointerConfig={{
-            pointerColor: "#4f9eff",
-            radius: 3,
-            activatePointersOnLongPress: true,
-            showPointerStrip: true,
-            pointerStripColor: theme.colors.border,
-            pointerLabelWidth: 120,
-            autoAdjustPointerLabelPosition: true,
-            pointerLabelComponent: (items: ChartLineDataItem[]) => {
-              const item = items[0];
-              if (!item) return null;
-              return (
-                <View style={styles.tooltip}>
-                  <Text style={styles.tooltipText}>
-                    {Math.round(item.value)}
-                    {unitSuffix}
-                  </Text>
-                </View>
-              );
-            },
-          }}
-        />
+      <View style={styles.chartContainer} onLayout={handleChartLayout}>
+        {chartWidth > 0 ? (
+          <LineChart
+            data={thinnedData}
+            areaChart
+            curved
+            curvature={0.4}
+            color="#4f9eff"
+            startFillColor="rgba(79, 158, 255, 0.3)"
+            endFillColor="rgba(79, 158, 255, 0.01)"
+            startOpacity={0.3}
+            endOpacity={0.01}
+            dataPointsColor="#4f9eff"
+            dataPointsRadius={effectiveRadius}
+            height={180}
+            adjustToWidth
+            parentWidth={chartWidth}
+            disableScroll
+            yAxisLabelWidth={0}
+            initialSpacing={INITIAL_SPACING}
+            hideYAxisText
+            xAxisLabelTextStyle={{
+              color: theme.colors.textMuted,
+              fontSize: 10,
+            }}
+            xAxisColor={theme.colors.border}
+            yAxisColor="transparent"
+            isAnimated={false}
+            hideRules
+            pointerConfig={{
+              pointerColor: "#4f9eff",
+              persistPointer: false,
+              radius: 3,
+              activatePointersOnLongPress: false,
+              showPointerStrip: true,
+              pointerStripColor: theme.colors.border,
+              pointerLabelWidth: 80,
+              autoAdjustPointerLabelPosition: true,
+              pointerLabelComponent: (items: ChartLineDataItem[]) => {
+                const item = items[0];
+                if (!item) return null;
+                return (
+                  <View style={styles.tooltip}>
+                    <Text style={styles.tooltipText}>
+                      {Math.round(item.value)}
+                      {unitSuffix}
+                    </Text>
+                  </View>
+                );
+              },
+            }}
+          />
+        ) : (
+          <View style={styles.placeholder} />
+        )}
       </View>
     );
   };
