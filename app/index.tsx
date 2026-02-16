@@ -13,6 +13,7 @@
  * - Crash recovery: checks AsyncStorage on mount for saved workout,
  *   shows ResumeWorkoutModal with Resume/Discard options
  * - Charts section with add/delete, 25-chart limit enforcement
+ * - Settings bottom sheet with My Exercises, Workout History, Log Out
  *
  * States:
  * - Loading: centered spinner (no cached templates yet)
@@ -39,6 +40,7 @@ import { TemplateGrid } from '@/components/TemplateGrid';
 import { ChartSection } from '@/components/ChartSection';
 import { AddChartSheet } from '@/components/AddChartSheet';
 import { ResumeWorkoutModal } from '@/components/ResumeWorkoutModal';
+import { SettingsSheet } from '@/components/SettingsSheet';
 import type { TemplateWithExercises } from '@/types/database';
 
 export default function DashboardScreen() {
@@ -56,6 +58,9 @@ export default function DashboardScreen() {
 
   // Chart sheet state
   const [showAddChart, setShowAddChart] = useState(false);
+
+  // Settings sheet state
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Check for saved workout on mount (crash recovery)
   useEffect(() => {
@@ -139,7 +144,25 @@ export default function DashboardScreen() {
   }
 
   function handleSettingsPress() {
-    // Temporary: wire to logout until Phase 7 settings bottom sheet
+    setSettingsOpen(true);
+  }
+
+  function handleSettingsClose() {
+    setSettingsOpen(false);
+  }
+
+  function handleMyExercises() {
+    setSettingsOpen(false);
+    setTimeout(() => router.push('/settings/exercises'), 200);
+  }
+
+  function handleWorkoutHistory() {
+    setSettingsOpen(false);
+    setTimeout(() => router.push('/settings/history'), 200);
+  }
+
+  function handleLogout() {
+    setSettingsOpen(false);
     auth.logout();
   }
 
@@ -201,6 +224,13 @@ export default function DashboardScreen() {
         startedAt={resumeData?.activeWorkout?.started_at || ''}
         onResume={handleResume}
         onDiscard={handleDiscard}
+      />
+      <SettingsSheet
+        visible={settingsOpen}
+        onClose={handleSettingsClose}
+        onMyExercises={handleMyExercises}
+        onWorkoutHistory={handleWorkoutHistory}
+        onLogout={handleLogout}
       />
     </SafeAreaView>
   );
