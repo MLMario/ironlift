@@ -183,11 +183,14 @@ Plans:
   - Reference: Workout History screen for timeline layout, date markers, metric badges, pagination pattern
   - Reference: Workout Detail screen for exercise/set display layout
   - Reference: My Exercises screen for custom exercise list, edit/delete UI (exercise service already ported in Phase 3)
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
+- [ ] 07-01-PLAN.md — Settings bottom sheet with menu items, dashboard gear icon rewiring
+- [ ] 07-02-PLAN.md — Workout History screen with paginated timeline, sticky stats, infinite scroll
+- [ ] 07-03-PLAN.md — My Exercises screen with inline edit, delete with dependency check, create modal
+- [ ] 07-04-PLAN.md — Workout Detail screen with exercise blocks, category badges, set grids
+- [ ] 07-05-PLAN.md — Human verification of all Phase 7 features
 
 ### Phase 8: Chart Fit-to-Width Display
 **Goal**: Charts display all data points within the visible card width instead of scrolling horizontally -- removing the need to scroll and showing the full trend at a glance
@@ -214,5 +217,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
 | 6. Charts | 6/6 | Complete | 2026-02-15 |
-| 7. History and Settings | 0/TBD | Not started | - |
+| 7. History and Settings | 0/5 | Not started | - |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
