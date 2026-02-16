@@ -22,6 +22,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
 import { exercises } from '@/services/exercises';
@@ -160,6 +161,7 @@ export function AddChartSheet({
 }: AddChartSheetProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
+  const insets = useSafeAreaInsets();
 
   // --- State ---
   const [step, setStep] = useState<SheetStep>('form');
@@ -267,7 +269,10 @@ export function AddChartSheet({
       onRequestClose={onClose}
     >
       <Pressable style={styles.overlay} onPress={onClose}>
-        <Pressable style={styles.sheet} onPress={() => {}}>
+        <View
+          style={[styles.sheet, { paddingBottom: theme.spacing.lg + insets.bottom }]}
+          onStartShouldSetResponder={() => true}
+        >
           {step === 'form' ? (
             // ================================================================
             // Form View
@@ -421,7 +426,7 @@ export function AddChartSheet({
               )}
             </View>
           )}
-        </Pressable>
+        </View>
       </Pressable>
     </Modal>
   );
