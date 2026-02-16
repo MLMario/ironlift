@@ -13,7 +13,7 @@
  * - Crash recovery: checks AsyncStorage on mount for saved workout,
  *   shows ResumeWorkoutModal with Resume/Discard options
  * - Charts section with add/delete, 25-chart limit enforcement
- * - Settings bottom sheet with My Exercises, Workout History, Log Out
+ * - Settings gear icon navigates to full-screen /settings route
  *
  * States:
  * - Loading: centered spinner (no cached templates yet)
@@ -27,7 +27,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
-import { auth } from '@/services/auth';
 import { templates as templatesService } from '@/services/templates';
 import { charts as chartsService } from '@/services/charts';
 import { useAuth } from '@/hooks/useAuth';
@@ -40,7 +39,6 @@ import { TemplateGrid } from '@/components/TemplateGrid';
 import { ChartSection } from '@/components/ChartSection';
 import { AddChartSheet } from '@/components/AddChartSheet';
 import { ResumeWorkoutModal } from '@/components/ResumeWorkoutModal';
-import { SettingsSheet } from '@/components/SettingsSheet';
 import type { TemplateWithExercises } from '@/types/database';
 
 export default function DashboardScreen() {
@@ -58,9 +56,6 @@ export default function DashboardScreen() {
 
   // Chart sheet state
   const [showAddChart, setShowAddChart] = useState(false);
-
-  // Settings sheet state
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Check for saved workout on mount (crash recovery)
   useEffect(() => {
@@ -144,26 +139,7 @@ export default function DashboardScreen() {
   }
 
   function handleSettingsPress() {
-    setSettingsOpen(true);
-  }
-
-  function handleSettingsClose() {
-    setSettingsOpen(false);
-  }
-
-  function handleMyExercises() {
-    setSettingsOpen(false);
-    setTimeout(() => router.push('/settings/exercises'), 200);
-  }
-
-  function handleWorkoutHistory() {
-    setSettingsOpen(false);
-    setTimeout(() => router.push('/settings/history'), 200);
-  }
-
-  function handleLogout() {
-    setSettingsOpen(false);
-    auth.logout();
+    router.push('/settings');
   }
 
   // Loading state: show spinner when loading with no cached data
@@ -224,13 +200,6 @@ export default function DashboardScreen() {
         startedAt={resumeData?.activeWorkout?.started_at || ''}
         onResume={handleResume}
         onDiscard={handleDiscard}
-      />
-      <SettingsSheet
-        visible={settingsOpen}
-        onClose={handleSettingsClose}
-        onMyExercises={handleMyExercises}
-        onWorkoutHistory={handleWorkoutHistory}
-        onLogout={handleLogout}
       />
     </SafeAreaView>
   );
