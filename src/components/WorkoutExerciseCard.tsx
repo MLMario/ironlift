@@ -16,22 +16,22 @@
  * No reorder controls (per research discretion: no mid-workout exercise reordering).
  */
 
-import { useState, useCallback } from 'react';
+import { ProgressRing } from "@/components/ProgressRing";
+import { RestTimerBar } from "@/components/RestTimerBar";
+import { WorkoutSetRow } from "@/components/WorkoutSetRow";
+import type { WorkoutExercise } from "@/hooks/useWorkoutState";
+import type { Theme } from "@/theme";
+import { useTheme } from "@/theme";
+import { Ionicons } from "@expo/vector-icons";
+import { useCallback, useState } from "react";
 import {
-  View,
-  Text,
-  Pressable,
   Alert,
   LayoutAnimation,
+  Pressable,
   StyleSheet,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@/theme';
-import type { Theme } from '@/theme';
-import { ProgressRing } from '@/components/ProgressRing';
-import { WorkoutSetRow } from '@/components/WorkoutSetRow';
-import { RestTimerBar } from '@/components/RestTimerBar';
-import type { WorkoutExercise } from '@/hooks/useWorkoutState';
+  Text,
+  View,
+} from "react-native";
 
 // ============================================================================
 // Types
@@ -41,7 +41,11 @@ interface WorkoutExerciseCardProps {
   exercise: WorkoutExercise;
   exerciseIndex: number;
   // Set handlers
-  onWeightChange: (exerciseIndex: number, setIndex: number, weight: number) => void;
+  onWeightChange: (
+    exerciseIndex: number,
+    setIndex: number,
+    weight: number,
+  ) => void;
   onRepsChange: (exerciseIndex: number, setIndex: number, reps: number) => void;
   onToggleDone: (exerciseIndex: number, setIndex: number) => void;
   onAddSet: (exerciseIndex: number) => void;
@@ -52,6 +56,10 @@ interface WorkoutExerciseCardProps {
   timerTotal: number;
   isTimerActive: boolean;
   onAdjustTimer: (delta: number) => void;
+  restSeconds: number;
+  onRestTimeChange: (seconds: number) => void;
+  onTimerPause: () => void;
+  onTimerRestart: (seconds: number) => void;
   // Swipe coordination
   revealedSetKey: string | null;
   onSetReveal: (key: string) => void;
@@ -75,6 +83,10 @@ export function WorkoutExerciseCard({
   timerTotal,
   isTimerActive,
   onAdjustTimer,
+  restSeconds,
+  onRestTimeChange,
+  onTimerPause,
+  onTimerRestart,
   revealedSetKey,
   onSetReveal,
   onSetClose,
@@ -98,16 +110,16 @@ export function WorkoutExerciseCard({
   // --- Remove exercise with confirmation ---
   const handleRemoveExercise = useCallback(() => {
     Alert.alert(
-      'Remove Exercise?',
+      "Remove Exercise?",
       `Remove ${exercise.name} from this workout?`,
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: "Cancel", style: "cancel" },
         {
-          text: 'Remove',
-          style: 'destructive',
+          text: "Remove",
+          style: "destructive",
           onPress: () => onRemoveExercise(exerciseIndex),
         },
-      ]
+      ],
     );
   }, [exercise.name, exerciseIndex, onRemoveExercise]);
 
@@ -127,7 +139,7 @@ export function WorkoutExerciseCard({
         </View>
 
         <Ionicons
-          name={isExpanded ? 'chevron-up' : 'chevron-down'}
+          name={isExpanded ? "chevron-up" : "chevron-down"}
           size={20}
           color={theme.colors.textSecondary}
         />
@@ -144,7 +156,9 @@ export function WorkoutExerciseCard({
               <Text style={styles.tableHeaderText}>#</Text>
             </View>
             <Text style={[styles.tableHeaderText, styles.flexColumn]}>lbs</Text>
-            <Text style={[styles.tableHeaderText, styles.flexColumn]}>Reps</Text>
+            <Text style={[styles.tableHeaderText, styles.flexColumn]}>
+              Reps
+            </Text>
             <View style={styles.checkboxColumn}>
               <Ionicons
                 name="checkmark"
@@ -184,7 +198,11 @@ export function WorkoutExerciseCard({
             remainingSeconds={timerRemaining}
             totalSeconds={timerTotal}
             isActive={isTimerActive}
+            restSeconds={restSeconds}
             onAdjust={onAdjustTimer}
+            onRestTimeChange={onRestTimeChange}
+            onTimerPause={onTimerPause}
+            onTimerRestart={onTimerRestart}
           />
 
           {/* Add Set button */}
@@ -225,14 +243,14 @@ function getStyles(theme: Theme) {
 
     // Header
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       gap: theme.spacing.sm,
     },
     headerInfo: {
       flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       gap: theme.spacing.sm,
     },
     exerciseName: {
@@ -253,8 +271,8 @@ function getStyles(theme: Theme) {
 
     // Table header
     tableHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       gap: theme.spacing.sm,
       paddingVertical: theme.spacing.xs,
     },
@@ -262,18 +280,18 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.xs,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textMuted,
-      textAlign: 'center',
+      textAlign: "center",
     },
     setNumberColumn: {
       width: 32,
-      alignItems: 'center',
+      alignItems: "center",
     },
     flexColumn: {
       flex: 1,
     },
     checkboxColumn: {
       width: 44,
-      alignItems: 'center',
+      alignItems: "center",
     },
 
     // Add Set button (matching ExerciseEditorCard style)
@@ -282,8 +300,8 @@ function getStyles(theme: Theme) {
       borderColor: theme.colors.accent,
       borderRadius: theme.radii.md,
       paddingVertical: theme.spacing.sm,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginTop: theme.spacing.sm,
     },
     addSetText: {
@@ -295,8 +313,8 @@ function getStyles(theme: Theme) {
     // Remove Exercise button
     removeExerciseButton: {
       paddingVertical: theme.spacing.sm,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginTop: theme.spacing.xs,
     },
     removeExerciseText: {
