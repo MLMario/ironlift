@@ -278,54 +278,61 @@ export function AddChartSheet({
             // Form View
             // ================================================================
             <View style={styles.formContainer}>
-              {/* Title */}
-              <Text style={styles.title}>Add Chart</Text>
+              <ScrollView
+                style={styles.formScroll}
+                contentContainerStyle={styles.formScrollContent}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+              >
+                {/* Title */}
+                <Text style={styles.title}>Add Chart</Text>
 
-              {/* Exercise Selector */}
-              <View style={styles.fieldGroup}>
-                <Text style={styles.fieldLabel}>Exercise</Text>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.exerciseSelector,
-                    pressed && styles.exerciseSelectorPressed,
-                  ]}
-                  onPress={() => setStep('selectExercise')}
-                >
-                  <Text
-                    style={
-                      selectedExercise
-                        ? styles.exerciseSelectorText
-                        : styles.exerciseSelectorPlaceholder
-                    }
-                    numberOfLines={1}
+                {/* Exercise Selector */}
+                <View style={styles.fieldGroup}>
+                  <Text style={styles.fieldLabel}>Exercise</Text>
+                  <Pressable
+                    style={({ pressed }) => [
+                      styles.exerciseSelector,
+                      pressed && styles.exerciseSelectorPressed,
+                    ]}
+                    onPress={() => setStep('selectExercise')}
                   >
-                    {selectedExercise
-                      ? selectedExercise.name
-                      : 'Select Exercise'}
-                  </Text>
-                </Pressable>
-              </View>
+                    <Text
+                      style={
+                        selectedExercise
+                          ? styles.exerciseSelectorText
+                          : styles.exerciseSelectorPlaceholder
+                      }
+                      numberOfLines={1}
+                    >
+                      {selectedExercise
+                        ? selectedExercise.name
+                        : 'Select Exercise'}
+                    </Text>
+                  </Pressable>
+                </View>
 
-              {/* Metric Type Radio */}
-              <RadioGroup
-                label="Metric"
-                options={METRIC_OPTIONS}
-                selected={metricType}
-                onSelect={setMetricType}
-                theme={theme}
-              />
+                {/* Metric Type Radio */}
+                <RadioGroup
+                  label="Metric"
+                  options={METRIC_OPTIONS}
+                  selected={metricType}
+                  onSelect={setMetricType}
+                  theme={theme}
+                />
 
-              {/* X-Axis Mode Radio */}
-              <RadioGroup
-                label="X-Axis"
-                options={AXIS_OPTIONS}
-                selected={xAxisMode}
-                onSelect={setXAxisMode}
-                theme={theme}
-              />
+                {/* X-Axis Mode Radio */}
+                <RadioGroup
+                  label="X-Axis"
+                  options={AXIS_OPTIONS}
+                  selected={xAxisMode}
+                  onSelect={setXAxisMode}
+                  theme={theme}
+                />
 
-              {/* Error */}
-              {error ? <Text style={styles.errorText}>{error}</Text> : null}
+                {/* Error */}
+                {error ? <Text style={styles.errorText}>{error}</Text> : null}
+              </ScrollView>
 
               {/* Button Row */}
               <View style={styles.buttonRow}>
@@ -457,6 +464,11 @@ function getStyles(theme: Theme) {
     // Form view
     formContainer: {
       flex: 1,
+    },
+    formScroll: {
+      flex: 1,
+    },
+    formScrollContent: {
       gap: theme.spacing.md,
     },
     title: {
@@ -506,7 +518,7 @@ function getStyles(theme: Theme) {
     buttonRow: {
       flexDirection: 'row',
       gap: theme.spacing.sm,
-      marginTop: 'auto' as const,
+      paddingTop: theme.spacing.md,
     },
     button: {
       flex: 1,
