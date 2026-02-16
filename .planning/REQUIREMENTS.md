@@ -88,20 +88,20 @@ Requirements for initial release. Faithful port of the IronFactor web app to nat
 
 ### History
 
-- [ ] **HIST-01**: User can view workout history as a paginated timeline
-- [ ] **HIST-02**: History shows summary stats (total workouts, total sets, total volume)
-- [ ] **HIST-03**: Each workout entry shows date and key metrics
-- [ ] **HIST-04**: User can tap a workout to see full detail (all exercises, sets, weights, reps)
-- [ ] **HIST-05**: History is accessible from Settings
+- [x] **HIST-01**: User can view workout history as a paginated timeline
+- [x] **HIST-02**: History shows summary stats (total workouts, total sets, total volume)
+- [x] **HIST-03**: Each workout entry shows date and key metrics
+- [x] **HIST-04**: User can tap a workout to see full detail (all exercises, sets, weights, reps)
+- [x] **HIST-05**: History is accessible from Settings
 
 ### Settings
 
-- [ ] **SETT-01**: Settings menu presents as bottom sheet overlay on dashboard
-- [ ] **SETT-02**: Settings menu shows: My Exercises, Workout History, Logout
-- [ ] **SETT-03**: My Exercises screen shows user's custom exercises with edit/delete
-- [ ] **SETT-04**: My Exercises allows creating new custom exercises
-- [ ] **SETT-05**: Workout History screen navigable from settings
-- [ ] **SETT-06**: Settings sub-screens (My Exercises, History, Detail) present as stack push
+- [x] **SETT-01**: Settings menu presents as bottom sheet overlay on dashboard
+- [x] **SETT-02**: Settings menu shows: My Exercises, Workout History, Logout
+- [x] **SETT-03**: My Exercises screen shows user's custom exercises with edit/delete
+- [x] **SETT-04**: My Exercises allows creating new custom exercises
+- [x] **SETT-05**: Workout History screen navigable from settings
+- [x] **SETT-06**: Settings sub-screens (My Exercises, History, Detail) present as stack push
 
 ### Theme & UI
 
@@ -223,17 +223,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHRT-05 | Phase 6 | Complete |
 | CHRT-06 | Phase 6 | Complete |
 | CHRT-07 | Phase 6 | Complete |
-| HIST-01 | Phase 7 | Pending |
-| HIST-02 | Phase 7 | Pending |
-| HIST-03 | Phase 7 | Pending |
-| HIST-04 | Phase 7 | Pending |
-| HIST-05 | Phase 7 | Pending |
-| SETT-01 | Phase 7 | Pending |
-| SETT-02 | Phase 7 | Pending |
-| SETT-03 | Phase 7 | Pending |
-| SETT-04 | Phase 7 | Pending |
-| SETT-05 | Phase 7 | Pending |
-| SETT-06 | Phase 7 | Pending |
+| HIST-01 | Phase 7 | Complete |
+| HIST-02 | Phase 7 | Complete |
+| HIST-03 | Phase 7 | Complete |
+| HIST-04 | Phase 7 | Complete |
+| HIST-05 | Phase 7 | Complete |
+| SETT-01 | Phase 7 | Complete |
+| SETT-02 | Phase 7 | Complete |
+| SETT-03 | Phase 7 | Complete |
+| SETT-04 | Phase 7 | Complete |
+| SETT-05 | Phase 7 | Complete |
+| SETT-06 | Phase 7 | Complete |
 | UI-01 | Phase 1 | Complete |
 | UI-02 | Phase 1 | Complete |
 | UI-03 | Phase 1 | Complete |
@@ -248,4 +248,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-15 after Phase 6 completion*
+*Last updated: 2026-02-16 after Phase 7 completion*
