@@ -100,10 +100,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
           spacing={40}
           initialSpacing={20}
           endSpacing={20}
-          yAxisTextStyle={{
-            color: theme.colors.textMuted,
-            fontSize: 10,
-          }}
+          hideYAxisText
           xAxisLabelTextStyle={{
             color: theme.colors.textMuted,
             fontSize: 10,
@@ -120,6 +117,8 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
             activatePointersOnLongPress: true,
             showPointerStrip: true,
             pointerStripColor: theme.colors.border,
+            pointerLabelWidth: 120,
+            autoAdjustPointerLabelPosition: true,
             pointerLabelComponent: (items: ChartLineDataItem[]) => {
               const item = items[0];
               if (!item) return null;

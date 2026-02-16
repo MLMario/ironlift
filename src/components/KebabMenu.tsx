@@ -35,7 +35,6 @@ export function KebabMenu({ onDelete }: KebabMenuProps) {
 
   const handleClose = () => {
     setMenuVisible(false);
-    setTriggerPos(null);
   };
 
   const handleDelete = () => {
