@@ -94,7 +94,7 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
     return () => {
       cancelled = true;
     };
-  }, [chart.id]);
+  }, [chart]);
 
   return { data, isLoading };
 }

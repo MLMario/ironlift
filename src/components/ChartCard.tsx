@@ -11,17 +11,17 @@
  * - Ready: full LineChart with all locked decision props
  */
 
-import { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
-import { useTheme } from '@/theme';
-import type { Theme } from '@/theme';
-import { useChartData } from '@/hooks/useChartData';
-import type { ChartLineDataItem } from '@/hooks/useChartData';
-import { KebabMenu } from '@/components/KebabMenu';
-import { ConfirmationModal } from '@/components/ConfirmationModal';
-import { charts } from '@/services/charts';
-import type { UserChartData } from '@/types/services';
+import { ConfirmationModal } from "@/components/ConfirmationModal";
+import { KebabMenu } from "@/components/KebabMenu";
+import type { ChartLineDataItem } from "@/hooks/useChartData";
+import { useChartData } from "@/hooks/useChartData";
+import { charts } from "@/services/charts";
+import type { Theme } from "@/theme";
+import { useTheme } from "@/theme";
+import type { UserChartData } from "@/types/services";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { LineChart } from "react-native-gifted-charts";
 
 interface ChartCardProps {
   chart: UserChartData;
@@ -36,12 +36,12 @@ interface ChartCardProps {
  */
 function getUnitSuffix(metricType: string): string {
   switch (metricType) {
-    case 'max_volume_set':
-      return ' lbs';
-    case 'total_sets':
-      return ' sets';
+    case "max_volume_set":
+      return " lbs";
+    case "total_sets":
+      return " sets";
     default:
-      return '';
+      return "";
   }
 }
 
@@ -100,7 +100,10 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
           spacing={40}
           initialSpacing={20}
           endSpacing={20}
-          hideYAxisText
+          yAxisTextStyle={{
+            color: theme.colors.textMuted,
+            fontSize: 10,
+          }}
           xAxisLabelTextStyle={{
             color: theme.colors.textMuted,
             fontSize: 10,
@@ -112,15 +115,12 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
           nestedScrollEnabled
           scrollToEnd
           pointerConfig={{
-            pointerColor: '#4f9eff',
-            radius: 6,
-            activatePointersOnLongPress: false,
-            persistPointer: true,
+            pointerColor: "#4f9eff",
+            radius: 3,
+            activatePointersOnLongPress: true,
             showPointerStrip: true,
             pointerStripColor: theme.colors.border,
-            pointerLabelComponent: (
-              items: ChartLineDataItem[]
-            ) => {
+            pointerLabelComponent: (items: ChartLineDataItem[]) => {
               const item = items[0];
               if (!item) return null;
               return (
@@ -168,11 +168,11 @@ function getStyles(theme: Theme) {
     card: {
       backgroundColor: theme.colors.bgSurface,
       borderRadius: theme.radii.lg,
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       paddingLeft: theme.spacing.md,
       paddingRight: theme.spacing.xs,
       paddingTop: theme.spacing.sm,
@@ -191,27 +191,28 @@ function getStyles(theme: Theme) {
     },
     notEnoughData: {
       height: 180,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       paddingHorizontal: theme.spacing.md,
     },
     notEnoughDataText: {
       fontSize: theme.typography.sizes.sm,
       color: theme.colors.textMuted,
-      textAlign: 'center',
+      textAlign: "center",
     },
     chartContainer: {
       paddingBottom: theme.spacing.sm,
       paddingTop: theme.spacing.xs,
     },
     tooltip: {
-      backgroundColor: 'rgba(0,0,0,0.8)',
+      backgroundColor: "rgba(0,0,0,0.8)",
       borderRadius: theme.radii.sm,
       paddingHorizontal: theme.spacing.sm,
       paddingVertical: theme.spacing.xs,
+      flexShrink: 0,
     },
     tooltipText: {
-      color: '#ffffff',
+      color: "#ffffff",
       fontSize: theme.typography.sizes.xs,
       fontWeight: theme.typography.weights.medium,
     },
