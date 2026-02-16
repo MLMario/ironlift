@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 9 of 10 (Timer Fixes)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-16 -- Completed 09-02-PLAN.md
+Plan: 3 of 3 in current phase
+Status: Phase complete
+Last activity: 2026-02-16 -- Completed 09-03-PLAN.md
 
-Progress: [████████████████████████████████████░] 40/41 plans
+Progress: [█████████████████████████████████████] 41/41 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 40
+- Total plans completed: 41
 - Average duration: ~2.9 min (including human verification)
-- Total execution time: ~114 min
+- Total execution time: ~118 min
 
 **By Phase:**
 
@@ -35,11 +35,11 @@ Progress: [███████████████████████
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
 | 7. History and Settings | 5/5 | ~9 min | ~2 min |
-| 9. Timer Fixes | 2/3 | ~5 min | ~2.5 min |
+| 9. Timer Fixes | 3/3 | ~9 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-04 (~1 min), 07-05 (~1 min), 09-01 (~3 min), 09-02 (~2 min)
-- Trend: Consistent ~1-3 min pace
+- Last 5 plans: 07-05 (~1 min), 09-01 (~3 min), 09-02 (~2 min), 09-03 (~4 min)
+- Trend: Consistent ~1-4 min pace
 
 *Updated after each plan completion*
 
@@ -184,6 +184,8 @@ Recent decisions affecting current work:
 - [09-02]: handleAdjustNormal calls BOTH onRestTimeChange (persist) AND onAdjust (adjust countdown) during active timer
 - [09-02]: Unparseable input on blur reverts without changing rest time; restarts timer from original value if was active
 - [09-02]: isExpanded default fixed from false to true in WorkoutExerciseCard (bug fix per decision [05-04])
+- [09-03]: Rest time save is independent from structural template update -- per-exercise save only runs when no structural changes or user declined
+- [09-03]: INACTIVE timer text color changed from textMuted to textPrimary for readable contrast against textMuted fill
 
 ### Pending Todos
 
@@ -203,5 +205,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 09-02-PLAN.md. Phase 9 plan 2 of 3 complete.
+Stopped at: Completed 09-03-PLAN.md. Phase 9 complete (3/3 plans).
 Resume file: None
