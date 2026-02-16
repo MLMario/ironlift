@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 6 (Charts) in progress. Plans 01-03 complete.
+**Current focus:** Phase 6 (Charts) complete including UAT gap closure. Ready for Phase 7.
 
 ## Current Position
 
 Phase: 6 of 7 (Charts)
-Plan: 4 of 4 in current phase
-Status: Phase complete
-Last activity: 2026-02-15 -- Completed 06-04-PLAN.md (dashboard integration)
+Plan: 5 of 5 in current phase (includes gap closure plan)
+Status: Phase complete (all UAT gaps closed)
+Last activity: 2026-02-15 -- Completed 06-05-PLAN.md (UAT gap closure)
 
-Progress: [████████████████████████████] 32/32 plans (100%)
+Progress: [█████████████████████████████] 33/33 plans (100%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 32
-- Average duration: ~3.1 min (including human verification)
-- Total execution time: ~98 min
+- Total plans completed: 33
+- Average duration: ~3.0 min (including human verification)
+- Total execution time: ~100 min
 
 **By Phase:**
 
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 3. Exercise Library | 3/3 | ~7 min | ~2.3 min |
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
-| 6. Charts | 4/4 | ~8 min | ~2 min |
+| 6. Charts | 5/5 | ~10 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-01 (~2 min), 06-02 (~2 min), 06-03 (~2 min), 06-04 (~2 min)
-- Trend: Component creation plans executing at consistent ~2 min pace
+- Last 5 plans: 06-02 (~2 min), 06-03 (~2 min), 06-04 (~2 min), 06-05 (~2 min)
+- Trend: Bugfix plans executing at consistent ~2 min pace
 
 *Updated after each plan completion*
 
@@ -137,7 +137,7 @@ Recent decisions affecting current work:
 - [06-01]: createChart re-fetches with exercises join after insert (fixes web app bug)
 - [06-01]: getMetricDisplayName returns "Max Volume" (shortened from web's "Max Volume Set (lbs)") for mobile card titles
 - [06-01]: Cache key ironlift:charts with no expiry timestamps -- best-effort caching (same as exercises, templates)
-- [06-02]: useChartData dependency array uses [chart.id] only -- recomputes when chart config changes
+- [06-02]: useChartData dependency array uses [chart.id] only -- recomputes when chart config changes (SUPERSEDED by 06-05-01)
 - [06-02]: KebabMenu uses RN Modal pattern (proven in codebase) rather than absolute positioning
 - [06-02]: ChartCard tooltip shows rounded integer with unit suffix ("225 lbs", "12 sets")
 - [06-02]: ChartSection renders charts with .map() not FlatList to avoid nested scrollable container warnings
@@ -149,6 +149,10 @@ Recent decisions affecting current work:
 - [06-03]: Offline error detection via error message content check for network-related keywords
 - [06-04]: TemplateGrid uses .map() instead of FlatList for ScrollView compatibility (avoids nested scrollable warnings)
 - [06-04]: Dashboard ScrollView wraps both template and chart sections for continuous scroll experience
+- [06-05]: useChartData dependency changed from [chart.id] to [chart] to detect new object references from refreshCharts()
+- [06-05]: activatePointersOnLongPress: true enables scroll by default, tooltip on long press
+- [06-05]: Inner Pressable in AddChartSheet replaced with View + onStartShouldSetResponder to stop touch swallowing
+- [06-05]: KebabMenu uses View.measure() with collapsable={false} for reliable screen coordinate measurement
 
 ### Pending Todos
 
@@ -162,5 +166,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-15
-Stopped at: Completed 06-04-PLAN.md (dashboard integration). Phase 6 complete.
+Stopped at: Completed 06-05-PLAN.md (UAT gap closure). Phase 6 fully complete with all UAT gaps closed.
 Resume file: None
