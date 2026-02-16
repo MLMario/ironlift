@@ -15,18 +15,19 @@
  * decision: cannot be dismissed by tapping overlay).
  */
 
-import { View, Text, Pressable, Modal, StyleSheet } from 'react-native';
-import { useTheme } from '@/theme';
-import type { Theme } from '@/theme';
+import type { Theme } from "@/theme";
+import { useTheme } from "@/theme";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
 interface ConfirmationModalProps {
   visible: boolean;
   title: string;
   message: string;
+  messageAlign?: "left" | "center" | "right";
   secondaryMessage?: string;
   confirmLabel: string;
   cancelLabel: string;
-  confirmVariant: 'primary' | 'danger';
+  confirmVariant: "primary" | "danger";
   dismissOnOverlayPress?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -36,6 +37,7 @@ export function ConfirmationModal({
   visible,
   title,
   message,
+  messageAlign = "left",
   secondaryMessage,
   confirmLabel,
   cancelLabel,
@@ -48,9 +50,9 @@ export function ConfirmationModal({
   const styles = getStyles(theme);
 
   const confirmBgColor =
-    confirmVariant === 'danger' ? theme.colors.danger : theme.colors.accent;
+    confirmVariant === "danger" ? theme.colors.danger : theme.colors.accent;
   const confirmPressedColor =
-    confirmVariant === 'danger'
+    confirmVariant === "danger"
       ? theme.colors.dangerHover
       : theme.colors.accentHover;
 
@@ -71,7 +73,9 @@ export function ConfirmationModal({
       <Pressable style={styles.overlay} onPress={handleOverlayPress}>
         <Pressable style={styles.card} onPress={() => {}}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.message}>{message}</Text>
+          <Text style={[styles.message, { textAlign: messageAlign }]}>
+            {message}
+          </Text>
           {secondaryMessage ? (
             <Text style={styles.secondaryMessage}>{secondaryMessage}</Text>
           ) : null}
@@ -92,7 +96,11 @@ export function ConfirmationModal({
               onPress={onConfirm}
               style={({ pressed }) => [
                 styles.button,
-                { backgroundColor: pressed ? confirmPressedColor : confirmBgColor },
+                {
+                  backgroundColor: pressed
+                    ? confirmPressedColor
+                    : confirmBgColor,
+                },
               ]}
             >
               <Text style={styles.confirmButtonText}>{confirmLabel}</Text>
@@ -108,13 +116,13 @@ function getStyles(theme: Theme) {
   return StyleSheet.create({
     overlay: {
       flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0,0,0,0.6)",
+      justifyContent: "center",
+      alignItems: "center",
       paddingHorizontal: theme.spacing.lg,
     },
     card: {
-      width: '100%',
+      width: "100%",
       maxWidth: 340,
       backgroundColor: theme.colors.bgSurface,
       borderRadius: theme.radii.lg,
@@ -129,18 +137,19 @@ function getStyles(theme: Theme) {
     message: {
       fontSize: theme.typography.sizes.base,
       color: theme.colors.textSecondary,
-      lineHeight: theme.typography.sizes.base * theme.typography.lineHeights.base,
+      lineHeight:
+        theme.typography.sizes.base * theme.typography.lineHeights.base,
       marginBottom: theme.spacing.sm,
     },
     secondaryMessage: {
       fontSize: theme.typography.sizes.sm,
       color: theme.colors.textMuted,
-      fontStyle: 'italic',
+      fontStyle: "italic",
       lineHeight: theme.typography.sizes.sm * theme.typography.lineHeights.base,
       marginBottom: theme.spacing.sm,
     },
     buttonRow: {
-      flexDirection: 'row',
+      flexDirection: "row",
       gap: theme.spacing.sm,
       marginTop: theme.spacing.md,
     },
@@ -148,8 +157,8 @@ function getStyles(theme: Theme) {
       flex: 1,
       minHeight: 44,
       borderRadius: theme.radii.md,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       paddingVertical: theme.spacing.sm,
     },
     cancelButton: {

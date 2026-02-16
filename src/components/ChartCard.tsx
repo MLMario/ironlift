@@ -5,9 +5,8 @@
  * Uses react-native-gifted-charts LineChart with smooth curves, accent blue line,
  * gradient fill, and pointer-based tooltips.
  *
- * Handles three states:
+ * Handles two states:
  * - Loading: dim placeholder area
- * - Not enough data (<2 points): informational message
  * - Ready: full LineChart with all locked decision props
  */
 
@@ -56,7 +55,7 @@ const MIN_LABEL_SPACING = 28;
  */
 function thinLabels(
   items: ChartLineDataItem[],
-  containerWidth: number
+  containerWidth: number,
 ): ChartLineDataItem[] {
   if (items.length <= 1) return items;
 
@@ -72,10 +71,15 @@ function thinLabels(
   return items.map((item, index) => ({
     ...item,
     label:
-      index % showEveryN === 0 || index === items.length - 1
-        ? item.label
-        : "",
+      index % showEveryN === 0 || index === items.length - 1 ? item.label : "",
   }));
+}
+
+function formatYlabel(label: string): string {
+  const value = Number(label);
+  if (value > 1000) return `${(value / 1000).toFixed(1)}k`;
+  if (value >= 100 && value < 1000) return `${value.toFixed(0)}`;
+  if (value < 100) return `${value.toFixed(1)}`;
 }
 
 export function ChartCard({ chart, onDelete }: ChartCardProps) {
@@ -111,16 +115,6 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
       return <View style={styles.placeholder} />;
     }
 
-    if (data.length < 2) {
-      return (
-        <View style={styles.notEnoughData}>
-          <Text style={styles.notEnoughDataText}>
-            Not enough data to display chart
-          </Text>
-        </View>
-      );
-    }
-
     const thinnedData = thinLabels(data, chartWidth);
     const effectiveRadius = data.length > 50 ? 2 : data.length > 30 ? 3 : 4;
 
@@ -141,17 +135,25 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
             dataPointsRadius={effectiveRadius}
             height={180}
             adjustToWidth
-            parentWidth={chartWidth}
+            parentWidth={chartWidth - 15}
             disableScroll
-            yAxisLabelWidth={0}
             initialSpacing={INITIAL_SPACING}
-            hideYAxisText
+            /* Y axis properties */
+            yAxisLabelWidth={25}
+            yAxisColor="transparent"
+            hideYAxisText={false}
+            formatYLabel={formatYlabel}
+            yAxisTextStyle={{
+              color: theme.colors.textSecondary,
+              fontSize: 10,
+            }}
+            noOfSections={5}
+            /*X Axis propertes */
             xAxisLabelTextStyle={{
               color: theme.colors.textMuted,
               fontSize: 10,
             }}
             xAxisColor={theme.colors.border}
-            yAxisColor="transparent"
             isAnimated={false}
             hideRules
             pointerConfig={{
@@ -199,6 +201,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
         visible={showDeleteConfirm}
         title="Delete Chart"
         message={`Delete "${chart.exercises.name}" chart?`}
+        messageAlign="center"
         confirmLabel="Delete"
         cancelLabel="Cancel"
         confirmVariant="danger"
@@ -225,9 +228,9 @@ function getStyles(theme: Theme) {
     },
     title: {
       flex: 1,
-      fontSize: theme.typography.sizes.sm,
+      fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.medium,
-      color: theme.colors.textSecondary,
+      color: theme.colors.textPrimary,
     },
     placeholder: {
       height: 180,
@@ -235,18 +238,7 @@ function getStyles(theme: Theme) {
       margin: theme.spacing.md,
       borderRadius: theme.radii.md,
     },
-    notEnoughData: {
-      height: 180,
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: theme.spacing.md,
-    },
-    notEnoughDataText: {
-      fontSize: theme.typography.sizes.sm,
-      color: theme.colors.textMuted,
-      textAlign: "center",
-    },
-    chartContainer: {
+chartContainer: {
       paddingBottom: theme.spacing.sm,
       paddingTop: theme.spacing.xs,
     },

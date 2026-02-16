@@ -6,17 +6,24 @@
  * Tapping a workout card navigates to the workout detail screen.
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, FlatList, ActivityIndicator, Pressable, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useTheme, type Theme } from '@/theme';
-import { Ionicons } from '@expo/vector-icons';
-import { logging } from '@/services/logging';
-import { SummaryStatsBar } from '@/components/SummaryStatsBar';
-import { WorkoutHistoryCard } from '@/components/WorkoutHistoryCard';
-import { formatWorkoutDate } from '@/lib/formatters';
-import type { WorkoutHistoryItem, WorkoutSummaryStats } from '@/types/services';
+import { SummaryStatsBar } from "@/components/SummaryStatsBar";
+import { WorkoutHistoryCard } from "@/components/WorkoutHistoryCard";
+import { formatWorkoutDate } from "@/lib/formatters";
+import { logging } from "@/services/logging";
+import { useTheme, type Theme } from "@/theme";
+import type { WorkoutHistoryItem, WorkoutSummaryStats } from "@/types/services";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PAGE_SIZE = 7;
 
@@ -27,8 +34,8 @@ function getStyles(theme: Theme) {
       backgroundColor: theme.colors.bgPrimary,
     },
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       paddingHorizontal: theme.spacing.md,
       paddingVertical: theme.spacing.sm,
       borderBottomWidth: 1,
@@ -37,23 +44,23 @@ function getStyles(theme: Theme) {
     backButton: {
       minWidth: 44,
       minHeight: 44,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     headerTitle: {
       fontSize: theme.typography.sizes.xl,
       fontWeight: theme.typography.weights.semibold,
       color: theme.colors.textPrimary,
       flex: 1,
-      textAlign: 'center',
+      textAlign: "center",
     },
     headerSpacer: {
       width: 44,
     },
     loadingContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     listContent: {
       paddingHorizontal: theme.spacing.md,
@@ -65,9 +72,9 @@ function getStyles(theme: Theme) {
     },
     emptyContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingVertical: theme.spacing['2xl'],
+      justifyContent: "center",
+      alignItems: "center",
+      paddingVertical: theme.spacing["2xl"],
     },
     emptyText: {
       color: theme.colors.textMuted,
@@ -76,10 +83,10 @@ function getStyles(theme: Theme) {
     timelineItem: {
       paddingLeft: 28,
       paddingBottom: theme.spacing.md,
-      position: 'relative' as const,
+      position: "relative" as const,
     },
     timelineDot: {
-      position: 'absolute' as const,
+      position: "absolute" as const,
       left: 2,
       top: 18,
       width: 10,
@@ -88,7 +95,7 @@ function getStyles(theme: Theme) {
       backgroundColor: theme.colors.accent,
     },
     timelineLine: {
-      position: 'absolute' as const,
+      position: "absolute" as const,
       left: 6,
       top: 28,
       bottom: 0,
@@ -114,7 +121,11 @@ export default function HistoryScreen() {
   const router = useRouter();
 
   const [workouts, setWorkouts] = useState<WorkoutHistoryItem[]>([]);
-  const [stats, setStats] = useState<WorkoutSummaryStats>({ totalWorkouts: 0, totalSets: 0, totalVolume: 0 });
+  const [stats, setStats] = useState<WorkoutSummaryStats>({
+    totalWorkouts: 0,
+    totalSets: 0,
+    totalVolume: 0,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -141,7 +152,7 @@ export default function HistoryScreen() {
         setStats(summaryResult.data);
       }
     } catch (err) {
-      console.error('Failed to load workout history:', err);
+      console.error("Failed to load workout history:", err);
     } finally {
       setIsLoading(false);
       setStatsLoaded(true);
@@ -153,37 +164,49 @@ export default function HistoryScreen() {
 
     setIsLoadingMore(true);
     try {
-      const result = await logging.getWorkoutLogsPaginated(workouts.length, PAGE_SIZE);
+      const result = await logging.getWorkoutLogsPaginated(
+        workouts.length,
+        PAGE_SIZE,
+      );
       if (result.data) {
-        setWorkouts(prev => [...prev, ...result.data!.data]);
+        setWorkouts((prev) => [...prev, ...result.data!.data]);
         setHasMore(result.data.hasMore);
       }
     } catch (err) {
-      console.error('Failed to load more workouts:', err);
+      console.error("Failed to load more workouts:", err);
     } finally {
       setIsLoadingMore(false);
     }
   }, [isLoadingMore, hasMore, workouts.length]);
 
-  const renderItem = useCallback(({ item, index }: { item: WorkoutHistoryItem; index: number }) => (
-    <View style={styles.timelineItem}>
-      {index < workouts.length - 1 && <View style={styles.timelineLine} />}
-      <View style={styles.timelineDot} />
-      <View style={styles.timelineContent}>
-        <Text style={styles.dateText}>{formatWorkoutDate(item.started_at)}</Text>
-        <WorkoutHistoryCard
-          workout={item}
-          onPress={() => router.push(`/settings/${item.id}`)}
-        />
+  const renderItem = useCallback(
+    ({ item, index }: { item: WorkoutHistoryItem; index: number }) => (
+      <View style={styles.timelineItem}>
+        {index < workouts.length - 1 && <View style={styles.timelineLine} />}
+        <View style={styles.timelineDot} />
+        <View style={styles.timelineContent}>
+          <Text style={styles.dateText}>
+            {formatWorkoutDate(item.started_at)}
+          </Text>
+          <WorkoutHistoryCard
+            workout={item}
+            onPress={() => router.push(`/settings/${item.id}`)}
+          />
+        </View>
       </View>
-    </View>
-  ), [router, styles, workouts.length]);
+    ),
+    [router, styles, workouts.length],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color={theme.colors.textPrimary} />
+          <Ionicons
+            name="chevron-back"
+            size={24}
+            color={theme.colors.textPrimary}
+          />
         </Pressable>
         <Text style={styles.headerTitle}>Workout History</Text>
         <View style={styles.headerSpacer} />
@@ -208,7 +231,7 @@ export default function HistoryScreen() {
               isLoading={!statsLoaded}
             />
           }
-          stickyHeaderIndices={[0]}
+          /*stickyHeaderIndices={[0]}*/
           ListFooterComponent={
             isLoadingMore ? (
               <ActivityIndicator
@@ -226,7 +249,9 @@ export default function HistoryScreen() {
             ) : null
           }
           contentContainerStyle={
-            workouts.length === 0 && !isLoading ? styles.emptyList : styles.listContent
+            workouts.length === 0 && !isLoading
+              ? styles.emptyList
+              : styles.listContent
           }
           showsVerticalScrollIndicator={false}
         />

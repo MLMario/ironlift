@@ -11,29 +11,29 @@
  * maxWidth 340, bgSurface.
  */
 
-import { useState, useEffect } from 'react';
+import { exercises } from "@/services/exercises";
+import { useTheme, type Theme } from "@/theme";
+import type { ExerciseCategory } from "@/types/database";
+import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Modal,
-  View,
+  Pressable,
+  StyleSheet,
   Text,
   TextInput,
-  Pressable,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme, type Theme } from '@/theme';
-import { exercises } from '@/services/exercises';
-import type { ExerciseCategory } from '@/types/database';
+  View,
+} from "react-native";
 
 const CATEGORIES: ExerciseCategory[] = [
-  'Chest',
-  'Back',
-  'Shoulders',
-  'Legs',
-  'Arms',
-  'Core',
-  'Other',
+  "Chest",
+  "Back",
+  "Shoulders",
+  "Legs",
+  "Arms",
+  "Core",
+  "Other",
 ];
 
 interface CreateExerciseModalProps {
@@ -50,8 +50,8 @@ export function CreateExerciseModal({
   const theme = useTheme();
   const styles = getStyles(theme);
 
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState<ExerciseCategory>('Chest');
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState<ExerciseCategory>("Chest");
   const [error, setError] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
@@ -59,8 +59,8 @@ export function CreateExerciseModal({
   // Reset state on modal open
   useEffect(() => {
     if (visible) {
-      setName('');
-      setCategory('Chest');
+      setName("");
+      setCategory("Chest");
       setError(null);
       setShowCategoryDropdown(false);
     }
@@ -71,12 +71,12 @@ export function CreateExerciseModal({
 
     const trimmed = name.trim();
     if (!trimmed) {
-      setError('Name cannot be empty');
+      setError("Name cannot be empty");
       return;
     }
 
-    if (!/^[a-zA-Z0-9 ]+$/.test(trimmed)) {
-      setError('Name can only contain letters, numbers, and spaces');
+    if (!/^[a-zA-Z0-9 -]+$/.test(trimmed)) {
+      setError("Name can only contain letters, numbers, spaces, and dashes");
       return;
     }
 
@@ -85,11 +85,11 @@ export function CreateExerciseModal({
     setIsCreating(false);
 
     if (result.error) {
-      const msg = result.error.message || '';
-      if (msg.toLowerCase().includes('already exists')) {
-        setError('An exercise with this name already exists');
+      const msg = result.error.message || "";
+      if (msg.toLowerCase().includes("already exists")) {
+        setError("An exercise with this name already exists");
       } else {
-        setError('Failed to create exercise');
+        setError("Failed to create exercise");
       }
       return;
     }
@@ -128,7 +128,7 @@ export function CreateExerciseModal({
           >
             <Text style={styles.categoryDropdownText}>{category}</Text>
             <Ionicons
-              name={showCategoryDropdown ? 'chevron-up' : 'chevron-down'}
+              name={showCategoryDropdown ? "chevron-up" : "chevron-down"}
               size={16}
               color={theme.colors.textSecondary}
             />
@@ -193,13 +193,13 @@ function getStyles(theme: Theme) {
   return StyleSheet.create({
     overlay: {
       flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor: "rgba(0,0,0,0.6)",
+      justifyContent: "center",
+      alignItems: "center",
       paddingHorizontal: theme.spacing.lg,
     },
     card: {
-      width: '100%',
+      width: "100%",
       maxWidth: 340,
       backgroundColor: theme.colors.bgSurface,
       borderRadius: theme.radii.lg,
@@ -221,9 +221,9 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.base,
     },
     categoryDropdownTrigger: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
       backgroundColor: theme.colors.bgPrimary,
       borderRadius: theme.radii.md,
       padding: theme.spacing.sm,
@@ -241,7 +241,7 @@ function getStyles(theme: Theme) {
       borderWidth: 1,
       borderColor: theme.colors.border,
       marginTop: theme.spacing.xs,
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     categoryOption: {
       paddingVertical: theme.spacing.xs + 2,
@@ -264,7 +264,7 @@ function getStyles(theme: Theme) {
       marginTop: theme.spacing.xs,
     },
     buttonRow: {
-      flexDirection: 'row',
+      flexDirection: "row",
       gap: theme.spacing.sm,
       marginTop: theme.spacing.md,
     },
@@ -273,8 +273,8 @@ function getStyles(theme: Theme) {
       backgroundColor: theme.colors.bgElevated,
       borderRadius: theme.radii.md,
       minHeight: 44,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     cancelButtonText: {
       fontSize: theme.typography.sizes.base,
@@ -286,8 +286,8 @@ function getStyles(theme: Theme) {
       backgroundColor: theme.colors.accent,
       borderRadius: theme.radii.md,
       minHeight: 44,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     createButtonText: {
       fontSize: theme.typography.sizes.base,

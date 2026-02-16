@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 05-active-workout
 source: 05-UAT.md (round 1 retests), 05-UAT-round2.md (fix verification), 05-07-SUMMARY.md, 05-08-SUMMARY.md
 started: 2026-02-14T00:00:00Z
@@ -95,9 +95,12 @@ skipped: 0
   reason: "User reported: rest time text is full but bar fill is not full/empty"
   severity: minor
   test: 6
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "RestTimerBar.tsx line 72: inactive fill color is bgElevated (#27272a) which is nearly identical to the track color border (#2a2a2a). The fill is at 100% width but invisible because colors are the same shade."
+  artifacts:
+    - path: "src/components/RestTimerBar.tsx"
+      issue: "Line 72: backgroundColor when !isActive is theme.colors.bgElevated, same shade as track"
+  missing:
+    - "Change inactive fill color to a visible color (e.g. accent or textMuted) that contrasts with the border track"
   debug_session: ""
 
 - truth: "Timer bar should reset to full fill when countdown ends"
@@ -105,11 +108,23 @@ skipped: 0
   reason: "User reported: timer text reset, bar stays empty"
   severity: minor
   test: 7
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "Same root cause as Test 6 — inactive fill color blends with track background"
+  artifacts:
+    - path: "src/components/RestTimerBar.tsx"
+      issue: "Same line 72: inactive state fill color indistinguishable from track"
+  missing:
+    - "Same fix as Test 6"
   debug_session: ""
 
-## Additional Feedback
-
-- Test 4 note: "bar needs to be significantly thicker, almost as much height as the +/-10s buttons"
+- truth: "Timer bar should be significantly thicker (closer to button height)"
+  status: feedback
+  reason: "User feedback: bar needs to be significantly thicker, almost as much height as the +/-10s buttons"
+  severity: cosmetic
+  test: 4
+  root_cause: "RestTimerBar.tsx barTrack height is 8px, buttons are 44px min height. Track needs to be much taller."
+  artifacts:
+    - path: "src/components/RestTimerBar.tsx"
+      issue: "Line 132: barTrack height: 8 — too thin compared to 44px buttons"
+  missing:
+    - "Increase barTrack height significantly (e.g., 28-32px) to match button prominence"
+  debug_session: ""

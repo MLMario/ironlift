@@ -1,0 +1,26 @@
+{
+  "model": "claude-opus-4-6",
+  "permissions": {
+    "allow": [
+      "Bash(git commit:*)",
+      "Skill(gsd:execute-plan)",
+      "Skill(gsd:execute-plan:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)",
+      "Bash(findstr:*)",
+      "Bash(vercel:*)",
+      "Bash(git reset:*)",
+      "Bash(npm ls:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git stash:*)",
+      "Bash(git restore:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}

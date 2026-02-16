@@ -7,11 +7,11 @@
  * without nested scrollable container warnings.
  */
 
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useTheme } from '@/theme';
-import type { Theme } from '@/theme';
-import { TemplateCard } from '@/components/TemplateCard';
-import type { TemplateWithExercises } from '@/types/database';
+import { TemplateCard } from "@/components/TemplateCard";
+import type { Theme } from "@/theme";
+import { useTheme } from "@/theme";
+import type { TemplateWithExercises } from "@/types/database";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface TemplateGridProps {
   templates: TemplateWithExercises[];
@@ -45,7 +45,9 @@ export function TemplateGrid({
           <Text style={styles.createButtonText}>+ Create</Text>
         </Pressable>
       </View>
+
       <View style={styles.templateList}>
+        <Text style={styles.sectionSubTitle}> Log a Workout</Text>
         {templates.map((template) => (
           <TemplateCard
             key={template.id}
@@ -68,14 +70,15 @@ function getStyles(theme: Theme) {
       paddingBottom: theme.spacing.md,
     },
     sectionHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       paddingHorizontal: theme.spacing.md,
+      marginTop: theme.spacing.md,
       marginBottom: theme.spacing.lg,
     },
     sectionTitle: {
-      fontSize: theme.typography.sizes['2xl'],
+      fontSize: theme.typography.sizes["2xl"],
       fontWeight: theme.typography.weights.semibold,
       color: theme.colors.textPrimary,
     },
@@ -92,6 +95,11 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.sm,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textPrimary,
+    },
+    sectionSubTitle: {
+      fontSize: theme.typography.sizes.base,
+      color: theme.colors.textSecondary,
+      marginBottom: theme.spacing.sm,
     },
   });
 }

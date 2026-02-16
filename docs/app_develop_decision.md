@@ -29,7 +29,7 @@ This is a living document. Decisions may be revisited as development progresses 
 | **State mgmt** | Preact hooks (no global store) |
 | **Data persistence** | localStorage for active workout crash recovery only |
 | **Auth** | Supabase Auth (email/password), session via `onAuthStateChange` |
-| **Key features** | Exercise library (~200+), templates, active workout tracking, rest timer, workout history, charts |
+| **Key features** | Exercise library (~1000+), templates, active workout tracking, rest timer, workout history, charts |
 
 ---
 

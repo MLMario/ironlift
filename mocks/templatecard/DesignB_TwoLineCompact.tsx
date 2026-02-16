@@ -1,33 +1,35 @@
 /**
- * TemplateCard Component
+ * Design B: "Two-Line Compact"
  *
- * A swipeable template card for the dashboard list. Displays the template
- * name, exercise preview (first 2 exercises + "and N more"), and a Start
- * button. Swiping left reveals Edit and Delete action buttons.
+ * Layout: Two lines stacked — name on top, metadata + action on bottom.
  *
- * Renders full-width in a single-column layout. Start button has internal
- * margin within the card (not edge-to-edge).
+ *   [ Template Name                              ]
+ *   [ 3 exercises                        [Start] ]
  *
- * Uses ReanimatedSwipeable from react-native-gesture-handler for swipe
- * gestures with react-native-reanimated SharedValue animation.
+ * - Card height: ~64px (two text lines + padding)
+ * - Template name spans full width, truncated to 1 line
+ * - Second row: exercise count left, small Start button right
+ * - Swipe left reveals Edit | Delete (same as current)
+ * - No exercise preview names, just the count
+ *
+ * Estimated height savings: ~45% vs current card
  */
 
-import type { Theme } from "@/theme";
-import { useTheme } from "@/theme";
-import type { TemplateWithExercises } from "@/types/database";
-import { Ionicons } from "@expo/vector-icons";
-import { useRef } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useRef } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import ReanimatedSwipeable, {
   type SwipeableMethods,
-} from "react-native-gesture-handler/ReanimatedSwipeable";
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Animated, {
   useAnimatedStyle,
   type SharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
+import { useTheme } from '@/theme';
+import type { Theme } from '@/theme';
+import type { TemplateWithExercises } from '@/types/database';
 
 const RIGHT_ACTIONS_WIDTH = 140;
-const PLAY_BUTTON_SIZE = 40;
 
 interface Props {
   template: TemplateWithExercises;
@@ -36,7 +38,7 @@ interface Props {
   onStart: (template: TemplateWithExercises) => void;
 }
 
-export function TemplateCard({ template, onEdit, onDelete, onStart }: Props) {
+export function TemplateCardB({ template, onEdit, onDelete, onStart }: Props) {
   const theme = useTheme();
   const styles = getStyles(theme);
   const swipeableRef = useRef<SwipeableMethods | null>(null);
@@ -44,7 +46,7 @@ export function TemplateCard({ template, onEdit, onDelete, onStart }: Props) {
 
   function renderRightActions(
     _progress: SharedValue<number>,
-    translation: SharedValue<number>,
+    translation: SharedValue<number>
   ) {
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateX: translation.value + RIGHT_ACTIONS_WIDTH }],
@@ -86,25 +88,25 @@ export function TemplateCard({ template, onEdit, onDelete, onStart }: Props) {
       containerStyle={styles.swipeableContainer}
     >
       <View style={styles.card}>
-        {/* Left: circular play button */}
-        <Pressable
-          style={({ pressed }) => [
-            styles.playButton,
-            pressed && styles.playButtonPressed,
-          ]}
-          onPress={() => onStart(template)}
-        >
-          <Ionicons name="add" size={24} color={theme.colors.textPrimary} />
-        </Pressable>
+        {/* Row 1: Template name */}
+        <Text style={styles.templateName} numberOfLines={1}>
+          {template.name}
+        </Text>
 
-        {/* Right: name + count */}
-        <View style={styles.info}>
-          <Text style={styles.templateName} numberOfLines={1}>
-            {template.name}
-          </Text>
+        {/* Row 2: exercise count + Start */}
+        <View style={styles.bottomRow}>
           <Text style={styles.exerciseCount}>
-            {exerciseCount} {exerciseCount === 1 ? "exercise" : "exercises"}
+            {exerciseCount} {exerciseCount === 1 ? 'exercise' : 'exercises'}
           </Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.startButton,
+              pressed && styles.startButtonPressed,
+            ]}
+            onPress={() => onStart(template)}
+          >
+            <Text style={styles.startButtonText}>Start</Text>
+          </Pressable>
         </View>
       </View>
     </ReanimatedSwipeable>
@@ -115,61 +117,64 @@ function getStyles(theme: Theme) {
   return StyleSheet.create({
     swipeableContainer: {
       borderRadius: theme.radii.lg,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     card: {
       backgroundColor: theme.colors.bgSurface,
       borderRadius: theme.radii.lg,
-      flexDirection: "row",
-      alignItems: "center",
       paddingVertical: theme.spacing.sm,
       paddingHorizontal: theme.spacing.md,
-      gap: theme.spacing.md,
-    },
-    playButton: {
-      width: PLAY_BUTTON_SIZE,
-      height: PLAY_BUTTON_SIZE,
-      borderRadius: PLAY_BUTTON_SIZE / 2,
-      backgroundColor: theme.colors.accent,
-      justifyContent: "center",
-      alignItems: "center",
-      // Nudge play icon slightly right to visually center it
-      paddingLeft: 2,
-    },
-    playButtonPressed: {
-      backgroundColor: theme.colors.accentHover,
-    },
-    info: {
-      flex: 1,
-      gap: 2,
+      gap: theme.spacing.xs,
     },
     templateName: {
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.semibold,
       color: theme.colors.textPrimary,
     },
+    bottomRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
     exerciseCount: {
-      fontSize: theme.typography.sizes.xs,
+      fontSize: theme.typography.sizes.sm,
       color: theme.colors.textMuted,
+    },
+    startButton: {
+      backgroundColor: theme.colors.accent,
+      borderRadius: theme.radii.md,
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: 6,
+      minHeight: 32,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    startButtonPressed: {
+      backgroundColor: theme.colors.accentHover,
+    },
+    startButtonText: {
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.medium,
+      color: theme.colors.textPrimary,
     },
 
     // Swipe actions — identical to current
     rightActionsContainer: {
-      flexDirection: "row",
+      flexDirection: 'row',
       width: RIGHT_ACTIONS_WIDTH,
     },
     editAction: {
       width: 70,
       backgroundColor: theme.colors.accent,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       gap: 4,
     },
     deleteAction: {
       width: 70,
       backgroundColor: theme.colors.danger,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       gap: 4,
     },
     actionText: {
