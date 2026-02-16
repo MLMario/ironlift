@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 7: History and Settings** - Workout history timeline, settings bottom sheet, My Exercises screen
 - [x] **Phase 8: Chart Fit-to-Width Display** - Show all chart data points in one view without horizontal scrolling
 - [x] **Phase 9: Timer Fixes** - Rest timer visible on workout start, direct time editing via text input
-- [ ] **Phase 10: Settings Stack Navigation** - Replace settings bottom sheet with full-screen stack navigation (slide from right with back button)
+- [x] **Phase 10: Settings Stack Navigation** - Replace settings bottom sheet with full-screen stack navigation (slide from right with back button)
 
 ## Phase Details
 
@@ -231,7 +231,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 10-01-PLAN.md — Settings index screen, dashboard rewiring, SettingsSheet deletion, @gorhom/bottom-sheet removal
+- [x] 10-01-PLAN.md — Settings index screen, dashboard rewiring, SettingsSheet deletion, @gorhom/bottom-sheet removal
 
 ## Progress
 
@@ -249,4 +249,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. History and Settings | 5/5 | Complete | 2026-02-16 |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
 | 9. Timer Fixes | 3/3 | Complete | 2026-02-16 |
-| 10. Settings Stack Navigation | 0/1 | Not started | - |
+| 10. Settings Stack Navigation | 1/1 | Complete | 2026-02-16 |
