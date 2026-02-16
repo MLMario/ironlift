@@ -164,7 +164,7 @@ Plans:
 - [x] 06-02-PLAN.md — Chart rendering components (useChartData, KebabMenu, ChartCard, ChartSection)
 - [x] 06-03-PLAN.md — Add Chart bottom sheet with exercise selection and radio buttons
 - [x] 06-04-PLAN.md — Dashboard integration (ScrollView conversion, chart wiring) and human verification
-- [ ] 06-05-PLAN.md — Gap closure: CTA cutoff, tooltip text width, kebab menu positioning
+- [ ] 06-05-PLAN.md — Gap closure: all 6 UAT issues (CTA cutoff, tooltip width, kebab position, chart refresh, first-touch, horizontal scroll)
 
 ### Phase 7: History and Settings
 **Goal**: Users can review past workouts in a paginated timeline, manage their custom exercises, and access app settings -- completing the full feature set for release
