@@ -1,177 +1,195 @@
 ---
 phase: 06-charts
-verified: 2026-02-15T15:30:00Z
+verified: 2026-02-15
 status: passed
-score: 4/4 must-haves verified
-re_verification: false
+must_haves_total: 10
+must_haves_verified: 10
+re_verification: true
+previous_verification:
+  date: 2026-02-15T15:30:00Z
+  status: passed
+  score: 4/4
+  note: "Initial verification passed all must-haves. UAT testing revealed 6 integration issues fixed in plan 06-05."
+gaps_closed:
+  - "Add Chart bottom sheet shows full content including CTA button above home indicator"
+  - "Chart tooltip displays value text readable on a single line"
+  - "Kebab menu dropdown appears next to the three-dot icon"
+  - "Chart data refreshes automatically after finishing a workout"
+  - "Exercise picker list responds to first touch/drag immediately"
+  - "Charts with many data points are horizontally scrollable"
 ---
 
-# Phase 6: Charts Verification Report
+# Phase 6: Charts Verification Report (Re-verification)
 
 **Phase Goal:** Users can create per-exercise progress charts that visualize their training history on the dashboard -- closing the feedback loop that makes consistent training motivating
 
-**Verified:** 2026-02-15T15:30:00Z
+**Verified:** 2026-02-15
 **Status:** PASSED
-**Re-verification:** No - initial verification
+**Re-verification:** Yes (after UAT gap closure in plan 06-05)
+
+## Verification History
+
+**Initial Verification (2026-02-15T15:30:00Z):**
+- Status: PASSED
+- Score: 4/4 core must-haves verified
+- All structural verification passed (artifacts exist, substantive, wired)
+
+**UAT Testing (06-UAT.md):**
+- 12 user acceptance tests executed
+- 6 passed initially, 6 issues found
+- All 6 issues diagnosed with root causes identified
+
+**Gap Closure (Plan 06-05):**
+- All 6 UAT gaps addressed with targeted fixes
+- 4 files modified (useChartData.ts, ChartCard.tsx, AddChartSheet.tsx, KebabMenu.tsx)
+- No new dependencies, all fixes are code-level adjustments
+
+**This Re-verification:**
+- Focus: Verify all 6 gap fixes are actually present in code
+- Method: Direct source inspection of modified files
+- Result: All 6 fixes confirmed present and correct
 
 ## Goal Achievement
 
-### Observable Truths
+### Observable Truths (Core Must-Haves)
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | User can create a chart by selecting an exercise, a metric type, and an x-axis mode | VERIFIED | AddChartSheet component with exercise picker, metric radio buttons, x-axis radio buttons, calls charts.createChart |
-| 2 | Charts render as line charts with gradient fill on dashboard below templates | VERIFIED | ChartCard renders LineChart with areaChart, gradient fill, curved lines. ChartSection below TemplateGrid in ScrollView |
-| 3 | Chart data is computed client-side from cached workout history | VERIFIED | useChartData calls logging.getExerciseMetrics which computes from local workout data. No API endpoint |
+| 1 | User can create a chart by selecting an exercise, a metric type, and an x-axis mode | VERIFIED | AddChartSheet with exercise picker, metric radio buttons (Total Sets/Max Volume), x-axis radio buttons (By Date/By Session), calls charts.createChart |
+| 2 | Charts render as line charts with gradient fill on dashboard below templates | VERIFIED | ChartCard renders LineChart with areaChart, gradient fill (rgba(79,158,255,0.3) to 0.01), curved lines. ChartSection below TemplateGrid in ScrollView |
+| 3 | Chart data is computed client-side from cached workout history | VERIFIED | useChartData calls logging.getExerciseMetrics which computes from local workout_logs. No separate API endpoint |
 | 4 | User can delete a chart from the dashboard | VERIFIED | KebabMenu triggers ConfirmationModal, calls charts.deleteChart. Complete delete flow wired |
 
-**Score:** 4/4 truths verified
+**Core Score:** 4/4 truths verified
+
+### UAT Gap Fixes (Additional Must-Haves from Testing)
+
+| # | Truth | Status | Evidence |
+|---|-------|--------|----------|
+| 5 | Add Chart bottom sheet shows full content including CTA button above home indicator | VERIFIED | AddChartSheet.tsx lines 25, 164, 273: useSafeAreaInsets applied as paddingBottom |
+| 6 | Chart tooltip displays value text readable on a single line | VERIFIED | ChartCard.tsx line 212: tooltip style has flexShrink: 0 |
+| 7 | Kebab menu dropdown appears next to the three-dot icon | VERIFIED | KebabMenu.tsx lines 26-34, 47, 74: View.measure() with dynamic top positioning |
+| 8 | Chart data refreshes automatically after finishing a workout | VERIFIED | useChartData.ts line 97: dependency array is [chart] not [chart.id] |
+| 9 | Exercise picker list responds to first touch/drag immediately | VERIFIED | AddChartSheet.tsx lines 272-275: View with onStartShouldSetResponder replaces Pressable |
+| 10 | Charts with many data points are horizontally scrollable | VERIFIED | ChartCard.tsx line 120: activatePointersOnLongPress: true enables scroll |
+
+**UAT Gap Closure Score:** 6/6 fixes verified
+
+**Overall Score:** 10/10 must-haves verified
 
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| src/services/charts.ts | Chart CRUD operations | VERIFIED | 298 lines. getUserCharts, createChart, deleteChart, reorderCharts, display helpers. Imported by AddChartSheet and dashboard |
-| src/hooks/useCharts.ts | Cache-first chart config loading | VERIFIED | 87 lines. Returns charts, isLoading, error, refresh. Used by dashboard |
-| src/hooks/useChartData.ts | Chart data computation | VERIFIED | 101 lines. Calls logging.getExerciseMetrics, transforms to ChartLineDataItem. Used by ChartCard |
-| src/lib/cache.ts | Chart cache functions | VERIFIED | CACHE_KEY_CHARTS, getCachedCharts, setCachedCharts, clearChartCache added |
-| src/components/ChartCard.tsx | Chart rendering with LineChart | VERIFIED | 221 lines. LineChart with gradient, tooltips, KebabMenu, ConfirmationModal |
-| src/components/ChartSection.tsx | Charts section container | VERIFIED | 141 lines. Header, chart list via map, empty state, 25-chart limit |
-| src/components/AddChartSheet.tsx | Chart creation modal | VERIFIED | 608 lines. Half-height sheet, exercise picker, radio buttons, creates chart |
-| src/components/KebabMenu.tsx | Three-dot menu | VERIFIED | 125 lines. Modal-based dropdown with Delete action |
-| app/index.tsx | Dashboard integration | VERIFIED | ChartSection below TemplateGrid in ScrollView. Chart handlers wired |
-| package.json | Chart dependencies | VERIFIED | react-native-gifted-charts and expo-linear-gradient installed |
-
+| src/services/charts.ts | Chart CRUD operations | VERIFIED | 298 lines. getUserCharts, createChart, deleteChart, reorderCharts |
+| src/hooks/useCharts.ts | Cache-first chart loading | VERIFIED | 87 lines. Returns charts, isLoading, error, refresh |
+| src/hooks/useChartData.ts | Chart data computation | VERIFIED | 101 lines. Fixed: dependency [chart] not [chart.id] |
+| src/lib/cache.ts | Chart cache functions | VERIFIED | CACHE_KEY_CHARTS, getCachedCharts, setCachedCharts |
+| src/components/ChartCard.tsx | Chart rendering | VERIFIED | 221 lines. Fixed: flexShrink:0, activatePointersOnLongPress:true |
+| src/components/ChartSection.tsx | Charts section | VERIFIED | 141 lines. Header, chart list, empty state, 25-chart limit |
+| src/components/AddChartSheet.tsx | Chart creation modal | VERIFIED | 613 lines. Fixed: useSafeAreaInsets, onStartShouldSetResponder |
+| src/components/KebabMenu.tsx | Three-dot menu | VERIFIED | 137 lines. Fixed: View.measure() positioning |
+| app/index.tsx | Dashboard integration | VERIFIED | ChartSection below TemplateGrid, useFocusEffect refresh |
+| package.json | Chart dependencies | VERIFIED | react-native-gifted-charts, expo-linear-gradient |
 
 ### Key Link Verification
 
-| From | To | Via | Status | Details |
-|------|----|----|--------|---------|
-| ChartCard | useChartData | hook import | WIRED | Line 17 import, Line 51 const data = useChartData |
-| useChartData | logging.getExerciseMetrics | service call | WIRED | Line 10 import, Line 63 await logging.getExerciseMetrics |
-| ChartCard | LineChart | component | WIRED | Line 24 import, Line 87 LineChart with gradient props |
-| AddChartSheet | charts.createChart | service call | WIRED | Line 28 import, Line 209 await charts.createChart |
-| AddChartSheet | exercises.getExercisesWithLoggedData | service call | WIRED | Line 27 import, Line 180 await getExercisesWithLoggedData |
-| Dashboard | ChartSection | component render | WIRED | Line 39 import, Line 185 ChartSection render |
-| Dashboard | useCharts | hook import | WIRED | Line 34 import, Line 50 const charts = useCharts |
-| useCharts | charts.getUserCharts | service call | WIRED | Line 13 import, Line 57 await getUserCharts |
-| useCharts | cache | get/set functions | WIRED | Line 14 import, Line 46 getCachedCharts, Line 62 setCachedCharts |
-
+| From | To | Via | Status |
+|------|----|----|--------|
+| ChartCard | useChartData | hook import | WIRED |
+| useChartData | logging.getExerciseMetrics | service call | WIRED |
+| ChartCard | LineChart | component | WIRED |
+| AddChartSheet | charts.createChart | service call | WIRED |
+| Dashboard | ChartSection | component render | WIRED |
+| Dashboard | useCharts | hook import | WIRED |
+| Dashboard | useFocusEffect refresh | navigation lifecycle | WIRED |
 
 ### Requirements Coverage
 
-| Requirement | Status | Blocking Issue |
-|-------------|--------|----------------|
-| CHRT-01: Create chart with exercise/metric/axis selection | SATISFIED | None. AddChartSheet implements full creation flow |
-| CHRT-02: Metric types total sets and max volume | SATISFIED | None. Radio buttons offer both metric types |
-| CHRT-03: X-axis modes by date and by session | SATISFIED | None. Radio buttons offer both axis modes |
-| CHRT-04: Charts render as line charts with gradient fill | SATISFIED | None. LineChart with areaChart and gradient colors |
-| CHRT-05: Chart data computed client-side from cached workout history | SATISFIED | None. useChartData calls logging.getExerciseMetrics |
-| CHRT-06: User can delete a chart | SATISFIED | None. KebabMenu to ConfirmationModal to deleteChart flow complete |
-| CHRT-07: Charts display on dashboard below templates | SATISFIED | None. ChartSection positioned after TemplateGrid |
-| DASH-03: Dashboard displays exercise charts below templates | SATISFIED | None. ChartSection rendered below TemplateGrid |
-| DASH-04: Each chart card shows exercise name, metric type, and chart | SATISFIED | None. Title format verified, LineChart rendered |
-| DASH-07: Tapping Add Chart opens add chart modal | SATISFIED | None. Add Chart button opens AddChartSheet |
+| Requirement | Status |
+|-------------|--------|
+| CHRT-01: Create chart with exercise/metric/axis selection | SATISFIED |
+| CHRT-02: Metric types total sets and max volume | SATISFIED |
+| CHRT-03: X-axis modes by date and by session | SATISFIED |
+| CHRT-04: Charts render as line charts with gradient fill | SATISFIED |
+| CHRT-05: Chart data computed client-side | SATISFIED |
+| CHRT-06: User can delete a chart | SATISFIED |
+| CHRT-07: Charts display on dashboard below templates | SATISFIED |
+| DASH-03: Dashboard displays exercise charts | SATISFIED |
+| DASH-04: Chart cards show exercise name, metric, chart | SATISFIED |
+| DASH-07: Tapping Add Chart opens modal | SATISFIED |
 
+
+### Gap Fix Verification (Code-Level)
+
+#### Gap 1: CTA Button Cutoff
+**Issue:** AddChartSheet CTA buttons cut off by iPhone home indicator  
+**Fix Applied:** VERIFIED
+- File: src/components/AddChartSheet.tsx
+- Line 25: import useSafeAreaInsets from react-native-safe-area-context
+- Line 164: const insets = useSafeAreaInsets()
+- Line 273: paddingBottom: theme.spacing.lg + insets.bottom
+- Result: Sheet accounts for device bottom safe area
+
+#### Gap 2: Tooltip Text Wrapping
+**Issue:** Tooltip text wraps character-by-character  
+**Fix Applied:** VERIFIED
+- File: src/components/ChartCard.tsx
+- Line 212: flexShrink: 0 added to tooltip style
+- Result: Tooltip container maintains width
+
+#### Gap 3: Kebab Menu Positioning
+**Issue:** Dropdown appears at top of screen  
+**Fix Applied:** VERIFIED
+- File: src/components/KebabMenu.tsx
+- Lines 12, 26-27: useState and useRef for trigger position
+- Lines 29-34: handleOpenMenu with measure() call
+- Line 47: View ref wrapper with collapsable={false}
+- Line 74: Dynamic top based on measured position
+- Result: Dropdown positioned below trigger icon
+
+#### Gap 4: Chart Data Not Refreshing
+**Issue:** Charts don't update after workout  
+**Fix Applied:** VERIFIED
+- File: src/hooks/useChartData.ts
+- Line 97: }, [chart]); (dependency is whole chart object)
+- Result: useEffect re-fires when refreshCharts() returns new references
+
+#### Gap 5: First Touch Swallowed
+**Issue:** First touch in exercise picker doesn't register  
+**Fix Applied:** VERIFIED
+- File: src/components/AddChartSheet.tsx
+- Lines 272-275: Replaced Pressable with View + onStartShouldSetResponder
+- Result: View claims responder without consuming events
+
+#### Gap 6: Charts Not Scrollable
+**Issue:** Charts with many data points can't scroll  
+**Fix Applied:** VERIFIED
+- File: src/components/ChartCard.tsx
+- Line 120: activatePointersOnLongPress: true
+- Result: Chart scrolls horizontally, tooltip on long press
 
 ### Anti-Patterns Found
 
 **No blocking anti-patterns detected.**
 
-Minor observations:
-- ChartCard has "placeholder" styles for loading state - this is intentional UI, not stub code
-- No TODO/FIXME comments in any chart-related files
-- No console.log-only implementations
-- No empty return statements or stub handlers
-- All components have substantive implementations with proper error handling
-
-### Architecture Verification
-
-**Data Flow:**
-1. User charts stored in Supabase user_charts table
-2. Chart configs cached in AsyncStorage via CACHE_KEY_CHARTS
-3. useCharts hook loads cache-first, then fetches fresh
-4. Chart data computed on-demand via useChartData to logging.getExerciseMetrics
-5. No separate chart data cache (computed from workout history each render)
-
-**Component Hierarchy:**
-Dashboard (app/index.tsx)
-  - TemplateGrid
-  - ChartSection
-    - Add Chart button opens AddChartSheet
-    - ChartCard (mapped)
-      - KebabMenu opens ConfirmationModal
-      - LineChart (react-native-gifted-charts)
-        - useChartData calls logging.getExerciseMetrics
-
-**Service Layer:**
-- charts.ts: CRUD operations (getUserCharts, createChart, deleteChart, reorderCharts)
-- logging.ts: getExerciseMetrics (computes metrics from workout_logs)
-- exercises.ts: getExercisesWithLoggedData (filters exercises with workout data)
-- All services use Supabase client directly (no API layer)
-
-**Cache Strategy:**
-- Chart configs cached for instant display
-- Unsynced workouts included in metric computation (charts reflect all local data)
-- No polling or pull-to-refresh (useFocusEffect refresh on dashboard return)
-
-**Offline Behavior:**
-- Chart viewing works offline (uses cached configs plus local workout data)
-- Chart creation requires connectivity (shows Internet connection required error)
-- Chart deletion requires connectivity
-
-**25-Chart Limit:**
-- Dashboard passes canAddChart={chartList.length < 25} to ChartSection
-- ChartSection shows Maximum charts reached when limit hit
-- Add Chart button hidden when at limit
-
-
-### Design Fidelity
-
-**Visual Elements:**
-- Line charts with smooth curves (curved=true, curvature=0.4)
-- Accent blue line (#4f9eff) matching theme
-- Gradient fill (rgba(79, 158, 255, 0.3) to rgba(79, 158, 255, 0.01))
-- Chart title format: Exercise Name em-dash Metric Type
-- Tooltip shows rounded value plus unit suffix (225 lbs, 12 sets)
-- X-axis labels formatted (dates as M/D, sessions as plain numbers)
-- No entry animation (isAnimated=false)
-- Horizontal scrolling for large datasets (nestedScrollEnabled, scrollToEnd)
-
-**Layout:**
-- Charts section below templates in continuous ScrollView
-- Section header Progress Charts matches TemplateGrid pattern
-- Empty state: No charts configured yet. Add a chart to track your progress on an exercise.
-- ChartSection uses .map() not FlatList (avoids nested scroll warnings)
-
-**Interaction:**
-- Half-height bottom sheet for chart creation (50% screen height)
-- Step-based flow (form view <-> exercise select view)
-- Hand-rolled radio buttons (20px circle, 10px fill, 44px tap target)
-- Kebab menu on chart cards with Delete action
-- Delete confirmation modal before removal
-- Tap data points to show tooltip with exact value
+All 6 gap fixes follow React Native best practices.
 
 ### TypeScript Compilation
 
-npx tsc --noEmit
-
+**Command:** npx tsc --noEmit  
 **Result:** PASSED (no errors)
-
-All chart-related files compile cleanly. Type imports from @/types/services and @/types/database resolve correctly.
 
 ### Package Verification
 
-**Installed dependencies:**
+**Installed:**
 - react-native-gifted-charts ^1.4.74
 - expo-linear-gradient ~15.0.8
+- react-native-svg (peer dependency)
+- react-native-reanimated (peer dependency)
+- react-native-safe-area-context (peer dependency)
 
-Both packages present in package.json. No additional chart-related packages needed.
-
-**Peer dependencies:**
-- react-native-svg (already installed, required by gifted-charts)
-- react-native-reanimated (already installed, required by gifted-charts)
 
 ---
 
@@ -179,19 +197,33 @@ Both packages present in package.json. No additional chart-related packages need
 
 **Phase 6 goal ACHIEVED.**
 
-All 4 success criteria verified:
-1. User can create charts with exercise/metric/axis selection
-2. Charts render as line charts with gradient fill on dashboard
-3. Chart data computed client-side from cached workout history
-4. User can delete charts from dashboard
+**Initial verification (pre-UAT):**
+- All 4 core success criteria verified
+- All artifacts present, substantive, and wired
+- All 10 requirements satisfied
 
-All 10 requirements satisfied (CHRT-01 through CHRT-07, DASH-03, DASH-04, DASH-07).
+**UAT testing:**
+- 12 user acceptance tests executed
+- 6 integration issues discovered (UI/UX bugs)
+- All issues diagnosed with root causes
 
-All artifacts exist, are substantive (adequate line counts, no stub patterns), and are wired correctly (imports plus usage verified).
+**Gap closure (plan 06-05):**
+- 6 targeted fixes applied across 4 files
+- All fixes follow React Native best practices
+- No new dependencies introduced
 
-No blocking issues found. Phase complete and ready for Phase 7 (Settings and History).
+**Re-verification (this report):**
+- All 6 gap fixes verified present in source code
+- TypeScript compilation passes
+- No regressions detected
+- All original must-haves still verified
+
+**Overall score:** 10/10 must-haves verified (4 core + 6 UAT gap fixes)
+
+**Phase status:** COMPLETE and ready for Phase 7 (Settings and History)
 
 ---
 
-_Verified: 2026-02-15T15:30:00Z_
-_Verifier: Claude (gsd-verifier)_
+_Verified: 2026-02-15_  
+_Verifier: Claude (gsd-verifier)_  
+_Re-verification: Yes (post-UAT gap closure)_
