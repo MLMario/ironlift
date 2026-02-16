@@ -228,10 +228,10 @@ Plans:
   2. Settings screen has a back button that returns to the dashboard
   3. All existing settings sub-screens (My Exercises, Workout History, Workout Detail) continue to work as stack pushes from the settings screen
   4. The @gorhom/bottom-sheet dependency for settings is removed (or no longer used for settings)
-**Plans**: 0 plans
+**Plans**: 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 10 to break down)
+- [ ] 10-01-PLAN.md — Settings index screen, dashboard rewiring, SettingsSheet deletion, @gorhom/bottom-sheet removal
 
 ## Progress
 
@@ -249,4 +249,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. History and Settings | 5/5 | Complete | 2026-02-16 |
 | 8. Chart Fit-to-Width Display | 1/1 | Complete | 2026-02-15 |
 | 9. Timer Fixes | 0/3 | Not started | - |
-| 10. Settings Stack Navigation | 0/0 | Not started | - |
+| 10. Settings Stack Navigation | 0/1 | Not started | - |
