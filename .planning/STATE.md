@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 9 (Timer Fixes) complete. Phase 10 (Settings Stack Navigation) ready for planning.
+**Current focus:** Phase 10 (Settings Stack Navigation) complete. All phases done.
 
 ## Current Position
 
-Phase: 9 of 10 (Timer Fixes)
-Plan: 3 of 3 in current phase
+Phase: 10 of 10 (Settings Stack Navigation)
+Plan: 1 of 1 in current phase
 Status: Phase complete
-Last activity: 2026-02-16 -- Completed 09-03-PLAN.md
+Last activity: 2026-02-16 -- Completed 10-01-PLAN.md
 
-Progress: [█████████████████████████████████████] 41/41 plans
+Progress: [██████████████████████████████████████] 42/42 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 41
+- Total plans completed: 42
 - Average duration: ~2.9 min (including human verification)
-- Total execution time: ~118 min
+- Total execution time: ~121 min
 
 **By Phase:**
 
@@ -36,10 +36,11 @@ Progress: [███████████████████████
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
 | 7. History and Settings | 5/5 | ~9 min | ~2 min |
 | 9. Timer Fixes | 3/3 | ~9 min | ~3 min |
+| 10. Settings Stack Navigation | 1/1 | ~3 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-05 (~1 min), 09-01 (~3 min), 09-02 (~2 min), 09-03 (~4 min)
-- Trend: Consistent ~1-4 min pace
+- Last 5 plans: 09-01 (~3 min), 09-02 (~2 min), 09-03 (~4 min), 10-01 (~3 min)
+- Trend: Consistent ~2-4 min pace
 
 *Updated after each plan completion*
 
@@ -163,9 +164,11 @@ Recent decisions affecting current work:
 - [08-01]: thinLabels function removes overlapping x-axis labels on dense charts (MIN_LABEL_SPACING=28)
 - [08-01]: chartWidth > 0 guard prevents division-by-zero in library spacing calculation
 - [08-01]: Adaptive data point radius: 4px default, 3px for 30+ points, 2px for 50+ points
-- [07-01]: @gorhom/bottom-sheet used for settings sheet (validated on SDK 54 with reanimated 4.1.6)
-- [07-01]: Dismiss-then-navigate uses 200ms setTimeout (simpler than onClose callback approach)
-- [07-01]: SettingsSheet rendered outside ScrollView as SafeAreaView sibling to avoid gesture conflicts
+- [07-01]: @gorhom/bottom-sheet used for settings sheet (validated on SDK 54 with reanimated 4.1.6) -- SUPERSEDED by 10-01
+- [07-01]: Dismiss-then-navigate uses 200ms setTimeout (simpler than onClose callback approach) -- SUPERSEDED by 10-01
+- [07-01]: SettingsSheet rendered outside ScrollView as SafeAreaView sibling to avoid gesture conflicts -- SUPERSEDED by 10-01
+- [10-01]: Settings screen uses full-screen stack navigation (router.push('/settings')) replacing bottom sheet overlay
+- [10-01]: @gorhom/bottom-sheet fully removed from project dependencies
 - [07-02]: Menlo fontFamily for monospace stat values (iOS-available, matches web ui-monospace)
 - [07-02]: Per-item timeline line segments (not single continuous line) for FlatList virtualization compatibility
 - [07-02]: PAGE_SIZE=7 matching web app pagination
@@ -199,11 +202,11 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- [RESOLVED]: @gorhom/bottom-sheet v5.2.8 installed and compiles successfully on SDK 54 with reanimated 4.1.6
+- [RESOLVED]: @gorhom/bottom-sheet v5.2.8 installed and compiles successfully on SDK 54 with reanimated 4.1.6 -- REMOVED in Phase 10
 - [Research]: New Architecture acceptance needed -- Expo Go SDK 54 defaults to it, constitution says classic
 
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Phase 9 complete, verified. Phase 10 next.
+Stopped at: Phase 10 complete. All 10 phases done.
 Resume file: None
