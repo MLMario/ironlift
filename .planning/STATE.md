@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** Phase 6 (Charts) complete including UAT gap closure round 2. Ready for Phase 7.
+**Current focus:** Phase 8 (Chart Fit-to-Width) complete. UAT passed 5/5. Ready for Phase 7.
 
 ## Current Position
 
-Phase: 6 of 7 (Charts)
-Plan: 6 of 6 in current phase (includes gap closure plans)
-Status: Phase complete (all UAT gaps closed, round 2 included)
-Last activity: 2026-02-16 -- Completed 06-06-PLAN.md (gap closure round 2)
+Phase: 8 of 8 (Chart Fit-to-Width Display)
+Plan: 1 of 1 in current phase
+Status: Phase complete (UAT 5/5 passed)
+Last activity: 2026-02-15 -- Completed 08-01-PLAN.md and UAT
 
-Progress: [██████████████████████████████] 34/34 plans (100%)
+Progress: [██████████████████████████████] 35/35 plans (100%)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 34
+- Total plans completed: 35
 - Average duration: ~3.0 min (including human verification)
-- Total execution time: ~101 min
+- Total execution time: ~103 min
 
 **By Phase:**
 
@@ -33,10 +33,11 @@ Progress: [███████████████████████
 | 4. Templates and Dashboard | 6/6 | ~12 min | ~2 min |
 | 5. Active Workout | 9/9 | ~27 min | ~3 min |
 | 6. Charts | 6/6 | ~11 min | ~2 min |
+| 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-03 (~2 min), 06-04 (~2 min), 06-05 (~2 min), 06-06 (~1 min)
-- Trend: Bugfix plans executing at consistent ~1-2 min pace
+- Last 5 plans: 06-05 (~2 min), 06-06 (~1 min), 08-01 (~2 min)
+- Trend: Single-file plans executing at consistent ~2 min pace
 
 *Updated after each plan completion*
 
@@ -156,10 +157,18 @@ Recent decisions affecting current work:
 - [06-06]: KebabMenu handleClose preserves triggerPos during fade-out -- prevents dropdown flash to fallback position
 - [06-06]: pointerLabelWidth: 120 overrides gifted-charts default 20px for readable tooltip text
 - [06-06]: AddChartSheet form fields wrapped in ScrollView with pinned button row for overflow handling
+- [08-01]: adjustToWidth + parentWidth={chartWidth} replaces fixed spacing={40} for fit-to-width charts
+- [08-01]: thinLabels function removes overlapping x-axis labels on dense charts (MIN_LABEL_SPACING=28)
+- [08-01]: chartWidth > 0 guard prevents division-by-zero in library spacing calculation
+- [08-01]: Adaptive data point radius: 4px default, 3px for 30+ points, 2px for 50+ points
 
 ### Pending Todos
 
 - Supabase Dashboard configuration needed (see 02-USER-SETUP.md): redirect URL, email confirmation, password length
+
+### Roadmap Evolution
+
+- Phase 8 added: Chart Fit-to-Width Display — show all chart data points in one view instead of scrollable
 
 ### Blockers/Concerns
 
@@ -168,6 +177,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-16
-Stopped at: Completed 06-06-PLAN.md (gap closure round 2). Phase 6 fully complete with all UAT gaps closed.
+Last session: 2026-02-15
+Stopped at: Completed 08-01-PLAN.md and UAT (5/5 passed). Phase 8 complete.
 Resume file: None
