@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 9 of 10 (Timer Fixes)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-16 -- Completed 09-01-PLAN.md
+Last activity: 2026-02-16 -- Completed 09-02-PLAN.md
 
-Progress: [███████████████████████████████████░░] 39/41 plans
+Progress: [████████████████████████████████████░] 40/41 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 39
+- Total plans completed: 40
 - Average duration: ~2.9 min (including human verification)
-- Total execution time: ~112 min
+- Total execution time: ~114 min
 
 **By Phase:**
 
@@ -35,10 +35,10 @@ Progress: [███████████████████████
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
 | 7. History and Settings | 5/5 | ~9 min | ~2 min |
-| 9. Timer Fixes | 1/3 | ~3 min | ~3 min |
+| 9. Timer Fixes | 2/3 | ~5 min | ~2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-03 (~2 min), 07-04 (~1 min), 07-05 (~1 min), 09-01 (~3 min)
+- Last 5 plans: 07-04 (~1 min), 07-05 (~1 min), 09-01 (~3 min), 09-02 (~2 min)
 - Trend: Consistent ~1-3 min pace
 
 *Updated after each plan completion*
@@ -180,6 +180,10 @@ Recent decisions affecting current work:
 - [09-01]: pause() keeps timer.status as 'active' with frozen remaining -- no new discriminated union value needed
 - [09-01]: TemplateSnapshot extended with rest_seconds for dirty tracking (not separate map)
 - [09-01]: Shared time utilities in src/lib/timeUtils.ts imported by RestTimerInline and future RestTimerBar
+- [09-02]: onPressIn used for +/-10s buttons (not onPress) to prevent blur-before-press race condition during editing
+- [09-02]: handleAdjustNormal calls BOTH onRestTimeChange (persist) AND onAdjust (adjust countdown) during active timer
+- [09-02]: Unparseable input on blur reverts without changing rest time; restarts timer from original value if was active
+- [09-02]: isExpanded default fixed from false to true in WorkoutExerciseCard (bug fix per decision [05-04])
 
 ### Pending Todos
 
@@ -199,5 +203,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 09-01-PLAN.md. Phase 9 plan 1 of 3 complete.
+Stopped at: Completed 09-02-PLAN.md. Phase 9 plan 2 of 3 complete.
 Resume file: None
