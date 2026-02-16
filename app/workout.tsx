@@ -144,12 +144,15 @@ export default function WorkoutScreen() {
     setRevealedSet,
     closeAllSwipes,
     hasTemplateChanges,
+    updateRestSeconds,
+    getRestTimeChanges,
   } = useWorkoutState(template, restoredBackup);
 
   const {
     timer,
     start: startTimer,
     stop: stopTimer,
+    pause: pauseTimer,
     adjust: adjustTimer,
     isActiveForExercise,
     getProgress,
@@ -259,6 +262,29 @@ export default function WorkoutScreen() {
   );
 
   // ============================================================================
+  // Rest time editing handlers
+  // ============================================================================
+
+  const handleRestTimeChange = useCallback(
+    (exerciseIndex: number, seconds: number) => {
+      updateRestSeconds(exerciseIndex, seconds);
+      triggerBackup();
+    },
+    [updateRestSeconds, triggerBackup]
+  );
+
+  const handleTimerPause = useCallback(() => {
+    pauseTimer();
+  }, [pauseTimer]);
+
+  const handleTimerRestart = useCallback(
+    (exerciseIndex: number, seconds: number) => {
+      startTimer(exerciseIndex, seconds);
+    },
+    [startTimer]
+  );
+
+  // ============================================================================
   // Modal state
   // ============================================================================
 
@@ -304,6 +330,30 @@ export default function WorkoutScreen() {
   }, []);
 
   /**
+   * Silent rest time save -- persists per-exercise rest time changes to template.
+   * Called on finish when NOT doing a structural update (structural update already
+   * includes rest times via activeWorkout.exercises[].rest_seconds).
+   * Best-effort: skip silently on failure per locked decision.
+   */
+  async function saveRestTimeChanges(): Promise<void> {
+    const changes = getRestTimeChanges();
+    if (changes.length === 0) return;
+    if (!activeWorkout.template_id) return;
+
+    for (const change of changes) {
+      try {
+        await templatesService.updateTemplateExercise(
+          activeWorkout.template_id,
+          change.exercise_id,
+          { default_rest_seconds: change.rest_seconds }
+        );
+      } catch {
+        // Best-effort per locked decision -- skip silently on failure
+      }
+    }
+  }
+
+  /**
    * Save workout log and clean up.
    * If updateTemplate is true, also update the template with current exercises.
    */
@@ -328,6 +378,12 @@ export default function WorkoutScreen() {
       };
 
       try {
+        // Silent rest time save (independent from structural changes)
+        // Only needed when NOT doing a structural update (which already includes rest times)
+        if (!shouldUpdateTemplate) {
+          await saveRestTimeChanges();
+        }
+
         // Update template if requested (best-effort, skip on failure)
         if (shouldUpdateTemplate && activeWorkout.template_id) {
           try {
@@ -389,7 +445,7 @@ export default function WorkoutScreen() {
         setIsSaving(false);
       }
     },
-    [activeWorkout, stopTimer, backup, router]
+    [activeWorkout, stopTimer, backup, router, getRestTimeChanges]
   );
 
   // ============================================================================
@@ -471,6 +527,7 @@ export default function WorkoutScreen() {
         timerRemaining: timer.remaining,
         timerTotal: timer.duration,
         isTimerActive: true,
+        restSeconds,
       };
     }
 
@@ -480,6 +537,7 @@ export default function WorkoutScreen() {
       timerRemaining: restSeconds,
       timerTotal: restSeconds,
       isTimerActive: false,
+      restSeconds,
     };
   }
 
@@ -539,7 +597,11 @@ export default function WorkoutScreen() {
                 timerRemaining={timerProps.timerRemaining}
                 timerTotal={timerProps.timerTotal}
                 isTimerActive={timerProps.isTimerActive}
+                restSeconds={timerProps.restSeconds}
                 onAdjustTimer={handleAdjustTimer}
+                onRestTimeChange={(seconds) => handleRestTimeChange(exerciseIndex, seconds)}
+                onTimerPause={handleTimerPause}
+                onTimerRestart={(seconds) => handleTimerRestart(exerciseIndex, seconds)}
                 revealedSetKey={revealedSetKey}
                 onSetReveal={handleSetReveal}
                 onSetClose={handleSetClose}
