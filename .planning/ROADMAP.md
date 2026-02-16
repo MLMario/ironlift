@@ -165,7 +165,7 @@ Plans:
 - [x] 06-03-PLAN.md — Add Chart bottom sheet with exercise selection and radio buttons
 - [x] 06-04-PLAN.md — Dashboard integration (ScrollView conversion, chart wiring) and human verification
 - [x] 06-05-PLAN.md — Gap closure: all 6 UAT issues (CTA cutoff, tooltip width, kebab position, chart refresh, first-touch, horizontal scroll)
-- [ ] 06-06-PLAN.md — Gap closure round 2: kebab dismiss flash, tooltip pointerLabelWidth, scrollable Add Chart form
+- [x] 06-06-PLAN.md — Gap closure round 2: kebab dismiss flash, tooltip pointerLabelWidth, scrollable Add Chart form
 
 ### Phase 7: History and Settings
 **Goal**: Users can review past workouts in a paginated timeline, manage their custom exercises, and access app settings -- completing the full feature set for release
@@ -200,5 +200,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Exercise Library | 3/3 | Complete | 2026-02-13 |
 | 4. Templates and Dashboard | 6/6 | Complete | 2026-02-13 |
 | 5. Active Workout | 9/9 | Complete | 2026-02-13 |
-| 6. Charts | 5/6 | In Progress | - |
+| 6. Charts | 6/6 | Complete | 2026-02-15 |
 | 7. History and Settings | 0/TBD | Not started | - |
