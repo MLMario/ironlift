@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-11)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** All 8 phases complete. Full feature set delivered.
+**Current focus:** Phase 9 (Timer Fixes) -- executing plans.
 
 ## Current Position
 
-Phase: 7 of 8 (History and Settings)
-Plan: 5 of 5 in current phase
-Status: Phase complete
-Last activity: 2026-02-16 -- Completed 07-05-PLAN.md
+Phase: 9 of 10 (Timer Fixes)
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-16 -- Completed 09-01-PLAN.md
 
-Progress: [██████████████████████████████████] 38/38 plans
+Progress: [███████████████████████████████████░░] 39/41 plans
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 38
+- Total plans completed: 39
 - Average duration: ~2.9 min (including human verification)
-- Total execution time: ~109 min
+- Total execution time: ~112 min
 
 **By Phase:**
 
@@ -35,10 +35,11 @@ Progress: [███████████████████████
 | 6. Charts | 6/6 | ~11 min | ~2 min |
 | 8. Chart Fit-to-Width | 1/1 | ~2 min | ~2 min |
 | 7. History and Settings | 5/5 | ~9 min | ~2 min |
+| 9. Timer Fixes | 1/3 | ~3 min | ~3 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-02 (~2 min), 07-03 (~2 min), 07-04 (~1 min), 07-05 (~1 min)
-- Trend: Consistent ~1-2 min pace
+- Last 5 plans: 07-03 (~2 min), 07-04 (~1 min), 07-05 (~1 min), 09-01 (~3 min)
+- Trend: Consistent ~1-3 min pace
 
 *Updated after each plan completion*
 
@@ -175,6 +176,10 @@ Recent decisions affecting current work:
 - [07-04]: CATEGORY_COLORS constant with rgba bg + hex text pairs for color-coded category badges
 - [07-04]: ExerciseBlock as inline function component (single-use within Workout Detail screen)
 - [07-04]: Unicode em dash for bodyweight exercises (weight === 0) instead of "0 lbs"
+- [09-01]: parseTimeInput returns null (not 0) for unparseable input -- enables revert-on-invalid behavior
+- [09-01]: pause() keeps timer.status as 'active' with frozen remaining -- no new discriminated union value needed
+- [09-01]: TemplateSnapshot extended with rest_seconds for dirty tracking (not separate map)
+- [09-01]: Shared time utilities in src/lib/timeUtils.ts imported by RestTimerInline and future RestTimerBar
 
 ### Pending Todos
 
@@ -183,6 +188,8 @@ Recent decisions affecting current work:
 ### Roadmap Evolution
 
 - Phase 8 added: Chart Fit-to-Width Display — show all chart data points in one view instead of scrollable
+- Phase 9 added: Timer Fixes — rest timer visible on workout start, direct time editing via text input
+- Phase 10 added: Settings Stack Navigation — replace bottom sheet with full-screen stack navigation (slide from right with back button)
 
 ### Blockers/Concerns
 
@@ -192,5 +199,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 07-05-PLAN.md (Human verification). Phase 7 complete. All phases complete.
+Stopped at: Completed 09-01-PLAN.md. Phase 9 plan 1 of 3 complete.
 Resume file: None
