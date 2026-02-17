@@ -24,8 +24,9 @@ Implement BEFORE INSERT trigger functions on Supabase to enforce max row counts 
 - Structured, parseable format: `LIMIT_EXCEEDED:{entity}:{max_limit}`
 - Example: `LIMIT_EXCEEDED:templates:20`
 - Include entity name and limit value only (no current count)
-- Each trigger uses a unique custom Postgres ERRCODE for programmatic detection
-- Error codes follow pattern: LIM01, LIM02, LIM03, etc. (one per entity/table)
+- All triggers use standard SQLSTATE `P0001` (raise_exception) as ERRCODE
+- Client identifies specific limit by parsing the structured error message prefix
+- **Note:** Custom SQLSTATE codes (LIM01, etc.) were attempted but rejected by PostgreSQL/Supabase -- P0001 is the reliable approach
 
 ### Error code documentation
 - Create `docs/error_documentation.md` documenting all custom error codes
@@ -34,16 +35,16 @@ Implement BEFORE INSERT trigger functions on Supabase to enforce max row counts 
 
 ### Counting logic
 - Count all rows (no soft-delete filtering -- soft deletes don't exist in the schema)
-- For exercises: only count rows with `source = 'user'` (system exercises excluded from the 50 limit)
+- For exercises: only count rows with `is_system = false` (system exercises excluded from the 50 limit)
 - For templates: count all templates WHERE user_id matches (no archive concept exists)
 - For charts: single limit of 25 across all chart types
 
 ### Trigger scope
 - Triggers on BOTH template and workout tables for per-parent limits:
-  - `template_exercises` AND `workout_exercises` (15 exercise limit)
-  - `template_exercise_sets` AND `workout_exercise_sets` (10 set limit)
+  - `template_exercises` AND `workout_log_exercises` (15 exercise limit)
+  - `template_exercise_sets` AND `workout_log_sets` (10 set limit)
 - Same limits for template-side and workout-side (no higher workout caps)
-- Per-user triggers on: `templates`, `exercises`, `charts`
+- Per-user triggers on: `templates`, `exercises`, `user_charts`
 
 ### Concurrency
 - Add advisory lock if complexity is low; otherwise defer as a known gap and note in roadmap
@@ -59,7 +60,7 @@ Implement BEFORE INSERT trigger functions on Supabase to enforce max row counts 
 <specifics>
 ## Specific Ideas
 
-- User explicitly wants custom ERRCODE pattern starting from LIM01 (not generic Postgres codes)
+- All triggers use standard P0001 ERRCODE; identification via structured message text (custom LIMxx codes don't work in practice)
 - Error documentation must live at `docs/error_documentation.md` with test queries per limit
 - Migration must be idempotent (CREATE OR REPLACE FUNCTION + DROP TRIGGER IF EXISTS) so it's safe to re-run
 - Single migration file in `sql/` (not split per table)

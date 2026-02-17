@@ -9,7 +9,7 @@
 
 ### Locked Decisions
 
-- **Error message format:** Structured, parseable format: `LIMIT_EXCEEDED:{entity}:{max_limit}` (e.g., `LIMIT_EXCEEDED:templates:20`). Include entity name and limit value only (no current count). Each trigger uses a unique custom Postgres ERRCODE for programmatic detection. Error codes follow pattern: LIM01, LIM02, LIM03, etc. (one per entity/table).
+- **Error message format:** Structured, parseable format: `LIMIT_EXCEEDED:{entity}:{max_limit}` (e.g., `LIMIT_EXCEEDED:templates:20`). Include entity name and limit value only (no current count). All triggers use standard SQLSTATE `P0001` (raise_exception) as ERRCODE. Client identifies specific limit by parsing the structured error message. Custom SQLSTATE codes (LIM01, etc.) were attempted but rejected by PostgreSQL/Supabase.
 - **Error code documentation:** Create `docs/error_documentation.md` documenting all custom error codes. Each entry includes: code, entity, limit value, trigger function name, and table. Include test INSERT queries for each limit so manual verification is straightforward.
 - **Counting logic:** Count all rows (no soft-delete filtering). For exercises: only count rows with `is_system = false` (system exercises excluded from the 50 limit). For templates: count all templates WHERE user_id matches. For charts: single limit of 25 across all chart types.
 - **Trigger scope:** Triggers on BOTH template-side and workout-side tables for per-parent limits: `template_exercises` AND `workout_log_exercises` (15 exercise limit), `template_exercise_sets` AND `workout_log_sets` (10 set limit). Same limits for template-side and workout-side. Per-user triggers on: `templates`, `exercises`, `user_charts`.
@@ -38,7 +38,7 @@ The standard approach is well-established PostgreSQL: create PL/pgSQL trigger fu
 
 Advisory locks add minimal complexity (one extra line per trigger function) and are recommended as included, using `pg_advisory_xact_lock` with a hash of the user/parent ID. This prevents the theoretical race condition where two concurrent inserts both pass the count check before either commits.
 
-**Primary recommendation:** Write a single idempotent SQL migration with 7 trigger functions (one per table), 7 triggers, and use transaction-scoped advisory locks for concurrency safety. Use the `LI` SQLSTATE class prefix (unused by PostgreSQL) for custom error codes `LIM01` through `LIM07`.
+**Primary recommendation:** Write a single idempotent SQL migration with 7 trigger functions (one per table), 7 triggers, and use transaction-scoped advisory locks for concurrency safety. All triggers use standard `P0001` (raise_exception) ERRCODE with structured messages for identification.
 
 ## Critical Schema Corrections
 
@@ -107,7 +107,7 @@ BEGIN
 
   IF current_count >= 20 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:templates:20'
-      USING ERRCODE = 'LIM01';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -143,7 +143,7 @@ BEGIN
 
   IF current_count >= 15 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:template_exercises:15'
-      USING ERRCODE = 'LIM04';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -184,7 +184,7 @@ BEGIN
 
   IF current_count >= 50 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:exercises:50'
-      USING ERRCODE = 'LIM02';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -208,15 +208,17 @@ $$;
 
 ### Error Code Assignment
 
-| Code | Entity | Table | Limit |
-|------|--------|-------|-------|
-| `LIM01` | templates | `templates` | 20 |
-| `LIM02` | exercises | `exercises` | 50 |
-| `LIM03` | charts | `user_charts` | 25 |
-| `LIM04` | template_exercises | `template_exercises` | 15 |
-| `LIM05` | workout_exercises | `workout_log_exercises` | 15 |
-| `LIM06` | template_sets | `template_exercise_sets` | 10 |
-| `LIM07` | workout_sets | `workout_log_sets` | 10 |
+All triggers use standard SQLSTATE `P0001` (raise_exception). Specific limits identified by parsing the structured error message.
+
+| Entity | Table | Limit | Error Message |
+|--------|-------|-------|---------------|
+| templates | `templates` | 20 | `LIMIT_EXCEEDED:templates:20` |
+| exercises | `exercises` | 50 | `LIMIT_EXCEEDED:exercises:50` |
+| charts | `user_charts` | 25 | `LIMIT_EXCEEDED:charts:25` |
+| template_exercises | `template_exercises` | 15 | `LIMIT_EXCEEDED:template_exercises:15` |
+| workout_exercises | `workout_log_exercises` | 15 | `LIMIT_EXCEEDED:workout_exercises:15` |
+| template_sets | `template_exercise_sets` | 10 | `LIMIT_EXCEEDED:template_sets:10` |
+| workout_sets | `workout_log_sets` | 10 | `LIMIT_EXCEEDED:workout_sets:10` |
 
 ### Anti-Patterns to Avoid
 
@@ -253,7 +255,7 @@ Use `hashtext('prefix_' || parent_id::text)` where prefix is a short identifier 
 | Problem | Don't Build | Use Instead | Why |
 |---------|-------------|-------------|-----|
 | Concurrency control | Custom locking mechanism | `pg_advisory_xact_lock()` | Built-in, transaction-scoped, automatic cleanup |
-| Error code namespacing | Reuse existing PG error codes | Custom `LIMxx` SQLSTATE codes | Avoids collision with PostgreSQL's standard codes |
+| Error identification | Custom SQLSTATE codes per trigger | Standard `P0001` + structured message | Custom codes rejected by Supabase; message parsing is reliable |
 | Idempotent DDL | Conditional logic in app code | `CREATE OR REPLACE FUNCTION` + `DROP TRIGGER IF EXISTS` | PostgreSQL native idempotency patterns |
 
 ## Common Pitfalls
@@ -288,10 +290,10 @@ Use `hashtext('prefix_' || parent_id::text)` where prefix is a short identifier 
 
 ### Pitfall 5: Custom ERRCODE Format
 
-**What goes wrong:** Using codes that conflict with PostgreSQL's standard error codes.
-**Why it happens:** Choosing a prefix that overlaps with an existing PostgreSQL error class.
-**How to avoid:** The `LI` prefix is safe -- PostgreSQL uses no error class starting with `LI`. The codes `LIM01` through `LIM07` are all valid 5-character SQLSTATE codes (uppercase letters and digits only, not `00000`, not ending in three zeros).
-**Warning signs:** Error handlers in the app match unintended PostgreSQL errors.
+**What goes wrong:** Custom SQLSTATE codes (like `LIM01`) are rejected by PostgreSQL/Supabase at migration time.
+**Why it happens:** While the SQLSTATE spec technically allows custom 5-character codes, Supabase's PostgreSQL implementation may not accept arbitrary values.
+**How to avoid:** Use standard `P0001` (raise_exception) as ERRCODE for all triggers. Identify specific limits by parsing the structured error message (`LIMIT_EXCEEDED:{entity}:{limit}`).
+**Warning signs:** Migration SQL fails with syntax/validation error when using custom ERRCODE values.
 
 ### Pitfall 6: Exercises Trigger Firing for System Exercises
 
@@ -321,7 +323,7 @@ BEGIN
 
   IF current_count >= 20 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:templates:20'
-      USING ERRCODE = 'LIM01';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -358,7 +360,7 @@ BEGIN
 
   IF current_count >= 10 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:workout_sets:10'
-      USING ERRCODE = 'LIM07';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -383,16 +385,15 @@ const { data, error } = await supabase
   .insert({ user_id: userId, name: 'My Template' });
 
 if (error) {
-  // error.code contains the SQLSTATE/ERRCODE (e.g., 'LIM01')
-  // error.message contains the exception message (e.g., 'LIMIT_EXCEEDED:templates:20')
-  // error.details contains additional details (if provided)
-  // error.hint contains hint text (if provided)
-  console.log(error.code);    // 'LIM01'
+  // error.code contains 'P0001' (standard raise_exception SQLSTATE)
+  // error.message contains the structured message (e.g., 'LIMIT_EXCEEDED:templates:20')
+  // Identify specific limit by parsing the message prefix
+  console.log(error.code);    // 'P0001'
   console.log(error.message); // 'LIMIT_EXCEEDED:templates:20'
 }
 ```
 
-This is confirmed by the existing codebase which already checks `error.code === '23505'` for unique constraint violations in `exercises.ts`.
+The codebase already checks `error.code === '23505'` for unique constraint violations in `exercises.ts`. For limit errors, check `error.message?.startsWith('LIMIT_EXCEEDED:')` instead, since all limits share the `P0001` SQLSTATE.
 
 ### Verification Query Example
 
@@ -416,8 +417,12 @@ BEGIN
   INSERT INTO templates (user_id, name) VALUES (test_user_id, 'Limit Test 21');
 
 EXCEPTION
-  WHEN SQLSTATE 'LIM01' THEN
-    RAISE NOTICE 'SUCCESS: Template limit enforced correctly (LIM01)';
+  WHEN raise_exception THEN
+    IF SQLERRM LIKE 'LIMIT_EXCEEDED:templates:%' THEN
+      RAISE NOTICE 'SUCCESS: Template limit enforced correctly';
+    ELSE
+      RAISE;
+    END IF;
     -- Clean up
     DELETE FROM templates WHERE user_id = test_user_id AND name LIKE 'Limit Test %';
 END;

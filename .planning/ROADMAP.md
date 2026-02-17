@@ -68,7 +68,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions (advisory locks) + error documentation + Supabase deploy
+- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions (advisory locks, P0001 ERRCODE) + error documentation + Supabase deploy
 
 **Deliverables:**
 - Full migration SQL for Supabase SQL Editor
