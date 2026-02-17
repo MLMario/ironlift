@@ -399,16 +399,16 @@ export function useWorkoutState(
    * Used on workout finish to auto-save weight/reps changes silently.
    */
   const getWeightRepsChanges = useCallback(
-    (): Array<{
+    (): {
       exercise_id: string;
-      sets: Array<{ set_number: number; weight: number; reps: number }>;
-    }> => {
+      sets: { set_number: number; weight: number; reps: number }[];
+    }[] => {
       if (!originalTemplateSnapshot) return [];
 
-      const changes: Array<{
+      const changes: {
         exercise_id: string;
-        sets: Array<{ set_number: number; weight: number; reps: number }>;
-      }> = [];
+        sets: { set_number: number; weight: number; reps: number }[];
+      }[] = [];
 
       for (const exercise of activeWorkout.exercises) {
         // Skip exercises added during workout (not in original template)
@@ -418,7 +418,7 @@ export function useWorkoutState(
         if (!original) continue;
 
         const templateSetCount = original.sets.length;
-        const setsToSave: Array<{ set_number: number; weight: number; reps: number }> = [];
+        const setsToSave: { set_number: number; weight: number; reps: number }[] = [];
 
         for (const set of exercise.sets) {
           // Only include sets that are marked done AND within template set count

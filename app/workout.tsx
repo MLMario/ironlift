@@ -42,9 +42,9 @@ import type { RestoredWorkoutData } from '@/hooks/useWorkoutState';
 import { useRestTimer } from '@/hooks/useRestTimer';
 import { useWorkoutBackup } from '@/hooks/useWorkoutBackup';
 import { logging } from '@/services/logging';
-import { templates as templatesService } from '@/services/templates';
+import { templates as templatesService, updateTemplateExerciseSetValues } from '@/services/templates';
 import { enqueue } from '@/services/writeQueue';
-import { getCachedTemplates } from '@/lib/cache';
+import { getCachedTemplates, setCachedTemplates } from '@/lib/cache';
 import { WorkoutExerciseCard } from '@/components/WorkoutExerciseCard';
 import { ConfirmationModal } from '@/components/ConfirmationModal';
 import { ExercisePickerModal } from '@/components/ExercisePickerModal';
@@ -146,6 +146,7 @@ export default function WorkoutScreen() {
     hasTemplateChanges,
     updateRestSeconds,
     getRestTimeChanges,
+    getWeightRepsChanges,
   } = useWorkoutState(template, restoredBackup);
 
   const {
@@ -322,6 +323,46 @@ export default function WorkoutScreen() {
   }
 
   /**
+   * Silent weight/reps save -- persists per-set weight/reps changes to template.
+   * Called on finish when NOT doing a structural update (structural update already
+   * includes weight/reps via the full template replace).
+   * Best-effort: skip silently on failure per locked decision.
+   * After successful saves, refreshes the template cache so next workout uses updated values.
+   */
+  async function saveWeightRepsChanges(): Promise<void> {
+    const changes = getWeightRepsChanges();
+    if (changes.length === 0) return;
+    if (!activeWorkout.template_id) return;
+
+    let anySaved = false;
+
+    for (const change of changes) {
+      try {
+        await updateTemplateExerciseSetValues(
+          activeWorkout.template_id,
+          change.exercise_id,
+          change.sets
+        );
+        anySaved = true;
+      } catch {
+        // Best-effort per locked decision -- skip silently on failure
+      }
+    }
+
+    // Refresh template cache after successful saves so next workout uses updated values
+    if (anySaved) {
+      try {
+        const { data: freshTemplates } = await templatesService.getTemplates();
+        if (freshTemplates) {
+          await setCachedTemplates(freshTemplates);
+        }
+      } catch {
+        // Cache refresh failure is non-critical -- template DB is already updated
+      }
+    }
+  }
+
+  /**
    * Save workout log and clean up.
    * If updateTemplate is true, also update the template with current exercises.
    */
@@ -350,6 +391,7 @@ export default function WorkoutScreen() {
         // Only needed when NOT doing a structural update (which already includes rest times)
         if (!shouldUpdateTemplate) {
           await saveRestTimeChanges();
+          await saveWeightRepsChanges();
         }
 
         // Update template if requested (best-effort, skip on failure)
@@ -413,7 +455,7 @@ export default function WorkoutScreen() {
         setIsSaving(false);
       }
     },
-    [activeWorkout, stopTimer, backup, router, getRestTimeChanges]
+    [activeWorkout, stopTimer, backup, router, getRestTimeChanges, getWeightRepsChanges]
   );
 
   const handleFinishPress = useCallback(() => {
