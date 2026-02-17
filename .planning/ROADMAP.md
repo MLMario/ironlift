@@ -3,6 +3,7 @@
 ## Milestones
 
 - SHIPPED **v0.1 MVP** — Phases 1-10 (shipped 2026-02-16) — [archive](milestones/v0.1-ROADMAP.md)
+- ACTIVE **v0.1.1 Bug Fixes & Architecture** — Phases 11+ (incremental)
 
 ## Phases
 
@@ -22,6 +23,29 @@
 
 </details>
 
+### v0.1.1 Bug Fixes & Architecture
+
+- [ ] Phase 11: Silent Save of Weight/Reps to Template
+
+## Phase Details
+
+### Phase 11: Silent Save of Weight/Reps to Template
+
+**Goal:** When a user modifies weight/reps during an active workout and completes the exercise, silently save those values back to the template — matching existing rest timer silent save behavior.
+
+**Requirements:** FIX-01
+
+**Implementation note:** Research whether to leverage the existing rest timer silent save implementation or create separate save logic. The rest timer already silently persists changes — weight/reps should follow the same pattern for consistency.
+
+**Preserved behavior:** Weight/reps changes do NOT trigger the template update confirmation modal. This is correct and must remain unchanged.
+
+**Success criteria:**
+1. User changes weight on a set during workout, completes all sets for that exercise → template reflects new weight
+2. User changes reps on a set during workout, completes all sets for that exercise → template reflects new reps
+3. Silent save does not trigger the template update confirmation modal
+4. Silent save works offline (queued for sync like other writes)
+5. Existing rest timer silent save behavior is unaffected
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -36,3 +60,4 @@
 | 8. Chart Fit-to-Width Display | v0.1 | 1/1 | Complete | 2026-02-15 |
 | 9. Timer Fixes | v0.1 | 3/3 | Complete | 2026-02-16 |
 | 10. Settings Stack Navigation | v0.1 | 1/1 | Complete | 2026-02-16 |
+| 11. Silent Save Weight/Reps | v0.1.1 | 0/? | Pending | — |

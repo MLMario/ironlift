@@ -24,6 +24,10 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 
 ### Active
 
+**v0.1.1 — Bug Fixes & Architecture:**
+- [ ] Silent save of modified weight/reps to template when exercise is completed during workout (FIX-01)
+
+**v0.2 — Table Stakes Gaps (deferred):**
 - [ ] Previous workout values displayed inline during active workout logging (GAP-01)
 - [ ] Workout duration tracking with finished_at timestamp and duration display in history (GAP-02)
 - [ ] Personal record (PR) detection on workout save (GAP-03)
@@ -97,5 +101,11 @@ Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requi
 | Wall-clock timer (not tick counting) | Immune to iOS background suspension | Good — reliable timer |
 | Fit-to-width charts (adjustToWidth) | Horizontal scrolling poor UX for trend visualization | Good — all data visible at a glance |
 
+## Current Milestone: v0.1.1 Bug Fixes & Architecture
+
+**Goal:** Fix behavioral gaps and improve architecture in the core workout loop, added incrementally as issues are discovered.
+
+**First target:** Silent save of weight/reps to template when exercise is finished during workout — matching existing rest timer silent save behavior.
+
 ---
-*Last updated: 2026-02-16 after v0.1 milestone*
+*Last updated: 2026-02-16 after v0.1.1 milestone start*

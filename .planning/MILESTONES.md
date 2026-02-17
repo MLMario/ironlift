@@ -24,6 +24,17 @@
 
 **Git range:** `feat(01-01)` → `feat(10-01)`
 
-**What's next:** v0.2 — table stakes gaps (previous workout values, workout duration, PR detection) and enrichments
+**What's next:** v0.1.1 — bug fixes and architecture improvements
+
+---
+
+## v0.1.1 Bug Fixes & Architecture (Active)
+
+**Goal:** Fix behavioral gaps and improve architecture in the core workout loop, added incrementally as issues are discovered.
+
+**Phases:** 11+ (incremental)
+
+**Current scope:**
+- Phase 11: Silent save of weight/reps to template when exercise completed during workout
 
 ---
