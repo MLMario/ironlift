@@ -297,38 +297,6 @@ export default function WorkoutScreen() {
   // Finish flow
   // ============================================================================
 
-  const handleFinishPress = useCallback(() => {
-    Keyboard.dismiss();
-    if (activeWorkout.exercises.length === 0) {
-      Alert.alert('No Exercises', 'Add at least one exercise before finishing.');
-      return;
-    }
-    setShowFinishModal(true);
-  }, [activeWorkout.exercises.length]);
-
-  const handleFinishConfirm = useCallback(() => {
-    setShowFinishModal(false);
-    // Check for template structural changes
-    if (hasTemplateChanges() && activeWorkout.template_id) {
-      setShowTemplateUpdateModal(true);
-    } else {
-      saveWorkoutAndCleanup(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasTemplateChanges, activeWorkout.template_id]);
-
-  const handleTemplateUpdateConfirm = useCallback(() => {
-    setShowTemplateUpdateModal(false);
-    saveWorkoutAndCleanup(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleTemplateUpdateCancel = useCallback(() => {
-    setShowTemplateUpdateModal(false);
-    saveWorkoutAndCleanup(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   /**
    * Silent rest time save -- persists per-exercise rest time changes to template.
    * Called on finish when NOT doing a structural update (structural update already
@@ -447,6 +415,35 @@ export default function WorkoutScreen() {
     },
     [activeWorkout, stopTimer, backup, router, getRestTimeChanges]
   );
+
+  const handleFinishPress = useCallback(() => {
+    Keyboard.dismiss();
+    if (activeWorkout.exercises.length === 0) {
+      Alert.alert('No Exercises', 'Add at least one exercise before finishing.');
+      return;
+    }
+    setShowFinishModal(true);
+  }, [activeWorkout.exercises.length]);
+
+  const handleFinishConfirm = useCallback(() => {
+    setShowFinishModal(false);
+    // Check for template structural changes
+    if (hasTemplateChanges() && activeWorkout.template_id) {
+      setShowTemplateUpdateModal(true);
+    } else {
+      saveWorkoutAndCleanup(false);
+    }
+  }, [hasTemplateChanges, activeWorkout.template_id, saveWorkoutAndCleanup]);
+
+  const handleTemplateUpdateConfirm = useCallback(() => {
+    setShowTemplateUpdateModal(false);
+    saveWorkoutAndCleanup(true);
+  }, [saveWorkoutAndCleanup]);
+
+  const handleTemplateUpdateCancel = useCallback(() => {
+    setShowTemplateUpdateModal(false);
+    saveWorkoutAndCleanup(false);
+  }, [saveWorkoutAndCleanup]);
 
   // ============================================================================
   // Cancel flow

@@ -96,6 +96,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
 
   const title = `${chart.exercises.name} \u2014 ${charts.getMetricDisplayName(chart.metric_type)}`;
   const unitSuffix = getUnitSuffix(chart.metric_type);
+  const metric_type = chart.x_axis_mode == "date" ? "By Date" : "By Session";
 
   const handleKebabDelete = () => {
     setShowDeleteConfirm(true);
@@ -115,6 +116,21 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
       return <View style={styles.placeholder} />;
     }
 
+    if (data.length === 0) {
+      return (
+        <View style={styles.chartContainer}>
+          <View style={styles.placeholder} />
+        </View>
+      );
+    }
+
+    const values = data.map((d) => d.value);
+    const minVal = Math.min(...values);
+    const maxVal = Math.max(...values);
+    const range = maxVal - minVal;
+    const padding = range > 0 ? range * 0.2 : minVal * 0.2;
+    const yAxisOffset = Math.max(0, Math.floor(minVal - padding));
+
     const thinnedData = thinLabels(data, chartWidth);
     const effectiveRadius = data.length > 50 ? 2 : data.length > 30 ? 3 : 4;
 
@@ -123,15 +139,15 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
         {chartWidth > 0 ? (
           <LineChart
             data={thinnedData}
-            areaChart
+            /*Chart Parameters*/
             curved
-            curvature={0.4}
-            color="#4f9eff"
+            curvature={0.1}
+            color={theme.colors.accent}
             startFillColor="rgba(79, 158, 255, 0.3)"
             endFillColor="rgba(79, 158, 255, 0.01)"
             startOpacity={0.3}
             endOpacity={0.01}
-            dataPointsColor="#4f9eff"
+            dataPointsColor={theme.colors.accent}
             dataPointsRadius={effectiveRadius}
             height={180}
             adjustToWidth
@@ -147,6 +163,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
               color: theme.colors.textSecondary,
               fontSize: 10,
             }}
+            yAxisOffset={yAxisOffset}
             noOfSections={5}
             /*X Axis propertes */
             xAxisLabelTextStyle={{
@@ -157,7 +174,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
             isAnimated={false}
             hideRules
             pointerConfig={{
-              pointerColor: "#4f9eff",
+              pointerColor: "#ffb86b",
               persistPointer: false,
               radius: 3,
               activatePointersOnLongPress: false,
@@ -194,6 +211,11 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
         </Text>
         <KebabMenu onDelete={handleKebabDelete} />
       </View>
+      <View style={styles.subheader}>
+        <Text style={styles.subtitle} numberOfLines={1} ellipsizeMode="tail">
+          {metric_type}
+        </Text>
+      </View>
 
       {renderChartArea()}
 
@@ -226,11 +248,22 @@ function getStyles(theme: Theme) {
       paddingRight: theme.spacing.xs,
       paddingTop: theme.spacing.sm,
     },
+    subheader: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingLeft: theme.spacing.md,
+    },
     title: {
       flex: 1,
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textPrimary,
+    },
+    subtitle: {
+      flex: 1,
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.semibold,
+      color: theme.colors.textSecondary,
     },
     placeholder: {
       height: 180,
@@ -238,7 +271,7 @@ function getStyles(theme: Theme) {
       margin: theme.spacing.md,
       borderRadius: theme.radii.md,
     },
-chartContainer: {
+    chartContainer: {
       paddingBottom: theme.spacing.sm,
       paddingTop: theme.spacing.xs,
     },

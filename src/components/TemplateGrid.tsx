@@ -30,6 +30,7 @@ export function TemplateGrid({
 }: TemplateGridProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
+  const templateCount = templates.length;
 
   return (
     <View>
@@ -47,7 +48,17 @@ export function TemplateGrid({
       </View>
 
       <View style={styles.templateList}>
-        <Text style={styles.sectionSubTitle}> Log a Workout</Text>
+        <Text
+          style={
+            templateCount > 0
+              ? styles.sectionSubTitle
+              : styles.emptySectionSubTitle
+          }
+        >
+          {templateCount > 0
+            ? "Start a New Workout"
+            : "Create a Workout Template to \n Start Logging"}
+        </Text>
         {templates.map((template) => (
           <TemplateCard
             key={template.id}
@@ -100,6 +111,15 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.base,
       color: theme.colors.textSecondary,
       marginBottom: theme.spacing.sm,
+    },
+    emptySectionSubTitle: {
+      fontSize: theme.typography.sizes.base,
+      color: theme.colors.textSecondary,
+      marginBottom: theme.spacing.sm,
+      paddingLeft: theme.spacing.xl,
+      paddingRight: theme.spacing.xl,
+      paddingTop: theme.spacing.xl,
+      textAlign: "center",
     },
   });
 }

@@ -95,7 +95,7 @@ export function WorkoutExerciseCard({
   const styles = getStyles(theme);
 
   // All cards start expanded (user collapses manually, matching web behavior)
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Calculate progress for the header ring
   const completedSets = exercise.sets.filter((s) => s.is_done).length;

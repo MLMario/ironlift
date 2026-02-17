@@ -9,11 +9,11 @@
  * (progress bar is a workout-only feature for Phase 5).
  */
 
-import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
-import { useState } from 'react';
-import { useTheme } from '@/theme';
-import type { Theme } from '@/theme';
-import { formatTime, parseTimeInput } from '@/lib/timeUtils';
+import { formatTime, parseTimeInput } from "@/lib/timeUtils";
+import type { Theme } from "@/theme";
+import { useTheme } from "@/theme";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 interface RestTimerInlineProps {
   seconds: number;
@@ -65,7 +65,7 @@ export function RestTimerInline({
         onBlur={handleBlur}
         keyboardType="numbers-and-punctuation"
         selectTextOnFocus
-        placeholderTextColor={theme.colors.textMuted}
+        placeholderTextColor={theme.colors.textPrimary}
       />
 
       <Pressable onPress={handleIncrement} style={styles.button}>
@@ -78,29 +78,30 @@ export function RestTimerInline({
 function getStyles(theme: Theme) {
   return StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       gap: theme.spacing.sm,
       marginTop: theme.spacing.sm,
+      justifyContent: "center",
     },
     button: {
-      minWidth: 44,
-      minHeight: 44,
+      minWidth: 40,
+      minHeight: 40,
       paddingHorizontal: theme.spacing.sm,
       backgroundColor: theme.colors.bgElevated,
       borderRadius: theme.radii.md,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
     },
     buttonText: {
-      fontSize: theme.typography.sizes.sm,
+      fontSize: theme.typography.sizes.xs,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textSecondary,
     },
     timeInput: {
-      width: 60,
+      width: 200,
       height: 40,
-      textAlign: 'center',
+      textAlign: "center",
       fontSize: theme.typography.sizes.sm,
       fontFamily: theme.typography.fontFamilyMono,
       color: theme.colors.textPrimary,

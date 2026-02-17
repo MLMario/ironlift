@@ -5,11 +5,11 @@
  * Shows template name, exercise count, completed sets, and total volume badges.
  */
 
-import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useTheme, type Theme } from '@/theme';
-import { formatVolume } from '@/lib/formatters';
-import type { WorkoutHistoryItem } from '@/types/services';
+import { formatVolume } from "@/lib/formatters";
+import { useTheme, type Theme } from "@/theme";
+import type { WorkoutHistoryItem } from "@/types/services";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface WorkoutHistoryCardProps {
   workout: WorkoutHistoryItem;
@@ -35,9 +35,9 @@ function getStyles(theme: Theme) {
       marginBottom: theme.spacing.xs,
     },
     badgeRow: {
-      flexDirection: 'row',
+      flexDirection: "row",
       gap: theme.spacing.sm,
-      flexWrap: 'wrap',
+      flexWrap: "wrap",
     },
     badge: {
       backgroundColor: theme.colors.bgElevated,
@@ -52,7 +52,10 @@ function getStyles(theme: Theme) {
   });
 }
 
-export function WorkoutHistoryCard({ workout, onPress }: WorkoutHistoryCardProps) {
+export function WorkoutHistoryCard({
+  workout,
+  onPress,
+}: WorkoutHistoryCardProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
 
@@ -62,17 +65,21 @@ export function WorkoutHistoryCard({ workout, onPress }: WorkoutHistoryCardProps
       onPress={onPress}
     >
       <Text style={styles.title}>
-        {workout.template_name || 'Untitled Workout'}
+        {workout.template_name || "Untitled Workout"}
       </Text>
       <View style={styles.badgeRow}>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>{workout.exercise_count} exercises</Text>
+          <Text style={styles.badgeText}>
+            {workout.exercise_count} exercises
+          </Text>
         </View>
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{workout.completed_sets} sets</Text>
         </View>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>{formatVolume(workout.total_volume)} vol</Text>
+          <Text style={styles.badgeText}>
+            {formatVolume(workout.total_volume)} vol
+          </Text>
         </View>
       </View>
     </Pressable>
