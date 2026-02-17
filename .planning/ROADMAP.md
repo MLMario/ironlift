@@ -26,11 +26,11 @@
 ### v0.1.1 Bug Fixes & Architecture
 
 - [x] Phase 11: Silent Save of Weight/Reps to Template (1/1 plan) — completed 2026-02-16
-- [ ] Phase 12: Database Creation Limits via Triggers (1 plan)
+- [x] Phase 12: Database Creation Limits via Triggers (1/1 plan) — completed 2026-02-17
 
 **Plans:**
 - [x] 11-01-PLAN.md — Silent save service, hook detection, and workout finish wiring
-- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions + error documentation
+- [x] 12-01-PLAN.md — SQL migration with 7 trigger functions + error documentation
 
 ## Phase Details
 
@@ -68,7 +68,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions (advisory locks, P0001 ERRCODE) + error documentation + Supabase deploy
+- [x] 12-01-PLAN.md — SQL migration with 7 trigger functions (advisory locks, P0001 ERRCODE) + error documentation + Supabase deploy
 
 **Deliverables:**
 - Full migration SQL for Supabase SQL Editor
@@ -95,4 +95,4 @@ Plans:
 | 9. Timer Fixes | v0.1 | 3/3 | Complete | 2026-02-16 |
 | 10. Settings Stack Navigation | v0.1 | 1/1 | Complete | 2026-02-16 |
 | 11. Silent Save Weight/Reps | v0.1.1 | 1/1 | Complete | 2026-02-16 |
-| 12. DB Creation Limits | v0.1.1 | 0/1 | Not Started | — |
+| 12. DB Creation Limits | v0.1.1 | 1/1 | Complete | 2026-02-17 |
