@@ -7,7 +7,7 @@
 
 ### Workout Behavior Fixes
 
-- [ ] **FIX-01**: When user completes all sets of an exercise during an active workout with modified weight/reps values, those changes are silently saved to the template (matching rest timer silent save behavior)
+- [x] **FIX-01**: When user completes all sets of an exercise during an active workout with modified weight/reps values, those changes are silently saved to the template (matching rest timer silent save behavior)
 
 ### Preserved Behavior
 
@@ -32,7 +32,7 @@ Weight/reps changes during a workout do NOT trigger the template update confirma
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FIX-01 | Phase 11 | Pending |
+| FIX-01 | Phase 11 | Complete |
 
 **Coverage:**
 - v0.1.1 requirements: 1 total
@@ -41,4 +41,4 @@ Weight/reps changes during a workout do NOT trigger the template update confirma
 
 ---
 *Requirements defined: 2026-02-16*
-*Last updated: 2026-02-16 after initial definition*
+*Last updated: 2026-02-16 after phase 11 completion*

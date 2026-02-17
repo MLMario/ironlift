@@ -25,10 +25,10 @@
 
 ### v0.1.1 Bug Fixes & Architecture
 
-- [ ] Phase 11: Silent Save of Weight/Reps to Template
+- [x] Phase 11: Silent Save of Weight/Reps to Template (1/1 plan) — completed 2026-02-16
 
 **Plans:**
-- [ ] 11-01-PLAN.md — Silent save service, hook detection, and workout finish wiring
+- [x] 11-01-PLAN.md — Silent save service, hook detection, and workout finish wiring
 
 ## Phase Details
 
@@ -39,7 +39,7 @@
 **Plans:** 1 plan
 
 Plans:
-- [ ] 11-01-PLAN.md — Add updateTemplateExerciseSetValues service, getWeightRepsChanges hook, wire into workout finish flow
+- [x] 11-01-PLAN.md — Add updateTemplateExerciseSetValues service, getWeightRepsChanges hook, wire into workout finish flow
 
 **Requirements:** FIX-01
 
@@ -66,4 +66,4 @@ Plans:
 | 8. Chart Fit-to-Width Display | v0.1 | 1/1 | Complete | 2026-02-15 |
 | 9. Timer Fixes | v0.1 | 3/3 | Complete | 2026-02-16 |
 | 10. Settings Stack Navigation | v0.1 | 1/1 | Complete | 2026-02-16 |
-| 11. Silent Save Weight/Reps | v0.1.1 | 0/1 | Planned | — |
+| 11. Silent Save Weight/Reps | v0.1.1 | 1/1 | Complete | 2026-02-16 |
