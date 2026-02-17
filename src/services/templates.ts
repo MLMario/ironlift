@@ -727,3 +727,58 @@ export const templates: TemplatesService = {
   removeExerciseFromTemplate,
   updateTemplateExercise,
 };
+
+// ============================================================================
+// Standalone Exports (not part of TemplatesService interface)
+// ============================================================================
+
+/**
+ * Update payload for a single template set's weight/reps values.
+ * Used by the silent save flow to persist workout set values back to template.
+ */
+export interface TemplateSetValueUpdate {
+  set_number: number;
+  weight: number;
+  reps: number;
+}
+
+/**
+ * Update weight/reps values for specific sets in a template exercise.
+ * Best-effort: silently returns on any error (lookup failure, update failure).
+ * No auth check -- RLS handles authorization at the database level.
+ *
+ * Used by the silent save flow at workout finish time to persist completed
+ * set values back to the template without triggering the template update modal.
+ *
+ * @param templateId - Template UUID
+ * @param exerciseId - Exercise UUID (NOT template_exercise_id)
+ * @param setUpdates - Array of set updates with set_number, weight, reps
+ */
+export async function updateTemplateExerciseSetValues(
+  templateId: string,
+  exerciseId: string,
+  setUpdates: TemplateSetValueUpdate[]
+): Promise<void> {
+  if (setUpdates.length === 0) return;
+
+  // Look up the template_exercise_id from (template_id, exercise_id)
+  // This is necessary because template_exercise_sets uses template_exercise_id, not exercise_id
+  const { data: templateExercise, error: lookupError } = await supabase
+    .from('template_exercises')
+    .select('id')
+    .eq('template_id', templateId)
+    .eq('exercise_id', exerciseId)
+    .single();
+
+  if (lookupError || !templateExercise) return; // Best-effort: skip silently
+
+  // Update each set individually using the UNIQUE (template_exercise_id, set_number) constraint
+  for (const update of setUpdates) {
+    await supabase
+      .from('template_exercise_sets')
+      .update({ weight: update.weight, reps: update.reps })
+      .eq('template_exercise_id', templateExercise.id)
+      .eq('set_number', update.set_number);
+    // Individual set errors are silently ignored (best-effort)
+  }
+}

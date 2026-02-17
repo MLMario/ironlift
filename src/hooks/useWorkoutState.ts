@@ -393,6 +393,58 @@ export function useWorkoutState(
   );
 
   /**
+   * Get completed set weight/reps values for silent save to template.
+   * For each exercise in the original template, collects all done sets
+   * where set_number <= template set count.
+   * Used on workout finish to auto-save weight/reps changes silently.
+   */
+  const getWeightRepsChanges = useCallback(
+    (): Array<{
+      exercise_id: string;
+      sets: Array<{ set_number: number; weight: number; reps: number }>;
+    }> => {
+      if (!originalTemplateSnapshot) return [];
+
+      const changes: Array<{
+        exercise_id: string;
+        sets: Array<{ set_number: number; weight: number; reps: number }>;
+      }> = [];
+
+      for (const exercise of activeWorkout.exercises) {
+        // Skip exercises added during workout (not in original template)
+        const original = originalTemplateSnapshot.exercises.find(
+          (e) => e.exercise_id === exercise.exercise_id
+        );
+        if (!original) continue;
+
+        const templateSetCount = original.sets.length;
+        const setsToSave: Array<{ set_number: number; weight: number; reps: number }> = [];
+
+        for (const set of exercise.sets) {
+          // Only include sets that are marked done AND within template set count
+          if (set.is_done && set.set_number <= templateSetCount) {
+            setsToSave.push({
+              set_number: set.set_number,
+              weight: set.weight,
+              reps: set.reps,
+            });
+          }
+        }
+
+        if (setsToSave.length > 0) {
+          changes.push({
+            exercise_id: exercise.exercise_id,
+            sets: setsToSave,
+          });
+        }
+      }
+
+      return changes;
+    },
+    [originalTemplateSnapshot, activeWorkout.exercises]
+  );
+
+  /**
    * Detect structural changes between current workout and original template.
    * Only checks exercise count, set count per exercise, and exercise presence.
    * Does NOT compare weight/reps values (locked decision).
@@ -445,5 +497,6 @@ export function useWorkoutState(
     closeAllSwipes,
     hasTemplateChanges,
     getRestTimeChanges,
+    getWeightRepsChanges,
   };
 }
