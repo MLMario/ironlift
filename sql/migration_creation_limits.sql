@@ -10,21 +10,21 @@
 -- Safe to re-run at any time.
 --
 -- Limits enforced:
---   LIM01  templates              20 per user
---   LIM02  exercises (user-only)  50 per user (system exercises bypass)
---   LIM03  user_charts            25 per user
---   LIM04  template_exercises     15 per template
---   LIM05  workout_log_exercises  15 per workout log
---   LIM06  template_exercise_sets 10 per template exercise
---   LIM07  workout_log_sets       10 per workout log exercise
+--   templates              20 per user
+--   exercises (user-only)  50 per user (system exercises bypass)
+--   user_charts            25 per user
+--   template_exercises     15 per template
+--   workout_log_exercises  15 per workout log
+--   template_exercise_sets 10 per template exercise
+--   workout_log_sets       10 per workout log exercise
 --
 -- Error format: LIMIT_EXCEEDED:{entity}:{max_limit}
--- Each trigger uses a unique ERRCODE: LIM01 through LIM07
+-- All triggers use ERRCODE P0001 (raise_exception); identify by message prefix
 
 -- ============================================
 -- 1. Table: templates
 -- Limit: 20 per user
--- Error: LIMIT_EXCEEDED:templates:20 (ERRCODE: LIM01)
+-- Error: LIMIT_EXCEEDED:templates:20 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_templates()
@@ -42,7 +42,7 @@ BEGIN
 
   IF current_count >= 20 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:templates:20'
-      USING ERRCODE = 'LIM01';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -58,7 +58,7 @@ CREATE TRIGGER trg_enforce_max_templates
 -- ============================================
 -- 2. Table: exercises
 -- Limit: 50 user-created exercises per user
--- Error: LIMIT_EXCEEDED:exercises:50 (ERRCODE: LIM02)
+-- Error: LIMIT_EXCEEDED:exercises:50 (ERRCODE: P0001)
 -- Note: System exercises (is_system = true) bypass this trigger entirely
 -- ============================================
 
@@ -81,7 +81,7 @@ BEGIN
 
   IF current_count >= 50 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:exercises:50'
-      USING ERRCODE = 'LIM02';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -97,7 +97,7 @@ CREATE TRIGGER trg_enforce_max_user_exercises
 -- ============================================
 -- 3. Table: user_charts
 -- Limit: 25 per user
--- Error: LIMIT_EXCEEDED:charts:25 (ERRCODE: LIM03)
+-- Error: LIMIT_EXCEEDED:charts:25 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_user_charts()
@@ -115,7 +115,7 @@ BEGIN
 
   IF current_count >= 25 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:charts:25'
-      USING ERRCODE = 'LIM03';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -131,7 +131,7 @@ CREATE TRIGGER trg_enforce_max_user_charts
 -- ============================================
 -- 4. Table: template_exercises
 -- Limit: 15 per template
--- Error: LIMIT_EXCEEDED:template_exercises:15 (ERRCODE: LIM04)
+-- Error: LIMIT_EXCEEDED:template_exercises:15 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_template_exercises()
@@ -149,7 +149,7 @@ BEGIN
 
   IF current_count >= 15 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:template_exercises:15'
-      USING ERRCODE = 'LIM04';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -165,7 +165,7 @@ CREATE TRIGGER trg_enforce_max_template_exercises
 -- ============================================
 -- 5. Table: workout_log_exercises
 -- Limit: 15 per workout log
--- Error: LIMIT_EXCEEDED:workout_exercises:15 (ERRCODE: LIM05)
+-- Error: LIMIT_EXCEEDED:workout_exercises:15 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_workout_exercises()
@@ -183,7 +183,7 @@ BEGIN
 
   IF current_count >= 15 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:workout_exercises:15'
-      USING ERRCODE = 'LIM05';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -199,7 +199,7 @@ CREATE TRIGGER trg_enforce_max_workout_exercises
 -- ============================================
 -- 6. Table: template_exercise_sets
 -- Limit: 10 per template exercise
--- Error: LIMIT_EXCEEDED:template_sets:10 (ERRCODE: LIM06)
+-- Error: LIMIT_EXCEEDED:template_sets:10 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_template_sets()
@@ -217,7 +217,7 @@ BEGIN
 
   IF current_count >= 10 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:template_sets:10'
-      USING ERRCODE = 'LIM06';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
@@ -233,7 +233,7 @@ CREATE TRIGGER trg_enforce_max_template_sets
 -- ============================================
 -- 7. Table: workout_log_sets
 -- Limit: 10 per workout log exercise
--- Error: LIMIT_EXCEEDED:workout_sets:10 (ERRCODE: LIM07)
+-- Error: LIMIT_EXCEEDED:workout_sets:10 (ERRCODE: P0001)
 -- ============================================
 
 CREATE OR REPLACE FUNCTION enforce_max_workout_sets()
@@ -251,7 +251,7 @@ BEGIN
 
   IF current_count >= 10 THEN
     RAISE EXCEPTION 'LIMIT_EXCEEDED:workout_sets:10'
-      USING ERRCODE = 'LIM07';
+      USING ERRCODE = 'P0001';
   END IF;
 
   RETURN NEW;
