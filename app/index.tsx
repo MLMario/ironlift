@@ -21,7 +21,7 @@
  * - Normal: "My Templates" + "Progress Charts" sections in ScrollView
  */
 
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView, ActivityIndicator, Alert, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
@@ -54,6 +54,10 @@ export default function DashboardScreen() {
   const [resumeData, setResumeData] = useState<WorkoutBackupData | null>(null);
   const [showResumeModal, setShowResumeModal] = useState(false);
 
+  // Chart metrics refresh tracking
+  const [metricsRefreshKey, setMetricsRefreshKey] = useState(0);
+  const navigatedToWorkout = useRef(false);
+
   // Chart sheet state
   const [showAddChart, setShowAddChart] = useState(false);
 
@@ -72,11 +76,15 @@ export default function DashboardScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
-  // Refresh templates and charts when dashboard regains focus
+  // Refresh templates on every focus; only refresh charts after workout
   useFocusEffect(
     useCallback(() => {
       refresh();
-      refreshCharts();
+      if (navigatedToWorkout.current) {
+        navigatedToWorkout.current = false;
+        refreshCharts();
+        setMetricsRefreshKey(prev => prev + 1);
+      }
     }, [refresh, refreshCharts])
   );
 
@@ -107,11 +115,13 @@ export default function DashboardScreen() {
   }
 
   function handleStart(template: TemplateWithExercises) {
+    navigatedToWorkout.current = true;
     router.push(`/workout?templateId=${template.id}`);
   }
 
   function handleResume() {
     setShowResumeModal(false);
+    navigatedToWorkout.current = true;
     router.push('/workout?restore=true');
   }
 
@@ -133,10 +143,10 @@ export default function DashboardScreen() {
     refreshCharts();
   }
 
-  async function handleDeleteChart(chartId: string) {
+  const handleDeleteChart = useCallback(async (chartId: string) => {
     await chartsService.deleteChart(chartId);
     refreshCharts();
-  }
+  }, [refreshCharts]);
 
   function handleSettingsPress() {
     router.push('/settings');
@@ -187,6 +197,7 @@ export default function DashboardScreen() {
           onDelete={handleDeleteChart}
           onAddChart={handleAddChart}
           canAddChart={chartList.length < 25}
+          refreshKey={metricsRefreshKey}
         />
       </ScrollView>
       <AddChartSheet

@@ -13,6 +13,20 @@ import type { UserChartData } from '@/types/services';
 import { charts } from '@/services/charts';
 import { getCachedCharts, setCachedCharts } from '@/lib/cache';
 
+/** Shallow-compare chart config arrays to avoid unnecessary re-renders. */
+function chartsChanged(prev: UserChartData[], next: UserChartData[]): boolean {
+  if (prev.length !== next.length) return true;
+  for (let i = 0; i < prev.length; i++) {
+    const a = prev[i], b = next[i];
+    if (a.id !== b.id || a.exercise_id !== b.exercise_id ||
+        a.metric_type !== b.metric_type || a.x_axis_mode !== b.x_axis_mode ||
+        a.order !== b.order || a.exercises?.name !== b.exercises?.name) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Hook for loading and managing chart config data.
  *
@@ -44,7 +58,7 @@ export function useCharts(): {
     try {
       const cached = await getCachedCharts();
       if (cached) {
-        setChartList(cached);
+        setChartList(prev => chartsChanged(prev, cached) ? cached : prev);
         setIsLoading(false);
         hasCachedData = true;
       }
@@ -57,7 +71,7 @@ export function useCharts(): {
       const { data, error: fetchError } = await charts.getUserCharts();
 
       if (data) {
-        setChartList(data);
+        setChartList(prev => chartsChanged(prev, data) ? data : prev);
         // Update cache with fresh data
         await setCachedCharts(data);
       } else if (fetchError && !hasCachedData) {

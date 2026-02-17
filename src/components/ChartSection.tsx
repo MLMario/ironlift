@@ -24,6 +24,7 @@ interface ChartSectionProps {
   onDelete: (chartId: string) => void;
   onAddChart: () => void;
   canAddChart: boolean;
+  refreshKey?: number;
 }
 
 export function ChartSection({
@@ -32,6 +33,7 @@ export function ChartSection({
   onDelete,
   onAddChart,
   canAddChart,
+  refreshKey,
 }: ChartSectionProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
@@ -73,7 +75,7 @@ export function ChartSection({
         /* Chart list */
         <View style={styles.chartList}>
           {charts.map((chart) => (
-            <ChartCard key={chart.id} chart={chart} onDelete={onDelete} />
+            <ChartCard key={chart.id} chart={chart} onDelete={onDelete} refreshKey={refreshKey} />
           ))}
         </View>
       )}

@@ -13,6 +13,18 @@ import type { TemplateWithExercises } from '@/types/database';
 import { templates } from '@/services/templates';
 import { getCachedTemplates, setCachedTemplates } from '@/lib/cache';
 
+function templatesChanged(prev: TemplateWithExercises[], next: TemplateWithExercises[]): boolean {
+  if (prev.length !== next.length) return true;
+  for (let i = 0; i < prev.length; i++) {
+    const a = prev[i], b = next[i];
+    if (a.id !== b.id || a.name !== b.name ||
+        a.exercises?.length !== b.exercises?.length) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Hook for loading and managing template data.
  *
@@ -44,7 +56,7 @@ export function useTemplates(): {
     try {
       const cached = await getCachedTemplates();
       if (cached) {
-        setTemplateList(cached);
+        setTemplateList(prev => templatesChanged(prev, cached) ? cached : prev);
         setIsLoading(false);
         hasCachedData = true;
       }
@@ -57,7 +69,7 @@ export function useTemplates(): {
       const { data, error: fetchError } = await templates.getTemplates();
 
       if (data) {
-        setTemplateList(data);
+        setTemplateList(prev => templatesChanged(prev, data) ? data : prev);
         // Update cache with fresh data
         await setCachedTemplates(data);
       } else if (fetchError && !hasCachedData) {

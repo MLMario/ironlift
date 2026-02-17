@@ -8,6 +8,7 @@
  * Handles two states:
  * - Loading: dim placeholder area
  * - Ready: full LineChart with all locked decision props
+ *
  */
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
@@ -18,7 +19,7 @@ import { charts } from "@/services/charts";
 import type { Theme } from "@/theme";
 import { useTheme } from "@/theme";
 import type { UserChartData } from "@/types/services";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
@@ -26,6 +27,7 @@ import { LineChart } from "react-native-gifted-charts";
 interface ChartCardProps {
   chart: UserChartData;
   onDelete: (chartId: string) => void;
+  refreshKey?: number;
 }
 
 /**
@@ -77,15 +79,15 @@ function thinLabels(
 
 function formatYlabel(label: string): string {
   const value = Number(label);
-  if (value > 1000) return `${(value / 1000).toFixed(1)}k`;
+  if (value >= 1000) return `${(value / 1000).toFixed(1)}k`;
   if (value >= 100 && value < 1000) return `${value.toFixed(0)}`;
-  if (value < 100) return `${value.toFixed(1)}`;
+  return `${value.toFixed(1)}`;
 }
 
-export function ChartCard({ chart, onDelete }: ChartCardProps) {
+function ChartCardInner({ chart, onDelete, refreshKey = 0 }: ChartCardProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
-  const { data, isLoading } = useChartData(chart);
+  const { data, isLoading } = useChartData(chart, refreshKey);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [chartWidth, setChartWidth] = useState(0);
 
@@ -96,7 +98,7 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
 
   const title = `${chart.exercises.name} \u2014 ${charts.getMetricDisplayName(chart.metric_type)}`;
   const unitSuffix = getUnitSuffix(chart.metric_type);
-  const metric_type = chart.x_axis_mode == "date" ? "By Date" : "By Session";
+  const metric_type = chart.x_axis_mode === "date" ? "By Date" : "By Session";
 
   const handleKebabDelete = () => {
     setShowDeleteConfirm(true);
@@ -233,6 +235,22 @@ export function ChartCard({ chart, onDelete }: ChartCardProps) {
     </View>
   );
 }
+
+function chartCardPropsEqual(
+  prev: ChartCardProps,
+  next: ChartCardProps,
+): boolean {
+  return (
+    prev.chart.id === next.chart.id &&
+    prev.chart.metric_type === next.chart.metric_type &&
+    prev.chart.x_axis_mode === next.chart.x_axis_mode &&
+    prev.chart.exercises?.name === next.chart.exercises?.name &&
+    prev.onDelete === next.onDelete &&
+    (prev.refreshKey ?? 0) === (next.refreshKey ?? 0)
+  );
+}
+
+export const ChartCard = React.memo(ChartCardInner, chartCardPropsEqual);
 
 function getStyles(theme: Theme) {
   return StyleSheet.create({

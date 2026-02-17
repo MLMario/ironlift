@@ -9,7 +9,7 @@
  * refreshes from the network in the background.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { logging } from '@/services/logging';
 import {
   getCachedChartMetrics,
@@ -76,15 +76,18 @@ function transformToLineData(metricsData: ChartData, xAxisMode: string): ChartLi
  * @param chart - User chart configuration with exercise_id, metric_type, x_axis_mode
  * @returns { data, isLoading } where data is an array of { value, label } items
  */
-export function useChartData(chart: UserChartData): UseChartDataResult {
+export function useChartData(chart: UserChartData, refreshKey: number = 0): UseChartDataResult {
   const [data, setData] = useState<ChartLineDataItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const hasInitialData = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
 
     async function fetchData() {
-      setIsLoading(true);
+      if (!hasInitialData.current) {
+        setIsLoading(true);
+      }
 
       const cacheKey = chartMetricsCacheKey(
         chart.exercise_id,
@@ -98,6 +101,7 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
       if (!cancelled && cached) {
         setData(transformToLineData(cached, chart.x_axis_mode));
         setIsLoading(false);
+        hasInitialData.current = true;
         hasCachedData = true;
       }
 
@@ -116,6 +120,7 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
 
       if (metricsData) {
         setData(transformToLineData(metricsData, chart.x_axis_mode));
+        hasInitialData.current = true;
         setCachedChartMetrics(cacheKey, metricsData);
       } else if (!hasCachedData) {
         setData([]);
@@ -129,7 +134,7 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
     return () => {
       cancelled = true;
     };
-  }, [chart]);
+  }, [chart.id, chart.exercise_id, chart.metric_type, chart.x_axis_mode, refreshKey]);
 
   return { data, isLoading };
 }
