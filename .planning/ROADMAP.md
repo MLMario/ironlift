@@ -26,9 +26,11 @@
 ### v0.1.1 Bug Fixes & Architecture
 
 - [x] Phase 11: Silent Save of Weight/Reps to Template (1/1 plan) — completed 2026-02-16
+- [ ] Phase 12: Database Creation Limits via Triggers (1 plan)
 
 **Plans:**
 - [x] 11-01-PLAN.md — Silent save service, hook detection, and workout finish wiring
+- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions + error documentation
 
 ## Phase Details
 
@@ -52,6 +54,32 @@ Plans:
 4. Silent save works offline (best-effort, matching rest timer pattern)
 5. Existing rest timer silent save behavior is unaffected
 
+### Phase 12: Database Creation Limits via Triggers
+
+**Goal:** Implement BEFORE INSERT trigger functions on Supabase to enforce max row counts as a database-level safety net. Service-layer count-before-insert checks and user-facing error messages are deferred to the next milestone — this phase is DB protection only.
+
+**Limits:**
+- Templates per user: 20
+- Custom exercises per user: 50
+- Charts per user: 25
+- Exercises per template/workout: 15
+- Sets per exercise in template/workout: 10
+
+**Plans:** 1 plan
+
+Plans:
+- [ ] 12-01-PLAN.md — SQL migration with 7 trigger functions (advisory locks) + error documentation + Supabase deploy
+
+**Deliverables:**
+- Full migration SQL for Supabase SQL Editor
+- Migration file added to `sql/` for version tracking
+
+**Success criteria:**
+1. Each trigger counts existing rows by relevant parent/owner column and RAISE EXCEPTION if limit exceeded
+2. All five limits enforced at database level
+3. Migration SQL runs cleanly in Supabase SQL Editor
+4. Migration file tracked in `sql/`
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -67,3 +95,4 @@ Plans:
 | 9. Timer Fixes | v0.1 | 3/3 | Complete | 2026-02-16 |
 | 10. Settings Stack Navigation | v0.1 | 1/1 | Complete | 2026-02-16 |
 | 11. Silent Save Weight/Reps | v0.1.1 | 1/1 | Complete | 2026-02-16 |
+| 12. DB Creation Limits | v0.1.1 | 0/1 | Not Started | — |
