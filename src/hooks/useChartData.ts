@@ -4,11 +4,19 @@
  * Computes chart data for a single chart config using the existing
  * logging.getExerciseMetrics() function. Transforms the { labels, values }
  * result into ChartLineDataItem[] compatible with react-native-gifted-charts.
+ *
+ * Uses a cache-first pattern: shows cached data instantly, then silently
+ * refreshes from the network in the background.
  */
 
 import { useState, useEffect } from 'react';
 import { logging } from '@/services/logging';
-import type { UserChartData } from '@/types/services';
+import {
+  getCachedChartMetrics,
+  setCachedChartMetrics,
+  chartMetricsCacheKey,
+} from '@/lib/cache';
+import type { ChartData, UserChartData } from '@/types/services';
 
 /**
  * Single data point for LineChart rendering.
@@ -39,11 +47,31 @@ function formatDateLabel(dateStr: string): string {
 }
 
 /**
+ * Transform raw ChartData into ChartLineDataItem[] for rendering.
+ *
+ * @param metricsData - Raw { labels, values } from service or cache
+ * @param xAxisMode - 'date' or 'session' to determine label formatting
+ * @returns Array of { value, label } items for LineChart
+ */
+function transformToLineData(metricsData: ChartData, xAxisMode: string): ChartLineDataItem[] {
+  return metricsData.labels.map((label, index) => ({
+    value: metricsData.values[index],
+    label:
+      xAxisMode === 'date'
+        ? formatDateLabel(label)
+        : label.replace('Session ', ''),
+  }));
+}
+
+/**
  * Hook that computes chart data for a single chart configuration.
  *
  * Calls logging.getExerciseMetrics() with the chart's exercise_id,
  * metric_type, and x_axis_mode, then transforms the result into
  * ChartLineDataItem[] for LineChart rendering.
+ *
+ * Uses cache-first pattern: returns cached data immediately if available,
+ * then fetches fresh data from the network in the background.
  *
  * @param chart - User chart configuration with exercise_id, metric_type, x_axis_mode
  * @returns { data, isLoading } where data is an array of { value, label } items
@@ -58,8 +86,23 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
     async function fetchData() {
       setIsLoading(true);
 
-      const limit = chart.x_axis_mode === 'session' ? 52 : 365;
+      const cacheKey = chartMetricsCacheKey(
+        chart.exercise_id,
+        chart.metric_type,
+        chart.x_axis_mode
+      );
 
+      // Cache-first: show cached data instantly
+      let hasCachedData = false;
+      const cached = await getCachedChartMetrics(cacheKey);
+      if (!cancelled && cached) {
+        setData(transformToLineData(cached, chart.x_axis_mode));
+        setIsLoading(false);
+        hasCachedData = true;
+      }
+
+      // Always fetch from network in the background
+      const limit = chart.x_axis_mode === 'session' ? 52 : 365;
       const { data: metricsData } = await logging.getExerciseMetrics(
         chart.exercise_id,
         {
@@ -72,17 +115,9 @@ export function useChartData(chart: UserChartData): UseChartDataResult {
       if (cancelled) return;
 
       if (metricsData) {
-        const items: ChartLineDataItem[] = metricsData.labels.map(
-          (label, index) => ({
-            value: metricsData.values[index],
-            label:
-              chart.x_axis_mode === 'date'
-                ? formatDateLabel(label)
-                : label.replace('Session ', ''),
-          })
-        );
-        setData(items);
-      } else {
+        setData(transformToLineData(metricsData, chart.x_axis_mode));
+        setCachedChartMetrics(cacheKey, metricsData);
+      } else if (!hasCachedData) {
         setData([]);
       }
 

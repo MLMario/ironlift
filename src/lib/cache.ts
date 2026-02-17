@@ -7,7 +7,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Exercise, TemplateWithExercises } from '@/types/database';
-import type { UserChartData } from '@/types/services';
+import type { ChartData, UserChartData } from '@/types/services';
 
 const CACHE_KEY_EXERCISES = 'ironlift:exercises';
 const CACHE_KEY_TEMPLATES = 'ironlift:templates';
@@ -132,5 +132,78 @@ export async function clearChartCache(): Promise<void> {
     await AsyncStorage.removeItem(CACHE_KEY_CHARTS);
   } catch (err) {
     console.error('Failed to clear chart cache:', err);
+  }
+}
+
+// ============================================================================
+// Chart Metrics Cache
+// ============================================================================
+
+const CACHE_KEY_CHART_METRICS = 'ironlift:chart-metrics';
+
+type ChartMetricsMap = Record<string, ChartData>;
+
+/**
+ * Build a composite cache key for a chart's metrics data.
+ *
+ * @param exerciseId - Exercise UUID
+ * @param metricType - Metric type (e.g., 'total_sets', 'max_volume_set')
+ * @param xAxisMode - X-axis mode ('date' or 'session')
+ * @returns Composite key string
+ */
+export function chartMetricsCacheKey(
+  exerciseId: string,
+  metricType: string,
+  xAxisMode: string
+): string {
+  return `${exerciseId}:${metricType}:${xAxisMode}`;
+}
+
+/**
+ * Retrieve a single chart's cached metrics data from AsyncStorage.
+ *
+ * @param key - Composite cache key from chartMetricsCacheKey()
+ * @returns Parsed ChartData, or null on cache miss/error
+ */
+export async function getCachedChartMetrics(key: string): Promise<ChartData | null> {
+  try {
+    const json = await AsyncStorage.getItem(CACHE_KEY_CHART_METRICS);
+    if (!json) return null;
+    const map: ChartMetricsMap = JSON.parse(json);
+    return map[key] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Store a single chart's metrics data in the AsyncStorage map.
+ * Reads the existing map, merges the new entry, and writes back.
+ *
+ * @param key - Composite cache key from chartMetricsCacheKey()
+ * @param data - Chart data to cache
+ */
+export async function setCachedChartMetrics(key: string, data: ChartData): Promise<void> {
+  try {
+    let map: ChartMetricsMap = {};
+    const json = await AsyncStorage.getItem(CACHE_KEY_CHART_METRICS);
+    if (json) {
+      map = JSON.parse(json);
+    }
+    map[key] = data;
+    await AsyncStorage.setItem(CACHE_KEY_CHART_METRICS, JSON.stringify(map));
+  } catch (err) {
+    console.error('Failed to cache chart metrics:', err);
+  }
+}
+
+/**
+ * Remove the entire chart metrics cache entry from AsyncStorage.
+ */
+export async function clearChartMetricsCache(): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(CACHE_KEY_CHART_METRICS);
+  } catch (err) {
+    console.error('Failed to clear chart metrics cache:', err);
   }
 }
