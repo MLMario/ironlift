@@ -171,11 +171,13 @@ function getStyles(theme: Theme) {
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.medium,
       color: theme.colors.textSecondary,
+      textAlign: "center",
     },
     confirmButtonText: {
       fontSize: theme.typography.sizes.base,
       fontWeight: theme.typography.weights.semibold,
       color: theme.colors.textPrimary,
+      textAlign: "center",
     },
   });
 }
