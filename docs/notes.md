@@ -18,8 +18,6 @@ Charts
 Template Grids:
 
 - Create a template message when templates are empty, create a template to start logging your workout
-- Log a wrokout subtitle only appear when templates >1
-- when weigh and reps are changed they should be silently updated in just like timer.
 
 ---
 

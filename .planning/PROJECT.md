@@ -25,12 +25,15 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 ### Active
 
 **v0.1.1 — Bug Fixes & Architecture:**
+
 - [ ] Silent save of modified weight/reps to template when exercise is completed during workout (FIX-01)
 
 **v0.2 — Table Stakes Gaps (deferred):**
+
 - [ ] Previous workout values displayed inline during active workout logging (GAP-01)
 - [ ] Workout duration tracking with finished_at timestamp and duration display in history (GAP-02)
 - [ ] Personal record (PR) detection on workout save (GAP-03)
+- [ ] Service layer implementation of templates per user, customer exercise per user, charts per user, exercise per template and set per exercise.
 
 ### Out of Scope
 
@@ -67,6 +70,7 @@ Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requi
 **Data model:** 8 tables in Supabase — exercises (system + user), templates (with nested exercises and sets), workout_logs (with nested exercises and sets), user_charts. All accessed via RLS. ~1000 system exercises pre-populated.
 
 **Known issues:**
+
 - No automated tests (manual testing on physical device only)
 - Sound asset directory uses .gitkeep placeholder (no real MP3 sourced)
 - Supabase Dashboard manual configuration still needed (redirect URL, email confirmation, password length)
@@ -85,21 +89,21 @@ Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requi
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Expo (React Native) over Swift/Capacitor | TypeScript reuse, Expo Go dev workflow, EAS cloud builds from Windows | Good — shipped full app in 6 days |
-| Copy-and-diverge from web app | Web app abandoned, standalone project simpler than shared package | Good — clean port, no dependency management |
-| AsyncStorage over SQLite for caching | Data volume ~16MB lifetime, JSON key-value sufficient | Good — simple, reliable, sufficient for scale |
-| Hub-and-spoke over tab bar | Matches web app IA, dashboard-centric model, app doesn't justify tabs | Good — clean single-hub UX |
-| Hand-rolled UI over component library | AI handles tedium, full control over dark theme, no lock-in | Good — full design control, no library conflicts |
-| react-native-gifted-charts over victory-native | Works in Expo Go (no Skia), maps 1:1 to Chart.js config | Good — worked well with adjustToWidth |
-| Local notifications only | No server involvement, rest timer is sole use case | Good — simple, reliable |
-| Email/password only (no biometrics/Apple) | Mirror web app, simplest path, can layer on later | Good — sufficient for MVP |
-| Full feature parity for v1 | All web app features in scope — auth, templates, workouts, charts, exercises, history | Good — complete port achieved |
-| IronLift rebrand | New brand identity for iOS app, distinct from abandoned web app | Good — clean brand separation |
-| @gorhom/bottom-sheet → stack navigation | Bottom sheet had gesture conflicts; stack nav cleaner for settings | Good — simpler, more native feel |
-| Wall-clock timer (not tick counting) | Immune to iOS background suspension | Good — reliable timer |
-| Fit-to-width charts (adjustToWidth) | Horizontal scrolling poor UX for trend visualization | Good — all data visible at a glance |
+| Decision                                       | Rationale                                                                             | Outcome                                          |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Expo (React Native) over Swift/Capacitor       | TypeScript reuse, Expo Go dev workflow, EAS cloud builds from Windows                 | Good — shipped full app in 6 days                |
+| Copy-and-diverge from web app                  | Web app abandoned, standalone project simpler than shared package                     | Good — clean port, no dependency management      |
+| AsyncStorage over SQLite for caching           | Data volume ~16MB lifetime, JSON key-value sufficient                                 | Good — simple, reliable, sufficient for scale    |
+| Hub-and-spoke over tab bar                     | Matches web app IA, dashboard-centric model, app doesn't justify tabs                 | Good — clean single-hub UX                       |
+| Hand-rolled UI over component library          | AI handles tedium, full control over dark theme, no lock-in                           | Good — full design control, no library conflicts |
+| react-native-gifted-charts over victory-native | Works in Expo Go (no Skia), maps 1:1 to Chart.js config                               | Good — worked well with adjustToWidth            |
+| Local notifications only                       | No server involvement, rest timer is sole use case                                    | Good — simple, reliable                          |
+| Email/password only (no biometrics/Apple)      | Mirror web app, simplest path, can layer on later                                     | Good — sufficient for MVP                        |
+| Full feature parity for v1                     | All web app features in scope — auth, templates, workouts, charts, exercises, history | Good — complete port achieved                    |
+| IronLift rebrand                               | New brand identity for iOS app, distinct from abandoned web app                       | Good — clean brand separation                    |
+| @gorhom/bottom-sheet → stack navigation        | Bottom sheet had gesture conflicts; stack nav cleaner for settings                    | Good — simpler, more native feel                 |
+| Wall-clock timer (not tick counting)           | Immune to iOS background suspension                                                   | Good — reliable timer                            |
+| Fit-to-width charts (adjustToWidth)            | Horizontal scrolling poor UX for trend visualization                                  | Good — all data visible at a glance              |
 
 ## Current Milestone: v0.1.1 Bug Fixes & Architecture
 
@@ -108,4 +112,5 @@ Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requi
 **First target:** Silent save of weight/reps to template when exercise is finished during workout — matching existing rest timer silent save behavior.
 
 ---
-*Last updated: 2026-02-16 after v0.1.1 milestone start*
+
+_Last updated: 2026-02-16 after v0.1.1 milestone start_
