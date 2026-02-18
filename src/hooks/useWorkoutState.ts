@@ -103,6 +103,10 @@ export function useWorkoutState(
   const [originalTemplateSnapshot, setOriginalTemplateSnapshot] =
     useState<TemplateSnapshot | null>(null);
 
+  // Ref to exercises for stable callbacks (avoids [activeWorkout.exercises] dep)
+  const exercisesRef = useRef(activeWorkout.exercises);
+  exercisesRef.current = activeWorkout.exercises;
+
   // Swipe coordination -- only one set row revealed at a time
   const [revealedSetKey, setRevealedSetKey] = useState<string | null>(null);
 
@@ -281,8 +285,8 @@ export function useWorkoutState(
    */
   const addExercise = useCallback(
     (exercise: Exercise): boolean => {
-      // Check for duplicates
-      const exists = activeWorkout.exercises.some(
+      // Check for duplicates (read from ref for stable deps)
+      const exists = exercisesRef.current.some(
         (ex) => ex.exercise_id === exercise.id
       );
       if (exists) return false;
@@ -308,7 +312,7 @@ export function useWorkoutState(
 
       return true;
     },
-    [activeWorkout.exercises]
+    []
   );
 
   /**
@@ -317,7 +321,8 @@ export function useWorkoutState(
    */
   const removeExercise = useCallback(
     (index: number): WorkoutExercise | undefined => {
-      const removed = activeWorkout.exercises[index];
+      // Read from ref for stable deps
+      const removed = exercisesRef.current[index];
 
       setActiveWorkout((prev) => ({
         ...prev,
@@ -326,7 +331,7 @@ export function useWorkoutState(
 
       return removed;
     },
-    [activeWorkout.exercises]
+    []
   );
 
   /**

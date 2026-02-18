@@ -187,17 +187,21 @@ export default function WorkoutScreen() {
   // Set done handler (connects state + timer + backup)
   // ============================================================================
 
+  // Ref to exercises for stable handleToggleDone (avoids [activeWorkout.exercises] dep)
+  const exercisesRef = useRef(activeWorkout.exercises);
+  exercisesRef.current = activeWorkout.exercises;
+
   const handleToggleDone = useCallback(
     (exerciseIndex: number, setIndex: number) => {
       const result = toggleSetDone(exerciseIndex, setIndex);
       if (!result.wasDone) {
         // Was not done, now is done -> start rest timer
-        const exercise = activeWorkout.exercises[exerciseIndex];
+        const exercise = exercisesRef.current[exerciseIndex];
         startTimer(exerciseIndex, exercise.rest_seconds);
       }
       triggerBackup();
     },
-    [toggleSetDone, activeWorkout.exercises, startTimer, triggerBackup]
+    [toggleSetDone, startTimer, triggerBackup]
   );
 
   // ============================================================================
@@ -638,9 +642,9 @@ export default function WorkoutScreen() {
                 isTimerActive={timerProps.isTimerActive}
                 restSeconds={timerProps.restSeconds}
                 onAdjustTimer={handleAdjustTimer}
-                onRestTimeChange={(seconds) => handleRestTimeChange(exerciseIndex, seconds)}
+                onRestTimeChange={handleRestTimeChange}
                 onTimerPause={handleTimerPause}
-                onTimerRestart={(seconds) => handleTimerRestart(exerciseIndex, seconds)}
+                onTimerRestart={handleTimerRestart}
                 revealedSetKey={revealedSetKey}
                 onSetReveal={handleSetReveal}
                 onSetClose={handleSetClose}

@@ -23,7 +23,7 @@ import type { WorkoutExercise } from "@/hooks/useWorkoutState";
 import type { Theme } from "@/theme";
 import { useTheme } from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Alert,
   LayoutAnimation,
@@ -57,9 +57,9 @@ interface WorkoutExerciseCardProps {
   isTimerActive: boolean;
   onAdjustTimer: (delta: number) => void;
   restSeconds: number;
-  onRestTimeChange: (seconds: number) => void;
+  onRestTimeChange: (exerciseIndex: number, seconds: number) => void;
   onTimerPause: () => void;
-  onTimerRestart: (seconds: number) => void;
+  onTimerRestart: (exerciseIndex: number, seconds: number) => void;
   // Swipe coordination
   revealedSetKey: string | null;
   onSetReveal: (key: string) => void;
@@ -70,7 +70,7 @@ interface WorkoutExerciseCardProps {
 // Component
 // ============================================================================
 
-export function WorkoutExerciseCard({
+function WorkoutExerciseCardInner({
   exercise,
   exerciseIndex,
   onWeightChange,
@@ -96,6 +96,16 @@ export function WorkoutExerciseCard({
 
   // All cards start expanded (user collapses manually, matching web behavior)
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // Bridge callbacks: parent passes (exerciseIndex, seconds), RestTimerBar expects (seconds)
+  const handleInnerRestTimeChange = useCallback(
+    (seconds: number) => onRestTimeChange(exerciseIndex, seconds),
+    [exerciseIndex, onRestTimeChange]
+  );
+  const handleInnerTimerRestart = useCallback(
+    (seconds: number) => onTimerRestart(exerciseIndex, seconds),
+    [exerciseIndex, onTimerRestart]
+  );
 
   // Calculate progress for the header ring
   const completedSets = exercise.sets.filter((s) => s.is_done).length;
@@ -200,9 +210,9 @@ export function WorkoutExerciseCard({
             isActive={isTimerActive}
             restSeconds={restSeconds}
             onAdjust={onAdjustTimer}
-            onRestTimeChange={onRestTimeChange}
+            onRestTimeChange={handleInnerRestTimeChange}
             onTimerPause={onTimerPause}
-            onTimerRestart={onTimerRestart}
+            onTimerRestart={handleInnerTimerRestart}
           />
 
           {/* Add Set button */}
@@ -225,6 +235,49 @@ export function WorkoutExerciseCard({
     </View>
   );
 }
+
+// ============================================================================
+// Custom comparator for React.memo
+// ============================================================================
+
+function exerciseCardPropsEqual(
+  prev: WorkoutExerciseCardProps,
+  next: WorkoutExerciseCardProps
+): boolean {
+  // Timer: if inactive on both sides, skip timer value comparison entirely
+  if (!prev.isTimerActive && !next.isTimerActive) {
+    if (prev.restSeconds !== next.restSeconds) return false;
+  } else {
+    if (prev.timerRemaining !== next.timerRemaining) return false;
+    if (prev.timerTotal !== next.timerTotal) return false;
+    if (prev.isTimerActive !== next.isTimerActive) return false;
+    if (prev.restSeconds !== next.restSeconds) return false;
+  }
+  // Exercise data + index (reference equality on exercise object)
+  if (prev.exercise !== next.exercise) return false;
+  if (prev.exerciseIndex !== next.exerciseIndex) return false;
+  // Swipe coordination
+  if (prev.revealedSetKey !== next.revealedSetKey) return false;
+  // All callbacks (reference equality — must all be stable)
+  if (prev.onWeightChange !== next.onWeightChange) return false;
+  if (prev.onRepsChange !== next.onRepsChange) return false;
+  if (prev.onToggleDone !== next.onToggleDone) return false;
+  if (prev.onAddSet !== next.onAddSet) return false;
+  if (prev.onDeleteSet !== next.onDeleteSet) return false;
+  if (prev.onRemoveExercise !== next.onRemoveExercise) return false;
+  if (prev.onAdjustTimer !== next.onAdjustTimer) return false;
+  if (prev.onRestTimeChange !== next.onRestTimeChange) return false;
+  if (prev.onTimerPause !== next.onTimerPause) return false;
+  if (prev.onTimerRestart !== next.onTimerRestart) return false;
+  if (prev.onSetReveal !== next.onSetReveal) return false;
+  if (prev.onSetClose !== next.onSetClose) return false;
+  return true;
+}
+
+export const WorkoutExerciseCard = React.memo(
+  WorkoutExerciseCardInner,
+  exerciseCardPropsEqual
+);
 
 // ============================================================================
 // Styles

@@ -10,6 +10,7 @@
  * Turns green (success) when all sets are complete.
  */
 
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { useTheme } from '@/theme';
@@ -23,7 +24,7 @@ interface ProgressRingProps {
 
 const STROKE_WIDTH = 3;
 
-export function ProgressRing({ completed, total, size = 40 }: ProgressRingProps) {
+function ProgressRingInner({ completed, total, size = 40 }: ProgressRingProps) {
   const theme = useTheme();
   const styles = getStyles(theme, size);
 
@@ -70,6 +71,8 @@ export function ProgressRing({ completed, total, size = 40 }: ProgressRingProps)
     </View>
   );
 }
+
+export const ProgressRing = React.memo(ProgressRingInner);
 
 function getStyles(theme: Theme, size: number) {
   return StyleSheet.create({

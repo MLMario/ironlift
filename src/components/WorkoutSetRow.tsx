@@ -20,7 +20,7 @@
  * - Only one row can be revealed at a time (coordinated via isRevealed prop)
  */
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -78,7 +78,7 @@ function formatWeight(value: number): string {
 // Component
 // ============================================================================
 
-export function WorkoutSetRow({
+function WorkoutSetRowInner({
   setNumber,
   weight,
   reps,
@@ -265,6 +265,8 @@ export function WorkoutSetRow({
     </View>
   );
 }
+
+export const WorkoutSetRow = React.memo(WorkoutSetRowInner);
 
 // ============================================================================
 // Styles

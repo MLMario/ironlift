@@ -15,7 +15,7 @@
  * Layout: [-10s] [progress bar with MM:SS overlay or TextInput] [+10s]
  */
 
-import { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/theme';
 import type { Theme } from '@/theme';
@@ -40,7 +40,7 @@ interface RestTimerBarProps {
 // Component
 // ============================================================================
 
-export function RestTimerBar({
+function RestTimerBarInner({
   remainingSeconds,
   totalSeconds,
   isActive,
@@ -204,6 +204,8 @@ export function RestTimerBar({
     </View>
   );
 }
+
+export const RestTimerBar = React.memo(RestTimerBarInner);
 
 // ============================================================================
 // Styles

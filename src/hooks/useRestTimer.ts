@@ -61,6 +61,13 @@ export function useRestTimer() {
     duration: number;
   } | null>(null);
 
+  // Stable identity ref for isActiveForExercise — only changes on start/stop/complete,
+  // NOT on every tick (which only changes remaining)
+  const timerIdentityRef = useRef<{ status: 'idle' | 'active'; exerciseIndex: number }>({
+    status: 'idle',
+    exerciseIndex: -1,
+  });
+
   /**
    * Clear the update interval.
    */
@@ -132,6 +139,7 @@ export function useRestTimer() {
     cancelNotification();
     fireHaptic();
     playAlertSound();
+    timerIdentityRef.current = { status: 'idle', exerciseIndex: -1 };
     setTimer({ status: 'idle' });
   }, [clearTimer, cancelNotification, fireHaptic, playAlertSound]);
 
@@ -149,6 +157,7 @@ export function useRestTimer() {
 
       const startedAt = Date.now();
       timerParamsRef.current = { startedAt, duration: totalSeconds };
+      timerIdentityRef.current = { status: 'active', exerciseIndex };
 
       // Set initial state
       setTimer({
@@ -207,6 +216,7 @@ export function useRestTimer() {
     clearTimer();
     await cancelNotification();
     timerParamsRef.current = null;
+    timerIdentityRef.current = { status: 'idle', exerciseIndex: -1 };
     setTimer({ status: 'idle' });
   }, [clearTimer, cancelNotification]);
 
@@ -292,14 +302,15 @@ export function useRestTimer() {
 
   /**
    * Check if the timer is currently active for a specific exercise.
+   * Reads from timerIdentityRef (stable ref) instead of timer state,
+   * so this callback never changes — preventing downstream re-renders.
    */
   const isActiveForExercise = useCallback(
     (exerciseIndex: number): boolean => {
-      return (
-        timer.status === 'active' && timer.exerciseIndex === exerciseIndex
-      );
+      const id = timerIdentityRef.current;
+      return id.status === 'active' && id.exerciseIndex === exerciseIndex;
     },
-    [timer]
+    []
   );
 
   /**
