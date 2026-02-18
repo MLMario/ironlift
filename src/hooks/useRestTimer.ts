@@ -47,7 +47,6 @@ export type TimerState =
  * - pause(): freezes timer at current remaining value (status stays 'active')
  * - adjust(): modifies duration mid-timer, reschedules notification
  * - isActiveForExercise(): checks if timer belongs to specific exercise
- * - getProgress(): returns 0-100 percentage for progress bar
  */
 export function useRestTimer() {
   const [timer, setTimer] = useState<TimerState>({ status: 'idle' });
@@ -313,21 +312,6 @@ export function useRestTimer() {
     []
   );
 
-  /**
-   * Get timer progress percentage for a specific exercise.
-   * Returns 0-100 where 100 means full (idle or just started) and 0 means complete.
-   */
-  const getProgress = useCallback(
-    (exerciseIndex: number): number => {
-      if (timer.status !== 'active' || timer.exerciseIndex !== exerciseIndex) {
-        return 100; // Full bar when idle
-      }
-      if (timer.duration <= 0) return 0;
-      return Math.round((timer.remaining / timer.duration) * 100);
-    },
-    [timer]
-  );
-
   // ==================== CLEANUP ====================
 
   useEffect(() => {
@@ -351,6 +335,5 @@ export function useRestTimer() {
     pause,
     adjust,
     isActiveForExercise,
-    getProgress,
   };
 }

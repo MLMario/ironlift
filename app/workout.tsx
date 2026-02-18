@@ -156,7 +156,6 @@ export default function WorkoutScreen() {
     pause: pauseTimer,
     adjust: adjustTimer,
     isActiveForExercise,
-    getProgress,
   } = useRestTimer();
 
   // ============================================================================
