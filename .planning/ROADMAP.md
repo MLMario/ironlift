@@ -27,10 +27,13 @@
 
 - [x] Phase 11: Silent Save of Weight/Reps to Template (1/1 plan) — completed 2026-02-16
 - [x] Phase 12: Database Creation Limits via Triggers (1/1 plan) — completed 2026-02-17
+- [ ] Phase 13: Test Harness for Unit Testing
 
 **Plans:**
 - [x] 11-01-PLAN.md — Silent save service, hook detection, and workout finish wiring
 - [x] 12-01-PLAN.md — SQL migration with 7 trigger functions + error documentation
+- [ ] 13-01-PLAN.md — Install test dependencies, create Jest config and global setup
+- [ ] 13-02-PLAN.md — Proof-of-concept tests (utilities + component render)
 
 ## Phase Details
 
@@ -80,6 +83,24 @@ Plans:
 3. Migration SQL runs cleanly in Supabase SQL Editor
 4. Migration file tracked in `sql/`
 
+### Phase 13: Test Harness for Unit Testing
+
+**Goal:** Set up a React Native/Expo-compatible unit test harness using Jest and @testing-library/react-native, enabling reliable unit and component testing across the codebase.
+
+**Depends on:** Phase 12
+**Plans:** 2 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — Install test dependencies, create Jest config and global setup
+- [ ] 13-02-PLAN.md — Proof-of-concept tests (utilities + component render)
+
+**Success criteria:**
+1. jest-expo, @testing-library/react-native, and supporting packages installed
+2. Jest configuration with jest-expo preset, global mocks for Reanimated/GestureHandler/AsyncStorage/Supabase
+3. Pure utility tests (formatters, timeUtils) pass
+4. Component render test (SubmitButton with ThemeProvider) passes
+5. `npm test` exits with code 0
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -96,3 +117,4 @@ Plans:
 | 10. Settings Stack Navigation | v0.1 | 1/1 | Complete | 2026-02-16 |
 | 11. Silent Save Weight/Reps | v0.1.1 | 1/1 | Complete | 2026-02-16 |
 | 12. DB Creation Limits | v0.1.1 | 1/1 | Complete | 2026-02-17 |
+| 13. Test Harness | v0.1.1 | 0/2 | Not Started | — |
