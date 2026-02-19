@@ -77,7 +77,7 @@ import type { Config } from 'jest';
 
 const config: Config = {
   preset: 'jest-expo',
-  setupFilesAfterSetup: ['<rootDir>/jest-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|react-native-reanimated|react-native-gesture-handler|react-native-gifted-charts)',
   ],
@@ -335,7 +335,7 @@ import type { Config } from 'jest';
 
 const config: Config = {
   preset: 'jest-expo',
-  setupFilesAfterSetup: ['<rootDir>/jest-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
   transformIgnorePatterns: [
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|native-base|react-native-svg|react-native-reanimated|react-native-gesture-handler|react-native-gifted-charts|react-native-worklets)',
   ],
@@ -389,7 +389,7 @@ jest.mock('@/services/exercises', () => ({
 |--------------|------------------|--------------|--------|
 | `@testing-library/jest-native` for matchers | Built-in matchers in RNTL v12.4+ | Mid-2024 | No separate package needed; matchers auto-register on import |
 | `react-native-reanimated/mock` manual require | `setUpTests()` function | Reanimated v3+ | Cleaner setup, better mock coverage |
-| `setupFiles` for Reanimated mock | `setupFilesAfterSetup` for Reanimated mock | Jest 28+ | Ensures mock runs after Jest environment is ready |
+| `setupFiles` for Reanimated mock | `setupFilesAfterEnv` for Reanimated mock | Jest 28+ | Ensures mock runs after Jest environment is ready |
 | RNTL v12 with React 18 defaults | RNTL v13 with concurrent rendering default for React 19 | RNTL v13 (Q4 2024) | Tests run in concurrent mode; need `waitFor`/`findBy*` for async |
 | react-test-renderer maintained | react-test-renderer deprecated (still functional) | React 19 | Shows console warnings; RNTL v14 will eliminate need but v14 is not stable |
 
