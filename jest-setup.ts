@@ -60,5 +60,6 @@ jest.mock('@/lib/supabase', () => ({
   },
 }));
 
-// 7. Suppress React Native NativeAnimatedHelper console warnings in tests
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+// 7. Suppress Animated warnings in tests
+// Note: Reanimated's setUpTests() handles animated mocking.
+// NativeAnimatedHelper mock removed -- module path no longer exists in RN 0.81+.
