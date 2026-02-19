@@ -24,6 +24,8 @@ export function SubmitButton({
 
   return (
     <Pressable
+      role="button"
+      aria-label={title}
       onPress={onPress}
       disabled={loading}
       style={({ pressed }) => [

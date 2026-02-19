@@ -36,16 +36,26 @@ jest.mock('expo-sqlite/localStorage/install', () => {
 
 // 6. Mock Supabase client (prevent real network calls and side effects in tests)
 // The real module reads env vars, calls AppState.addEventListener at module scope
+
+function mockCreateQueryBuilder() {
+  const mocks: Record<string, jest.Mock> = {};
+  const handler: ProxyHandler<Record<string, jest.Mock>> = {
+    get(_target, prop: string) {
+      if (prop === 'then') return undefined; // prevent thenable detection
+      if (!mocks[prop]) {
+        mocks[prop] = jest.fn();
+      }
+      mocks[prop].mockReturnValue(proxy);
+      return mocks[prop];
+    },
+  };
+  const proxy = new Proxy(mocks, handler);
+  return proxy;
+}
+
 jest.mock('@/lib/supabase', () => ({
   supabase: {
-    from: jest.fn(() => ({
-      select: jest.fn().mockReturnThis(),
-      insert: jest.fn().mockReturnThis(),
-      update: jest.fn().mockReturnThis(),
-      delete: jest.fn().mockReturnThis(),
-      eq: jest.fn().mockReturnThis(),
-      single: jest.fn().mockReturnThis(),
-    })),
+    from: jest.fn(() => mockCreateQueryBuilder()),
     auth: {
       getSession: jest.fn(),
       signInWithPassword: jest.fn(),
