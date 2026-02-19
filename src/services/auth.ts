@@ -7,10 +7,9 @@
  * Ported from web app (exercise_tracker_app/packages/shared/src/services/auth.ts)
  * with two changes:
  * 1. Import paths updated for iOS project structure
- * 2. resetPassword() uses Linking.createURL() instead of window.location
+ * 2. resetPassword() and register() use hardcoded scheme URLs for deep linking
  */
 
-import * as Linking from 'expo-linking';
 import type { User, Session } from '@supabase/supabase-js';
 
 import type {
@@ -52,6 +51,9 @@ async function register(email: string, password: string): Promise<AuthResult> {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: 'ironlift://sign-in',
+      },
     });
 
     if (error) {
@@ -143,12 +145,9 @@ async function resetPassword(email: string): Promise<SuccessResult> {
       };
     }
 
-    // Use deep link URL instead of window.location (iOS native app)
-    const redirectTo = Linking.createURL('reset-password');
-
     // Attempt to send password reset email with explicit redirect URL
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo,
+      redirectTo: 'ironlift://reset-password',
     });
 
     if (error) {
