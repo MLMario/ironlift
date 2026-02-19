@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 13 of 13 (test-harness)
-Plan: 1 of 2
-Status: In progress
-Last activity: 2026-02-18 -- Completed 13-01-PLAN.md
+Plan: 2 of 2
+Status: Phase complete
+Last activity: 2026-02-19 -- Completed 13-02-PLAN.md
 
-Progress: █████████░ 95% (44 of 46 plans)
+Progress: ██████████ 100% (46 of 46 plans)
 
 ## Performance Metrics
 
@@ -24,9 +24,9 @@ Progress: █████████░ 95% (44 of 46 plans)
 - Total execution time: ~121 min
 
 **Velocity (v0.1.1):**
-- Total plans completed: 3
-- Average duration: ~4.3 min
-- Total execution time: ~12.8 min
+- Total plans completed: 4
+- Average duration: ~3.7 min
+- Total execution time: ~14.8 min
 
 ## Accumulated Context
 
@@ -41,6 +41,8 @@ All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
 | 3 | Use P0001 ERRCODE instead of custom LIMxx codes | 12-01 | Custom SQLSTATE codes rejected by PostgreSQL/Supabase; message-based identification reliable |
 | 4 | jest.config.js over jest.config.ts | 13-01 | Avoids ts-node dependency; JSDoc type annotation provides equivalent IDE support |
 | 5 | Let jest-expo auto-resolve @/* path alias | 13-01 | Confirmed working via --showConfig; no manual moduleNameMapper needed |
+| 6 | testPathIgnorePatterns for __tests__/helpers/ | 13-02 | Jest discovers helper files as test suites; exclude to prevent false failures |
+| 7 | Removed NativeAnimatedHelper mock from jest-setup.ts | 13-02 | Module path gone in RN 0.81+; Reanimated setUpTests() handles animated mocking |
 
 ### Pending Todos
 
@@ -52,7 +54,7 @@ All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
 - v0.1.1 is an incremental milestone -- phases added as issues are discovered
 - Phase 11 (silent-save-weight-reps) complete
 - Phase 12 (db-creation-limits) complete: 7 BEFORE INSERT triggers with advisory locks deployed to Supabase
-- Phase 13 (test-harness) in progress: Plan 01 complete (Jest + RNTL harness), Plan 02 pending (proof-of-concept tests)
+- Phase 13 (test-harness) complete: Jest + RNTL harness with 21 passing proof-of-concept tests
 
 ### Blockers/Concerns
 
@@ -60,6 +62,6 @@ All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
 
 ## Session Continuity
 
-Last session: 2026-02-18
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-02-19
+Stopped at: Completed 13-02-PLAN.md (Phase 13 complete)
 Resume file: None
