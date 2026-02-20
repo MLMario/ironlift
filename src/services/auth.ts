@@ -52,7 +52,6 @@ async function register(email: string, password: string): Promise<AuthResult> {
     // Attempt to sign up the user
     const deepLink = Linking.createURL('sign-in');
     const emailRedirectTo = `https://ironliftapp.vercel.app/auth-callback?target=${encodeURIComponent(deepLink)}`;
-    console.log('[AUTH] register emailRedirectTo:', emailRedirectTo);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -153,7 +152,6 @@ async function resetPassword(email: string): Promise<SuccessResult> {
     // Attempt to send password reset email with explicit redirect URL
     const deepLink = Linking.createURL('reset-password');
     const redirectTo = `https://ironliftapp.vercel.app/auth-callback?target=${encodeURIComponent(deepLink)}`;
-    console.log('[AUTH] resetPassword redirectTo:', redirectTo);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo,
     });

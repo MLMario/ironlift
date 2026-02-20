@@ -26,7 +26,7 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 
 **v0.1.1 — Bug Fixes & Architecture:**
 
-- [ ] Silent save of modified weight/reps to template when exercise is completed during workout (FIX-01)
+- [x] Silent save of modified weight/reps to template when exercise is completed during workout (FIX-01)
 
 **v0.2 — Table Stakes Gaps (deferred):**
 

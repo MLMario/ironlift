@@ -100,7 +100,8 @@ export default function ResetPasswordScreen() {
   };
 
   // Navigate to sign-in
-  const handleGoToLogin = () => {
+  const handleGoToLogin = async () => {
+    await auth.logout();
     router.replace('/sign-in');
   };
 
