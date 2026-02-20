@@ -21,6 +21,8 @@ import type {
   AuthSubscription,
 } from '@/types/services';
 
+import * as Linking from 'expo-linking';
+
 import { supabase } from '@/lib/supabase';
 
 /**
@@ -48,11 +50,13 @@ async function register(email: string, password: string): Promise<AuthResult> {
     }
 
     // Attempt to sign up the user
+    const emailRedirectTo = Linking.createURL('sign-in');
+    console.log('[AUTH] register emailRedirectTo:', emailRedirectTo);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: 'ironlift://sign-in',
+        emailRedirectTo,
       },
     });
 
@@ -146,8 +150,10 @@ async function resetPassword(email: string): Promise<SuccessResult> {
     }
 
     // Attempt to send password reset email with explicit redirect URL
+    const redirectTo = Linking.createURL('reset-password');
+    console.log('[AUTH] resetPassword redirectTo:', redirectTo);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'ironlift://reset-password',
+      redirectTo,
     });
 
     if (error) {
