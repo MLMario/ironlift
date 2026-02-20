@@ -1,5 +1,32 @@
 # Project Milestones: IronLift
 
+## v0.1.1 Bug Fixes & Architecture (Shipped: 2026-02-20)
+
+**Delivered:** Silent save of weight/reps to templates, database creation limits via triggers, and a full Jest + RNTL test harness — plus expanded unit test coverage and deep linking fixes.
+
+**Phases completed:** 11-13 (4 plans total)
+
+**Key accomplishments:**
+
+- Silent save of modified weight/reps values to template when exercise completed during active workout
+- 7 BEFORE INSERT database triggers with advisory locks enforcing creation limits across all tables
+- Jest + RNTL test harness with jest-expo preset, global mocks, and 21 proof-of-concept tests
+- Expanded unit test suite covering services (auth, cache, exercises, templates, logging, writeQueue) and hooks
+- Deep linking fix for signup and password reset flows
+
+**Stats:**
+
+- 59 source files created/modified
+- 23,128 lines of TypeScript (up from 14,849 at v0.1)
+- 3 phases, 4 plans
+- 4 days from v0.1 ship to v0.1.1 ship (2026-02-16 → 2026-02-20)
+
+**Git range:** `feat(11-01)` → `feat(13-02)`
+
+**What's next:** v0.2 — Table Stakes Gaps (previous workout values, workout duration, PR detection)
+
+---
+
 ## v0.1 MVP (Shipped: 2026-02-16)
 
 **Delivered:** Full iOS port of the IronFactor web app — a complete exercise tracker with authentication, template management, active workout logging (offline-capable with crash recovery), progress charts, workout history, and settings navigation.
@@ -25,16 +52,5 @@
 **Git range:** `feat(01-01)` → `feat(10-01)`
 
 **What's next:** v0.1.1 — bug fixes and architecture improvements
-
----
-
-## v0.1.1 Bug Fixes & Architecture (Active)
-
-**Goal:** Fix behavioral gaps and improve architecture in the core workout loop, added incrementally as issues are discovered.
-
-**Phases:** 11+ (incremental)
-
-**Current scope:**
-- Phase 11: Silent save of weight/reps to template when exercise completed during workout
 
 ---

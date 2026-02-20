@@ -21,19 +21,16 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 - HIST-01 through HIST-05 — v0.1 (paginated timeline, summary stats, workout detail drill-down)
 - SETT-01 through SETT-06 — v0.1 (settings navigation, My Exercises, History, Logout)
 - UI-01 through UI-06 — v0.1 (dark mode, theme tokens, hand-rolled UI, system font, 44px tap targets)
+- FIX-01 — v0.1.1 (silent save of weight/reps to template on exercise completion)
+- DB creation limits — v0.1.1 (7 BEFORE INSERT triggers with advisory locks)
+- Test harness — v0.1.1 (Jest + RNTL with jest-expo preset, 21 proof-of-concept tests)
 
 ### Active
-
-**v0.1.1 — Bug Fixes & Architecture:**
-
-- [x] Silent save of modified weight/reps to template when exercise is completed during workout (FIX-01)
-
-**v0.2 — Table Stakes Gaps (deferred):**
 
 - [ ] Previous workout values displayed inline during active workout logging (GAP-01)
 - [ ] Workout duration tracking with finished_at timestamp and duration display in history (GAP-02)
 - [ ] Personal record (PR) detection on workout save (GAP-03)
-- [ ] Service layer implementation of templates per user, customer exercise per user, charts per user, exercise per template and set per exercise.
+- [ ] Service layer limit checks with user-facing error messages (DB triggers already enforce limits)
 - [ ] Migrate auth email trampoline to Supabase Edge Function — currently a static HTML page on the Vercel web app at /auth-callback that redirects email tokens to the app's deep link scheme (GAP-04)
 
 ### Out of Scope
@@ -59,22 +56,22 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 
 ## Context
 
-Shipped v0.1 MVP with 14,849 LOC TypeScript across 238 files.
-Tech stack: Expo SDK 54, React Native, TypeScript, Supabase (PostgreSQL + Auth + RLS), AsyncStorage, react-native-gifted-charts, react-native-gesture-handler, react-native-reanimated.
+Shipped v0.1.1 with 23,128 LOC TypeScript across ~300 files.
+Tech stack: Expo SDK 54, React Native, TypeScript, Supabase (PostgreSQL + Auth + RLS), AsyncStorage, react-native-gifted-charts, react-native-gesture-handler, react-native-reanimated. Testing: Jest + jest-expo + @testing-library/react-native.
 
-Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requirements.
+Built across 2 milestones: v0.1 MVP (6 days, 10 phases, 42 plans) + v0.1.1 Bug Fixes & Architecture (4 days, 3 phases, 4 plans).
 
 **Port context:** All web app features faithfully ported. Web app CSS custom properties translated to TypeScript theme tokens. Screen layouts and user flows mirror the web app, adapted for native iOS conventions (stack pushes, modals, gestures).
 
 **Brand:** Rebranded from "IronFactor" (web) to "IronLift" (iOS). Split-color brand text (Iron=white, Lift=blue).
 
-**Data model:** 8 tables in Supabase — exercises (system + user), templates (with nested exercises and sets), workout_logs (with nested exercises and sets), user_charts. All accessed via RLS. ~1000 system exercises pre-populated.
+**Data model:** 8 tables in Supabase — exercises (system + user), templates (with nested exercises and sets), workout_logs (with nested exercises and sets), user_charts. All accessed via RLS. ~1000 system exercises pre-populated. Database creation limits enforced via 7 BEFORE INSERT triggers with advisory locks.
 
 **Known issues:**
 
-- No automated tests (manual testing on physical device only)
 - Sound asset directory uses .gitkeep placeholder (no real MP3 sourced)
 - Supabase Dashboard manual configuration still needed (redirect URL, email confirmation, password length)
+- DB triggers enforce creation limits but no service-layer or UI feedback yet
 
 **Development environment:** Windows PC, Expo Go on physical iPhone over Wi-Fi. No simulator, no Mac. EAS Build for production/TestFlight. pnpm package manager.
 
@@ -106,12 +103,17 @@ Built in 6 days (2026-02-10 → 2026-02-16) across 10 phases, 42 plans, 78 requi
 | Wall-clock timer (not tick counting)           | Immune to iOS background suspension                                                   | Good — reliable timer                            |
 | Fit-to-width charts (adjustToWidth)            | Horizontal scrolling poor UX for trend visualization                                  | Good — all data visible at a glance              |
 
-## Current Milestone: v0.1.1 Bug Fixes & Architecture
+## Current Milestone: Planning Next (v0.2)
 
-**Goal:** Fix behavioral gaps and improve architecture in the core workout loop, added incrementally as issues are discovered.
+**Previous:** v0.1.1 Bug Fixes & Architecture shipped 2026-02-20 (silent save, DB triggers, test harness)
 
-**First target:** Silent save of weight/reps to template when exercise is finished during workout — matching existing rest timer silent save behavior.
+**Next targets (from Active requirements):**
+- Previous workout values displayed inline during active workout logging
+- Workout duration tracking with finished_at and display in history
+- PR detection on workout save
+- Service layer limit checks with user-facing error messages
+- Auth email trampoline migration to Edge Function
 
 ---
 
-_Last updated: 2026-02-16 after v0.1.1 milestone start_
+_Last updated: 2026-02-20 after v0.1.1 milestone completion_

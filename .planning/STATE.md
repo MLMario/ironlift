@@ -2,19 +2,19 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-16)
+See: .planning/PROJECT.md (updated 2026-02-20)
 
 **Core value:** The core workout loop -- pick a template, log sets with weight/reps, finish and save -- must work flawlessly, including fully offline.
-**Current focus:** v0.1.1 Bug Fixes & Architecture
+**Current focus:** Planning next milestone
 
 ## Current Position
 
-Phase: 13 of 13 (test-harness)
-Plan: 2 of 2
-Status: Phase complete
-Last activity: 2026-02-19 -- Completed 13-02-PLAN.md
+Phase: 13 of 13 (last completed)
+Plan: Complete
+Status: Milestone v0.1.1 shipped
+Last activity: 2026-02-20 -- v0.1.1 milestone complete
 
-Progress: ██████████ 100% (46 of 46 plans)
+Progress: ██████████ 100% (46 of 46 plans across v0.1 + v0.1.1)
 
 ## Performance Metrics
 
@@ -33,16 +33,7 @@ Progress: ██████████ 100% (46 of 46 plans)
 ### Decisions
 
 All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
-
-| # | Decision | Phase | Rationale |
-|---|----------|-------|-----------|
-| 1 | No auth check in updateTemplateExerciseSetValues | 11-01 | Best-effort silent save; RLS handles authorization |
-| 2 | Cache refresh after successful silent saves | 11-01 | Prevents stale values on immediate re-use of same template |
-| 3 | Use P0001 ERRCODE instead of custom LIMxx codes | 12-01 | Custom SQLSTATE codes rejected by PostgreSQL/Supabase; message-based identification reliable |
-| 4 | jest.config.js over jest.config.ts | 13-01 | Avoids ts-node dependency; JSDoc type annotation provides equivalent IDE support |
-| 5 | Let jest-expo auto-resolve @/* path alias | 13-01 | Confirmed working via --showConfig; no manual moduleNameMapper needed |
-| 6 | testPathIgnorePatterns for __tests__/helpers/ | 13-02 | Jest discovers helper files as test suites; exclude to prevent false failures |
-| 7 | Removed NativeAnimatedHelper mock from jest-setup.ts | 13-02 | Module path gone in RN 0.81+; Reanimated setUpTests() handles animated mocking |
+All v0.1.1 decisions archived in milestones/v0.1.1-ROADMAP.md.
 
 ### Pending Todos
 
@@ -50,11 +41,9 @@ All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
 
 ### Roadmap Evolution
 
-- v0.1 MVP shipped with 10 phases (original 7 + 3 additions)
-- v0.1.1 is an incremental milestone -- phases added as issues are discovered
-- Phase 11 (silent-save-weight-reps) complete
-- Phase 12 (db-creation-limits) complete: 7 BEFORE INSERT triggers with advisory locks deployed to Supabase
-- Phase 13 (test-harness) complete: Jest + RNTL harness with 21 passing proof-of-concept tests
+- v0.1 MVP shipped with 10 phases (2026-02-16)
+- v0.1.1 shipped with 3 additional phases (2026-02-20)
+- Next milestone (v0.2) not yet planned
 
 ### Blockers/Concerns
 
@@ -62,6 +51,6 @@ All v0.1 decisions logged in PROJECT.md Key Decisions table with outcomes.
 
 ## Session Continuity
 
-Last session: 2026-02-19
-Stopped at: Completed 13-02-PLAN.md (Phase 13 complete)
+Last session: 2026-02-20
+Stopped at: v0.1.1 milestone complete
 Resume file: None
