@@ -34,6 +34,7 @@ The core workout loop — pick a template, log sets with weight/reps, finish and
 - [ ] Workout duration tracking with finished_at timestamp and duration display in history (GAP-02)
 - [ ] Personal record (PR) detection on workout save (GAP-03)
 - [ ] Service layer implementation of templates per user, customer exercise per user, charts per user, exercise per template and set per exercise.
+- [ ] Migrate auth email trampoline to Supabase Edge Function — currently a static HTML page on the Vercel web app at /auth-callback that redirects email tokens to the app's deep link scheme (GAP-04)
 
 ### Out of Scope
 

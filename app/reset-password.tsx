@@ -9,8 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import * as Linking from 'expo-linking';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme, type Theme } from '@/theme';
 import { supabase } from '@/lib/supabase';
 import { auth } from '@/services/auth';
@@ -20,35 +19,15 @@ import { ErrorBox } from '@/components/ErrorBox';
 import { SuccessBox } from '@/components/SuccessBox';
 import { SubmitButton } from '@/components/SubmitButton';
 
-/**
- * Extract access_token, refresh_token, and type from a Supabase deep link URL.
- *
- * Supabase sends tokens in the URL hash fragment (#), NOT query parameters (?).
- * Example: ironlift://reset-password#access_token=xxx&refresh_token=yyy&type=recovery
- */
-function extractTokensFromUrl(url: string): {
-  accessToken: string | null;
-  refreshToken: string | null;
-  type: string | null;
-} {
-  const hashIndex = url.indexOf('#');
-  if (hashIndex === -1) {
-    return { accessToken: null, refreshToken: null, type: null };
-  }
-
-  const hashParams = new URLSearchParams(url.substring(hashIndex + 1));
-  return {
-    accessToken: hashParams.get('access_token'),
-    refreshToken: hashParams.get('refresh_token'),
-    type: hashParams.get('type'),
-  };
-}
-
 export default function ResetPasswordScreen() {
   const theme = useTheme();
   const styles = getStyles(theme);
   const router = useRouter();
-  const url = Linking.useURL();
+  const { access_token, refresh_token, type } = useLocalSearchParams<{
+    access_token?: string;
+    refresh_token?: string;
+    type?: string;
+  }>();
 
   // State variables
   const [tokenError, setTokenError] = useState<string | null>(null);
@@ -61,28 +40,14 @@ export default function ResetPasswordScreen() {
 
   // Deep link token extraction and session establishment
   useEffect(() => {
-    if (!url) {
-      // No URL yet -- could still be loading, or no deep link was used.
-      // We set an error only after we've confirmed there's no URL to parse.
+    if (!access_token || !refresh_token) {
+      setTokenError('No reset link found. Please request a new password reset email.');
       return;
     }
 
-    const { accessToken, refreshToken } = extractTokensFromUrl(url);
-
-    if (!accessToken || !refreshToken) {
-      setTokenError(
-        'No reset link found. Please request a new password reset email.'
-      );
-      return;
-    }
-
-    // Establish session from deep link tokens
     setLoading(true);
     supabase.auth
-      .setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-      })
+      .setSession({ access_token, refresh_token })
       .then(({ error: sessionError }) => {
         if (sessionError) {
           setTokenError(
@@ -100,7 +65,7 @@ export default function ResetPasswordScreen() {
       .finally(() => {
         setLoading(false);
       });
-  }, [url]);
+  }, [access_token, refresh_token]);
 
   // Handle password update submission
   const handlePasswordUpdate = async () => {
@@ -140,7 +105,7 @@ export default function ResetPasswordScreen() {
   };
 
   // State 1: Loading (initial, while establishing session from deep link)
-  if (!url || (loading && !sessionEstablished && !tokenError && !passwordUpdated)) {
+  if (loading && !sessionEstablished && !tokenError && !passwordUpdated) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
